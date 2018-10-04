@@ -28,6 +28,39 @@ public class CardStack : MonoBehaviour
 		return cards.Count;
 	}
 
+	//calculate hand value
+	public int handValue(){
+		int total = 0;
+		int cardRank;
+		int aces = 0; // count the number of aces in hand, used later to do 1 or 11 logic
+		foreach (int card in getCards()) {
+			cardRank = card % 13;
+			//Debug.Log ("Cardrank="+cardRank);
+			if (cardRank >= 10 && cardRank <= 12) { // J, Q, K
+				cardRank = 10; // J,Q,K worth 10 points
+
+			} 
+			else if (cardRank == 0) { // ace
+				aces++;
+				continue; // dont want to add cardrank to total.
+			} 
+			else { // pip value 2-10
+				cardRank += 1; // needs one added to get correct value.
+			}
+
+			total += cardRank; // add hand value up.
+		}
+
+		for (int i = 0; i < aces; i++) {
+			if (total + 11 <= 21) {
+				total += 11;
+			} else {
+				total += 1;
+			}
+		}
+		return total;
+	}
+
 	public int pop(){
 		//TODO: error checking, bounds checking.
 		//remove card from stack and send removal event

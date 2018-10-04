@@ -13,6 +13,8 @@ public class CardStackView : MonoBehaviour
 	public float cardOffset;
 	public GameObject cardPrefab;
 	public bool faceUp = false;
+	public bool reverseLayerOrder = false;
+
 
 	void Start(){
 		cardStack = GetComponent<CardStack> ();
@@ -79,10 +81,16 @@ public class CardStackView : MonoBehaviour
 		cardCopy.name = "Card"+cardIndex;
 
 		SpriteRenderer spriteRenderer = cardCopy.GetComponent<SpriteRenderer> ();
-		spriteRenderer.sortingOrder = renderIndex; //left to right put down first to last.
-		//spriteRenderer.sortingOrder = 51 - renderIndex; //right to left put down first to last.
+		if(reverseLayerOrder){
+			spriteRenderer.sortingOrder = 51 - renderIndex; //right to left put down first to last.
+		}
+		else{
+			spriteRenderer.sortingOrder = renderIndex; //left to right put down first to last.
+		}
 
 		//keep track of added cards
 		fetchedCards.Add(cardIndex, cardCopy);
+
+		Debug.Log ("Hand value = " + cardStack.handValue ());
 	}
 }

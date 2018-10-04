@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2d80f19b3a864dd79d233cffcc75cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 0}
+  card: {fileID: 818320865}
 --- !u!4 &140208360
 Transform:
   m_ObjectHideFlags: 0
@@ -163,6 +163,7 @@ GameObject:
   - component: {fileID: 818320868}
   - component: {fileID: 818320867}
   - component: {fileID: 818320866}
+  - component: {fileID: 818320869}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -234,7 +235,7 @@ MonoBehaviour:
   - {fileID: 21300098, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
   - {fileID: 21300100, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
   - {fileID: 21300102, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
-  cardback: {fileID: 21300112, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  cardBack: {fileID: 21300112, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
   cardIndex: 0
 --- !u!212 &818320867
 SpriteRenderer:
@@ -293,6 +294,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &818320869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 818320865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6ccbe267051473ebd491bf564c74fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaleCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.49948645
+      value: 0.00000011920929
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  duration: 0.5
 --- !u!1 &1446292583
 GameObject:
   m_ObjectHideFlags: 0

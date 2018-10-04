@@ -232,6 +232,7 @@ MonoBehaviour:
   startPosition: {x: -4, y: 2, z: 0}
   cardOffset: 0.2
   cardPrefab: {fileID: 296012586}
+  faceUp: 1
 --- !u!114 &1098091029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,9 +299,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -4, y: 0, z: 0}
-  cardOffset: 0.2
+  startPosition: {x: -3, y: 0, z: 0}
+  cardOffset: 0.005
   cardPrefab: {fileID: 296012586}
+  faceUp: 0
 --- !u!114 &1408933471
 MonoBehaviour:
   m_ObjectHideFlags: 0

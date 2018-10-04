@@ -8,6 +8,8 @@ public class CardStack : MonoBehaviour
 
 	public bool isGameDeck = false;
 
+	public event CardRemovalEventHandler cardRemoved;
+
 	public bool hasCards{
 		get { return cards != null && cards.Count > 0; }
 	}
@@ -28,13 +30,17 @@ public class CardStack : MonoBehaviour
 
 	public int pop(){
 		//TODO: error checking, bounds checking.
+		//remove card from stack and send removal event
 		int temp = cards [0];
 		cards.RemoveAt (0);
+		if (cardRemoved != null) {
+			cardRemoved (this, new CardRemovedEventArgs (temp));
+		}
 		return temp;
 	}
 
-	public void push (int index){
-		cards.Add (index);
+	public void push (int cardIndex){
+		cards.Add (cardIndex);
 	}
 
 	public void CreateDeck(){

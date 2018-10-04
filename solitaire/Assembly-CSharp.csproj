@@ -55,6 +55,7 @@
      <Compile Include="Assets\scripts\CardModel.cs" />
      <Compile Include="Assets\scripts\DebugChangeCard.cs" />
      <Compile Include="Assets\scripts\DeckModel.cs" />
+     <Compile Include="Assets\scripts\DeckView.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>/Users/jaicarlton/Unity-card/solitaire/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>

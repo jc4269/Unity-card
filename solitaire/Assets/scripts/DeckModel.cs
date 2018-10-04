@@ -6,6 +6,12 @@ public class DeckModel : MonoBehaviour
 {
 	List<int> cards;
 
+	public IEnumerable<int> getCards(){
+		foreach (int i in cards) {
+			yield return i;
+		}
+	}
+
 	public void shuffle(){
 
 		//instantiate card list if not already

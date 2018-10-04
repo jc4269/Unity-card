@@ -112,6 +112,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &296012585
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 11.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &296012586 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a,
+    type: 2}
+  m_PrefabInternal: {fileID: 296012585}
 --- !u!1 &1408933468
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +167,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1408933469}
+  - component: {fileID: 1408933470}
+  - component: {fileID: 1408933471}
   m_Layer: 0
   m_Name: CardDeckTest
   m_TagString: Untagged
@@ -138,8 +187,33 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1408933470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1408933468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462281db8ecdf458684753e1154c7205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1408933471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1408933468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951e83eda0d70462aab64aa07463eae6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPosition: {x: -4, y: 0, z: 0}
+  cardOffset: 0.2
+  cardPrefab: {fileID: 296012586}
 --- !u!1 &1594063651
 GameObject:
   m_ObjectHideFlags: 0

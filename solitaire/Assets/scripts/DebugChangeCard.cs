@@ -20,7 +20,6 @@ public class DebugChangeCard : MonoBehaviour
 	void OnGUI(){
 
 		if(GUI.Button(new Rect(10,10,100,20),"Hit me!")){
-			Debug.Log ("button hit");
 			if (cardIndex >= cardModel.faces.Length) {
 				cardIndex = 0;
 				cardFlipper.flipCard (cardModel.faces[cardModel.faces.Length-1], cardModel.cardBack, -1);
@@ -28,9 +27,7 @@ public class DebugChangeCard : MonoBehaviour
 				if (cardIndex > 0) {
 					cardFlipper.flipCard (cardModel.faces[cardIndex - 1], cardModel.faces[cardIndex], cardIndex);
 				} else {
-					Debug.Log ("cardIndex: " + cardIndex);
 					cardFlipper.flipCard (cardModel.cardBack, cardModel.faces[cardIndex], cardIndex);
-					Debug.Log (cardModel.cardBack);
 				}
 				cardIndex++;
 			}

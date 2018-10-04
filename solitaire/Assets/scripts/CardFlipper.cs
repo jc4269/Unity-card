@@ -45,7 +45,7 @@ public class CardFlipper : MonoBehaviour
 
 		//once animation is done, need to update the card model
 		if (cardIndex == -1) { // no face cards, just back
-			cardModel.cardIndex = 0;
+			//cardModel.cardIndex = 0;
 			cardModel.toggleFace (false);
 		} else {
 			cardModel.cardIndex = cardIndex;

@@ -6,7 +6,7 @@ using UnityEngine;
 public class CardStackView : MonoBehaviour 
 {
 	CardStack cardStack;
-	Dictionary<int, GameObject> fetchedCards;
+	Dictionary<int, CardView> fetchedCards;
 	int lastCount;
 
 	public Vector3 startPosition;
@@ -15,29 +15,32 @@ public class CardStackView : MonoBehaviour
 	public bool faceUp = false;
 	public bool reverseLayerOrder = false;
 
+	public void Toggle(int cardIndex, bool isFaceUp){
+		fetchedCards [cardIndex].faceUp = isFaceUp;
+	}
 
-	void Start(){
+	void Awake(){
 		cardStack = GetComponent<CardStack> ();
-		fetchedCards = new Dictionary<int, GameObject>();
+		fetchedCards = new Dictionary<int, CardView>();
 		showCards ();
 		lastCount = cardStack.cardsCount();
 
 		cardStack.cardRemoved += CardStack_cardRemoved;
+		cardStack.cardAdded += CardStack_cardAdded;
 	}
 
-	void CardStack_cardRemoved (object sender, CardRemovedEventArgs e)
+	void CardStack_cardAdded (object sender, CardEventArgs e)
 	{
-		//Debug.Log ("cardRemoveEvent i="+e.cardIndex+", name="+fetchedCards[e.cardIndex].name);
+		float co = cardOffset * cardStack.cardsCount();
+		Vector3 temp = startPosition + (new Vector3 (co, 0f, 0f));
+		addCard (temp, e.cardIndex, cardStack.cardsCount());
+	}
 
+	void CardStack_cardRemoved (object sender, CardEventArgs e)
+	{
 		if (fetchedCards.ContainsKey (e.cardIndex)) {
-			//Debug.Log ("exists so delete");
-			//Debug.Log("is null? "+(fetchedCards [e.cardIndex] == null));
-			//Debug.Log("name="+fetchedCards[e.cardIndex].name);
-			Destroy (fetchedCards[e.cardIndex]);
-
-			//Debug.Log("is null? "+(fetchedCards [e.cardIndex] == null));
+			Destroy (fetchedCards[e.cardIndex].card);
 			fetchedCards.Remove (e.cardIndex);
-			//Debug.Log ("fetchedCards.Count"+ fetchedCards.Count);
 		}
 	}
 
@@ -56,20 +59,22 @@ public class CardStackView : MonoBehaviour
 			foreach (int i in cardStack.getCards()) {
 				co = cardOffset * cardCount;
 				Vector3 temp = startPosition + (new Vector3 (co, 0f, 0f));
-				//Debug.Log("card= "+i+"temp="+temp);
 				addCard (temp, i, cardCount);
 				cardCount++;
 			}
-			//Destroy (fetchedCards[cardCount-1]);
 		}
-		Debug.Log("cardStack.cardsCount ()="+cardStack.cardsCount ());
+		//Debug.Log("cardStack.cardsCount ()="+cardStack.cardsCount ());
 
 	}
 
 	void addCard(Vector3 position, int cardIndex, int renderIndex){
 
 		if (fetchedCards.ContainsKey (cardIndex)) {
-			//Debug.Log ("Card already fetched");
+
+			if (!faceUp) {
+				CardModel cModel = fetchedCards [cardIndex].card.GetComponent<CardModel> ();
+				cModel.toggleFace (fetchedCards [cardIndex].faceUp);
+			}
 			return;
 		}
 
@@ -89,8 +94,11 @@ public class CardStackView : MonoBehaviour
 		}
 
 		//keep track of added cards
-		fetchedCards.Add(cardIndex, cardCopy);
+		fetchedCards.Add(cardIndex, new CardView(cardCopy));
 
-		Debug.Log ("Hand value = " + cardStack.handValue ());
+		//Debug.Log ("Hand value = " + cardStack.handValue ());
 	}
+
+
+
 }

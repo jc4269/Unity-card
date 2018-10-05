@@ -8,7 +8,8 @@ public class CardStack : MonoBehaviour
 
 	public bool isGameDeck = false;
 
-	public event CardRemovalEventHandler cardRemoved;
+	public event CardEventHandler cardRemoved;
+	public event CardEventHandler cardAdded;
 
 	public bool hasCards{
 		get { return cards != null && cards.Count > 0; }
@@ -67,13 +68,18 @@ public class CardStack : MonoBehaviour
 		int temp = cards [0];
 		cards.RemoveAt (0);
 		if (cardRemoved != null) {
-			cardRemoved (this, new CardRemovedEventArgs (temp));
+			cardRemoved (this, new CardEventArgs (temp));
 		}
 		return temp;
 	}
 
 	public void push (int cardIndex){
 		cards.Add (cardIndex);
+
+		if (cardAdded != null) {
+			cardAdded (this, new CardEventArgs (cardIndex));
+		}
+
 	}
 
 	public void CreateDeck(){
@@ -103,8 +109,8 @@ public class CardStack : MonoBehaviour
 	}
 
 	// Use this for initialization
-	void Start () {
-		Debug.Log ("Start");
+	void Awake () {
+		//Debug.Log ("Start");
 		cards = new List<int>();
 		if (isGameDeck) {
 			CreateDeck ();

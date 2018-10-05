@@ -159,43 +159,44 @@ GameObject:
   m_PrefabParentObject: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a,
     type: 2}
   m_PrefabInternal: {fileID: 296012585}
---- !u!1 &353376804
+--- !u!1 &921193276
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 353376806}
-  - component: {fileID: 353376805}
+  - component: {fileID: 921193278}
+  - component: {fileID: 921193277}
   m_Layer: 0
-  m_Name: DebugDealer
+  m_Name: Game Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &353376805
+--- !u!114 &921193277
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 353376804}
+  m_GameObject: {fileID: 921193276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c058540866da5403fa6dfdb4088912aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 994e84f3c76364c338f1f3ea0ed2bd15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dealer: {fileID: 1408933471}
   player: {fileID: 1098091029}
---- !u!4 &353376806
+  dealer: {fileID: 1408933471}
+  deck: {fileID: 1566646316}
+--- !u!4 &921193278
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 353376804}
+  m_GameObject: {fileID: 921193276}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24932766, y: 0.04790114, z: -0.0077860253}
+  m_LocalPosition: {x: -0.6542723, y: 0.6209137, z: -0.019144455}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -230,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: -4, y: 2, z: 0}
-  cardOffset: 0.2
+  cardOffset: 0.3
   cardPrefab: {fileID: 296012586}
   faceUp: 1
   reverseLayerOrder: 0
@@ -300,11 +301,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 0, y: 0, z: 0}
-  cardOffset: 0.005
+  startPosition: {x: -4, y: -2, z: 0}
+  cardOffset: 0.3
   cardPrefab: {fileID: 296012586}
   faceUp: 0
-  reverseLayerOrder: 1
+  reverseLayerOrder: 0
 --- !u!114 &1408933471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +317,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 465a92c895cd94020949e55b38d72c09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGameDeck: 0
+--- !u!1 &1566646314
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1566646317}
+  - component: {fileID: 1566646316}
+  - component: {fileID: 1566646315}
+  m_Layer: 0
+  m_Name: The Deck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1566646315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1566646314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: 0, z: 0}
+  cardOffset: 0.005
+  cardPrefab: {fileID: 296012586}
+  faceUp: 0
+  reverseLayerOrder: 1
+--- !u!114 &1566646316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1566646314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 465a92c895cd94020949e55b38d72c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   isGameDeck: 1
+--- !u!4 &1566646317
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1566646314}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.036733747, y: -1.1633602, z: 0.044186812}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1594063651
 GameObject:
   m_ObjectHideFlags: 0

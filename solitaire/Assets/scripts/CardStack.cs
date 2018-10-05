@@ -84,7 +84,7 @@ public class CardStack : MonoBehaviour
 
 	public void CreateDeck(){
 
-		cards.Clear();
+		reset ();
 
 		//add unshuffled cards to list (deck)
 		for(int i = 0; i < 52; i++){
@@ -93,7 +93,7 @@ public class CardStack : MonoBehaviour
 		}
 
 
-		int n = cards.Count; 	//number of cards in deck
+		int n = cards.Count; 		//number of cards in deck
 		Debug.Log("n="+n);
 		int k; 						// random value
 		int temp; 					// holds int for swapping
@@ -106,6 +106,10 @@ public class CardStack : MonoBehaviour
 		}
 
 
+	}
+
+	public void reset(){
+		cards.Clear ();
 	}
 
 	// Use this for initialization

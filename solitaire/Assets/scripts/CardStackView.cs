@@ -46,13 +46,23 @@ public class CardStackView : MonoBehaviour
 
 	void Update(){
 		if(lastCount != cardStack.cardsCount()){
+			Debug.Log ("updating updating");
 			showCards ();
 			lastCount = cardStack.cardsCount();
 		}
 	}
 
+	public void clear (){
+		cardStack.reset ();
+		foreach (CardView cv in fetchedCards.Values) {
+			Destroy (cv.card);
+		}
+		fetchedCards.Clear ();
+		lastCount = 0;
+	}
+
 	//show a deck of cards setting position with offset and showing face up, also dealing with render order.
-	void showCards(){
+	public void showCards(){
 		int cardCount = 0;
 		float co;
 		if (cardStack.hasCards) {

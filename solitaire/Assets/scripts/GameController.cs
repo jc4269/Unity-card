@@ -13,7 +13,9 @@ public class GameController : MonoBehaviour
 
 	public Button hitButton;
 	public Button standButton;
+	public Button playAgainButton;
 
+	public Text feedBackText;
 	/***
 	 * Deal 2 cards to each player and dealer.
 	 * 	Dealers cards have first face down and rest face up.
@@ -32,12 +34,39 @@ public class GameController : MonoBehaviour
 			//TODO: player bust
 			hitButton.interactable = false;
 			standButton.interactable = false;
+			StartCoroutine(dealersTurn());
 		}
 	}
 	public void stand(){
-		//foreach(int card in dealer.ca)
+		Debug.Log ("stand hit");
+		//player turn ends, disable buttons
+		hitButton.interactable = false;
+		standButton.interactable = false;
+		//start dealers turn
 		StartCoroutine(dealersTurn());
 		//TODO: ends players turn with current hand value and dealer turn to reveal cards and keep hitting till handvalue is 17 or more
+	}
+
+	public void playAgain(){
+		//disable play again button
+		playAgainButton.interactable = false;
+		//reset hands and deck
+		player.GetComponent<CardStackView>().clear();
+		dealer.GetComponent<CardStackView>().clear();
+		deck.GetComponent<CardStackView>().clear();
+		deck.CreateDeck ();
+		//deck.GetComponent<CardStackView> ().showCards ();
+		dealersFirstCard = -1;
+
+		//enable gameplay buttons
+		hitButton.interactable = true;
+		standButton.interactable = true;
+
+
+		//reset feedback text
+		feedBackText.text = "Playing again!";
+
+		startGame ();
 	}
 
 	#endregion
@@ -72,13 +101,42 @@ public class GameController : MonoBehaviour
 	}
 
 	IEnumerator dealersTurn(){
+		Debug.Log ("dealers turn");
 		CardStackView view = dealer.GetComponent<CardStackView> ();
 		view.Toggle (dealersFirstCard, true);
+		view.showCards ();
 		yield return new WaitForSeconds (1f);
 		while (dealer.handValue () < 17) {
 			HitDealer ();
 			yield return new WaitForSeconds (1f);
 		}
+
+		string winStr = "You win! Play again?";
+		string loseStr = "You lost. Play again?";
+		string drawStr = "Draw. Play again?";
+		int playerHandValue = player.handValue ();
+		int dealerHandValue = dealer.handValue ();
+
+		Debug.Log ("playerHandValue = "+ playerHandValue + ", dealerHandValue = "+ dealerHandValue);
+		//determine who won and give feedback
+		if (playerHandValue > 21) { //player bust
+			feedBackText.text = loseStr;
+		} 
+		else if (dealerHandValue > 21) { //dealer bust
+			feedBackText.text = winStr;
+		}
+		else if (dealerHandValue < playerHandValue) {
+			feedBackText.text = winStr;
+		}
+		else if (dealerHandValue == playerHandValue) {
+			feedBackText.text = drawStr;
+		}
+		else if (dealerHandValue > playerHandValue) {
+			feedBackText.text = loseStr;
+		}
+
+		//end of game, enable play again button
+		playAgainButton.interactable = true;
 	}
 
 }

@@ -94,7 +94,7 @@ public class CardStack : MonoBehaviour
 
 
 		int n = cards.Count; 		//number of cards in deck
-		Debug.Log("n="+n);
+		//Debug.Log("n="+n);
 		int k; 						// random value
 		int temp; 					// holds int for swapping
 		while (n > 1) {

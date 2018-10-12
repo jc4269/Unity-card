@@ -47,7 +47,7 @@ public class CardStackView : MonoBehaviour
 
 	void Update(){
 		if(lastCount != cardStack.cardsCount()){
-			Debug.Log ("updating updating");
+			//Debug.Log ("updating updating");
 			showCards ();
 			lastCount = cardStack.cardsCount();
 		}
@@ -92,7 +92,7 @@ public class CardStackView : MonoBehaviour
 		}
 
 		GameObject cardCopy = (GameObject)Instantiate (cardPrefab);
-		Debug.Log ("position="+position);
+		//Debug.Log ("position="+position);
 		cardCopy.transform.position = position;
 		CardModel cardModel = cardCopy.GetComponent<CardModel> ();
 		cardModel.cardIndex = cardIndex;

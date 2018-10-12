@@ -11,6 +11,7 @@ public class CardStackView : MonoBehaviour
 
 	public Vector3 startPosition;
 	public float cardOffset;
+	public bool offsetHorizontal = true; //true for horizontal, false for vertical offset.
 	public GameObject cardPrefab;
 	public bool faceUp = false;
 	public bool reverseLayerOrder = false;
@@ -32,7 +33,7 @@ public class CardStackView : MonoBehaviour
 	void CardStack_cardAdded (object sender, CardEventArgs e)
 	{
 		float co = cardOffset * cardStack.cardsCount();
-		Vector3 temp = startPosition + (new Vector3 (co, 0f, 0f));
+		Vector3 temp = startPosition + offsetPositionWithDirection(co);
 		addCard (temp, e.cardIndex, cardStack.cardsCount());
 	}
 
@@ -68,7 +69,9 @@ public class CardStackView : MonoBehaviour
 		if (cardStack.hasCards) {
 			foreach (int i in cardStack.getCards()) {
 				co = cardOffset * cardCount;
-				Vector3 temp = startPosition + (new Vector3 (co, 0f, 0f));
+
+				Vector3 temp = startPosition + offsetPositionWithDirection(co);
+
 				addCard (temp, i, cardCount);
 				cardCount++;
 			}
@@ -89,6 +92,7 @@ public class CardStackView : MonoBehaviour
 		}
 
 		GameObject cardCopy = (GameObject)Instantiate (cardPrefab);
+		Debug.Log ("position="+position);
 		cardCopy.transform.position = position;
 		CardModel cardModel = cardCopy.GetComponent<CardModel> ();
 		cardModel.cardIndex = cardIndex;
@@ -109,6 +113,16 @@ public class CardStackView : MonoBehaviour
 		//Debug.Log ("Hand value = " + cardStack.handValue ());
 	}
 
-
+	//private helper function since this code is used twice in script.
+	//offsetHorizontal is needed but this function has access and is fine since private.
+	Vector3 offsetPositionWithDirection (float co){
+		Vector3 offset;
+		if (offsetHorizontal) {
+			offset = (new Vector3 (co, 0f, 0f));
+		} else {
+			offset = (new Vector3 (0f, co, 0f));
+		}
+		return offset;
+	}
 
 }

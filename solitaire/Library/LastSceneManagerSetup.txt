@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/deckgame.unity
+- path: Assets/scenes/blackjack.unity
   isLoaded: 1
   isActive: 1

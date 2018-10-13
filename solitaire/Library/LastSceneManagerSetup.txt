@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/blackjack.unity
+- path: Assets/scenes/FreeCell.unity
   isLoaded: 1
   isActive: 1

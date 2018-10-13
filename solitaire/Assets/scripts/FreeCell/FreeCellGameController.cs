@@ -8,6 +8,8 @@ public class FreeCellGameController : MonoBehaviour {
 	public CardStack deck;
 	//public CardStack column;
 	public GameObject column;
+	public GameObject pileStackRow;
+	public GameObject freeCardRow;
 	public List<GameObject> columns;
 
 	// Use this for initialization
@@ -16,11 +18,20 @@ public class FreeCellGameController : MonoBehaviour {
 
 		CardStack tempCS;
 		for (int i = 0; i < 8; i++) {
+			tempCS = columns [i].GetComponent<CardStack> ();
 			for (int j = 0; j < 2; j++) {
-				tempCS = columns [i].GetComponent<CardStack> ();
 				tempCS.push (deck.pop ());
 			}
 		}
+		tempCS = freeCardRow.GetComponent<CardStack> ();
+		for (int j = 0; j < 2; j++) {
+			tempCS.push (deck.pop ());
+		}
+		tempCS = pileStackRow.GetComponent<CardStack> ();
+		for (int j = 0; j < 2; j++) {
+			tempCS.push (deck.pop ());
+		}
+
 	}
 
 	void boardSetup(){

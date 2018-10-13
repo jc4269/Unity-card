@@ -62,6 +62,7 @@
      <Compile Include="Assets\scripts\CardStackView.cs" />
      <Compile Include="Assets\scripts\CardView.cs" />
      <Compile Include="Assets\scripts\FreeCell\DebugZone.cs" />
+     <Compile Include="Assets\scripts\FreeCell\DragAndDrop.cs" />
      <Compile Include="Assets\scripts\FreeCell\FreeCellGameController.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>/Users/jaicarlton/Unity-card/solitaire/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>

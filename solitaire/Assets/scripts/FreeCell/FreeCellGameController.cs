@@ -41,7 +41,7 @@ public class FreeCellGameController : MonoBehaviour {
 		columns.Add (column);
 		CardStackView columnCVS = column.GetComponent<CardStackView> ();
 		Vector3 startPosition = columnCVS.startPosition;
-		Debug.Log ("startPosition="+startPosition);
+		//Debug.Log ("startPosition="+startPosition);
 		Vector3 temp;
 		float columnOffset = 1.0f;
 		float cs;
@@ -50,7 +50,7 @@ public class FreeCellGameController : MonoBehaviour {
 			cs = columnOffset * (i+1);
 			temp = startPosition + (new Vector3 (cs, 0f, 0f));
 			c.transform.position = temp;
-			Debug.Log ("temp="+temp);
+			//Debug.Log ("temp="+temp);
 			CardStackView csv = c.GetComponent<CardStackView> ();
 			csv.cardOffset = 0.3f;
 			csv.cardPrefab = card;

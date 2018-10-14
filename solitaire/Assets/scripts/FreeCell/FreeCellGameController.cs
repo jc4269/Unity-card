@@ -48,16 +48,16 @@ public class FreeCellGameController : MonoBehaviour {
 		for(int i = 0; i < 7; i++){
 			c = (GameObject)Instantiate (column);
 			cs = columnOffset * (i+1);
-			temp = startPosition + (new Vector3 (cs, 0f, 0f));
+			temp = startPosition + (new Vector3 (cs, -2f, 0f));
 			c.transform.position = temp;
 			//Debug.Log ("temp="+temp);
 			CardStackView csv = c.GetComponent<CardStackView> ();
-			csv.cardOffset = 0.3f;
+			csv.cardOffset = -0.3f;
 			csv.cardPrefab = card;
 			csv.faceUp = true;
 			csv.offsetHorizontal = false;
 			csv.startPosition = temp;
-			csv.reverseLayerOrder = true;
+			csv.reverseLayerOrder = false;
 			columns.Add (c);
 		}
 	}

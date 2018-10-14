@@ -134,13 +134,18 @@ public class CardStackView : MonoBehaviour
 	//			dealing with transforming, sorting order and turning off hit box for those not at top.
 	public void updateCardViewStackFetchedCardsVisually(){
 		int i = 0;
+		GameObject c = null;
+		SpriteRenderer csr;
+		Vector3 temp;
 		foreach(CardView cv in fetchedCards.Values){
-			GameObject c = cv.card;
-			SpriteRenderer csr = c.GetComponent<SpriteRenderer> ();
+			c = cv.card;
+			c.GetComponent<BoxCollider> ().enabled = false;
+
+			csr = c.GetComponent<SpriteRenderer> ();
 			//Vector3 temp = c.transform.position;
 			float co = cardOffset * i;
 
-			Vector3 temp = startPosition + offsetPositionWithDirection(co);
+			temp = startPosition + offsetPositionWithDirection(co);
 
 			c.transform.position = temp;
 
@@ -152,6 +157,8 @@ public class CardStackView : MonoBehaviour
 			}
 			i++;
 		}
+		//last object processed now gets box colider enabled. Saves using if statement in loop above for now.
+		if(c) c.GetComponent<BoxCollider> ().enabled = true;
 	}
 
 }

@@ -10,6 +10,8 @@ public class CardModel : MonoBehaviour
 	public Sprite cardBack;
 	public int cardIndex; // e.g. faces[cardIndex]
 
+	public GameObject zoneIn { get; set; } // which column/row cardstack is it apart of. field or deck etc.
+
 	public void toggleFace(bool showFace){
 		if (showFace) {
 			spriteRenderer.sprite = faces[cardIndex];

@@ -25,16 +25,21 @@ public class DragAndDrop : MonoBehaviour {
 	void Update () {
 		
 		if (Input.GetMouseButtonDown (0)) {
-			
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-
+			//Debug.Log ("Input.mousePosition="+Input.mousePosition);
+			//RaycastHit[] rch = Physics.RaycastAll (ray);
+			//Debug.Log("Length="+rch.Length);
 			if (Physics.Raycast (ray, out hit)) {
 				gameobjectToDrag = hit.collider.gameObject;
 				GOCenter = gameobjectToDrag.transform.position;
 				touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				offset = touchPosition - GOCenter;
 				draggingMode = true;
+				SpriteRenderer sr = gameobjectToDrag.GetComponent<SpriteRenderer> ();
+				sr.sortingOrder = 100;
+				//TODO: card tells column it's being removed and is in freespace. Keep column its from to snap back if no valid drop is made
 			}
+
 		}
 		if (Input.GetMouseButton (0)) {
 			if (draggingMode) {
@@ -46,6 +51,19 @@ public class DragAndDrop : MonoBehaviour {
 		}
 		if (Input.GetMouseButtonUp (0)) {
 			draggingMode = false;
+			if(gameobjectToDrag){
+				//snap back to column
+				CardModel cm = gameobjectToDrag.GetComponent<CardModel>();
+	 			GameObject cmzoneIn = cm.zoneIn;
+				//Debug.Log("getmouseup.name="+cmzoneIn);
+				cmzoneIn.GetComponent<CardStackView> ().updateCardViewStackFetchedCardsVisually ();
+			}
+
+			//TODO: hit test to see which column or row its over.
+			//		if column card is from, just snap it back
+			//		Then pass to function to see if valid placement.
+			//		If valid, add card into column/row
+			//		If false, add back to column card is from.
 		}
 	}
 }

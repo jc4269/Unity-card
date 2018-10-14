@@ -75,6 +75,8 @@ public class CardStackView : MonoBehaviour
 				addCard (temp, i, cardCount);
 				cardCount++;
 			}
+
+			updateCardViewStackFetchedCardsVisually ();
 		}
 		//Debug.Log("cardStack.cardsCount ()="+cardStack.cardsCount ());
 
@@ -90,13 +92,15 @@ public class CardStackView : MonoBehaviour
 			}
 			return;
 		}
-
+		//Debug.Log("I'm attached to " + gameObject.name);
 		GameObject cardCopy = (GameObject)Instantiate (cardPrefab);
 		//Debug.Log ("position="+position);
 		cardCopy.transform.position = position;
 		CardModel cardModel = cardCopy.GetComponent<CardModel> ();
 		cardModel.cardIndex = cardIndex;
 		cardModel.toggleFace (faceUp);
+		cardModel.zoneIn = gameObject;
+		//Debug.Log("I'm attached to " + cardModel.zoneIn.name);
 		cardCopy.name = "Card"+cardIndex;
 
 		SpriteRenderer spriteRenderer = cardCopy.GetComponent<SpriteRenderer> ();
@@ -123,6 +127,31 @@ public class CardStackView : MonoBehaviour
 			offset = (new Vector3 (0f, co, 0f));
 		}
 		return offset;
+	}
+
+
+	//function: go through fetched stack for column/row and position cards in order
+	//			dealing with transforming, sorting order and turning off hit box for those not at top.
+	public void updateCardViewStackFetchedCardsVisually(){
+		int i = 0;
+		foreach(CardView cv in fetchedCards.Values){
+			GameObject c = cv.card;
+			SpriteRenderer csr = c.GetComponent<SpriteRenderer> ();
+			//Vector3 temp = c.transform.position;
+			float co = cardOffset * i;
+
+			Vector3 temp = startPosition + offsetPositionWithDirection(co);
+
+			c.transform.position = temp;
+
+			if(reverseLayerOrder){
+				csr.sortingOrder = fetchedCards.Count - i; //right to left put down first to last.
+			}
+			else{
+				csr.sortingOrder = i; //left to right put down first to last.
+			}
+			i++;
+		}
 	}
 
 }

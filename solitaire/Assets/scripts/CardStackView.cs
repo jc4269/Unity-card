@@ -15,6 +15,19 @@ public class CardStackView : MonoBehaviour
 	public GameObject cardPrefab;
 	public bool faceUp = false;
 	public bool reverseLayerOrder = false;
+	public bool isLastCardClickableOnly = true; // set all cards clickable in stack if false, or just the last card in stack to clickable if true.
+
+	public int getLastCardIndex (){
+		int lastIndex = -1;
+		foreach (KeyValuePair<int, CardView> entry in fetchedCards) {
+			lastIndex = entry.Key;
+		}
+		return lastIndex;
+	}
+
+	public int getFetchedCardsSize(){
+		return fetchedCards.Count;
+	}
 
 	public void Toggle(int cardIndex, bool isFaceUp){
 		fetchedCards [cardIndex].faceUp = isFaceUp;
@@ -137,13 +150,17 @@ public class CardStackView : MonoBehaviour
 		GameObject c = null;
 		SpriteRenderer csr;
 		Vector3 temp;
+		float co;
 		foreach(CardView cv in fetchedCards.Values){
 			c = cv.card;
-			c.GetComponent<BoxCollider> ().enabled = false;
-
+			if (isLastCardClickableOnly) {
+				c.GetComponent<BoxCollider> ().enabled = false;
+			} else {
+				c.GetComponent<BoxCollider> ().enabled = true;
+			}
 			csr = c.GetComponent<SpriteRenderer> ();
 			//Vector3 temp = c.transform.position;
-			float co = cardOffset * i;
+			co = cardOffset * i;
 
 			temp = startPosition + offsetPositionWithDirection(co);
 
@@ -157,8 +174,20 @@ public class CardStackView : MonoBehaviour
 			}
 			i++;
 		}
+		//set cardstack collider size to encompass all cards.
+		//TODO:see if this dynamicism is still needed?
+
 		//last object processed now gets box colider enabled. Saves using if statement in loop above for now.
-		if(c) c.GetComponent<BoxCollider> ().enabled = true;
+		if (c) {
+			c.GetComponent<BoxCollider> ().enabled = true;
+		}
+	}
+
+	public void removeCardFromFetchedWithIndex(int index){
+		fetchedCards.Remove (index);
+	}
+	public void addCardToFetchedWithIndexAndCard(int index, GameObject c){
+		fetchedCards.Add(index, new CardView(c));
 	}
 
 }

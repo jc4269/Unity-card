@@ -215,52 +215,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &300979017
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: -3.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-      propertyPath: m_Name
-      value: dragtest
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &646967737
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,7 +226,6 @@ GameObject:
   - component: {fileID: 646967740}
   - component: {fileID: 646967739}
   - component: {fileID: 646967738}
-  - component: {fileID: 646967742}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -342,22 +295,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &646967742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 646967737}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c25d2a0b045984165a91164e1d811265, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameobjectToDrag: {fileID: 0}
-  GOCenter: {x: 0, y: 0, z: 0}
-  touchPosition: {x: 0, y: 0, z: 0}
-  offset: {x: 0, y: 0, z: 0}
-  draggingMode: 0
 --- !u!1 &983388869
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,9 +305,10 @@ GameObject:
   - component: {fileID: 983388872}
   - component: {fileID: 983388871}
   - component: {fileID: 983388870}
-  m_Layer: 0
+  - component: {fileID: 983388873}
+  m_Layer: 8
   m_Name: FreeCardRow
-  m_TagString: Untagged
+  m_TagString: FreeCardRow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -411,12 +349,24 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 983388869}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24932766, y: 0.04790114, z: -0.0077860253}
+  m_LocalPosition: {x: 0.2493277, y: 0.04790114, z: -0.0077860253}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &983388873
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 983388869}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 1, z: 1}
+  m_Center: {x: 2, y: 0, z: 0}
 --- !u!1001 &999792068
 Prefab:
   m_ObjectHideFlags: 0
@@ -461,6 +411,39 @@ Prefab:
       propertyPath: cardPrefab
       value: 
       objectReference: {fileID: 1946358085}
+    - target: {fileID: 1223964212663546, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
+      propertyPath: m_TagString
+      value: Column
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223964212663546, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
+        type: 2}
+      propertyPath: faceUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
+        type: 2}
+      propertyPath: offsetHorizontal
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
+        type: 2}
+      propertyPath: startPosition.x
+      value: -4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
+        type: 2}
+      propertyPath: cardOffset
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
+        type: 2}
+      propertyPath: reverseLayerOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
   m_IsPrefabParent: 0
@@ -474,9 +457,10 @@ GameObject:
   - component: {fileID: 1030466294}
   - component: {fileID: 1030466293}
   - component: {fileID: 1030466292}
+  - component: {fileID: 1030466295}
   m_Layer: 0
   m_Name: Row
-  m_TagString: Untagged
+  m_TagString: Row
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -492,11 +476,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -4, y: 2, z: 0}
-  cardOffset: 1
+  startPosition: {x: 0, y: 0, z: 0}
+  cardOffset: 0
   offsetHorizontal: 1
   cardPrefab: {fileID: 1946358085}
-  faceUp: 1
+  faceUp: 0
   reverseLayerOrder: 0
 --- !u!114 &1030466293
 MonoBehaviour:
@@ -523,6 +507,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1030466295
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1030466291}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1137715557
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,9 +530,10 @@ GameObject:
   - component: {fileID: 1137715560}
   - component: {fileID: 1137715559}
   - component: {fileID: 1137715558}
-  m_Layer: 0
+  - component: {fileID: 1137715561}
+  m_Layer: 8
   m_Name: Column
-  m_TagString: Untagged
+  m_TagString: Column
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -554,7 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPosition: {x: -4, y: 0, z: 0}
-  cardOffset: 0.3
+  cardOffset: -0.3
   offsetHorizontal: 0
   cardPrefab: {fileID: 1946358085}
   faceUp: 1
@@ -586,6 +583,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1137715561
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137715557}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 4, z: 1}
+  m_Center: {x: 0, y: -2, z: 0}
 --- !u!1 &1413907494
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,9 +646,10 @@ GameObject:
   - component: {fileID: 1467531177}
   - component: {fileID: 1467531176}
   - component: {fileID: 1467531175}
-  m_Layer: 0
+  - component: {fileID: 1467531178}
+  m_Layer: 8
   m_Name: PileStackRow
-  m_TagString: Untagged
+  m_TagString: PileStackRow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -655,7 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: 1, y: 2, z: 0}
+  startPosition: {x: 0, y: 2, z: 0}
   cardOffset: 1
   offsetHorizontal: 1
   cardPrefab: {fileID: 1946358085}
@@ -686,6 +696,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1467531178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1467531174}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 1, z: 1}
+  m_Center: {x: 2, y: 0, z: 0}
 --- !u!1001 &1946358084
 Prefab:
   m_ObjectHideFlags: 0
@@ -725,6 +747,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_TagString
+      value: Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
   m_IsPrefabParent: 0
@@ -739,23 +769,6 @@ BoxCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1946358085}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1.39, z: 0.2}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &2075683846 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a,
-    type: 2}
-  m_PrefabInternal: {fileID: 300979017}
---- !u!65 &2075683847
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2075683846}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1

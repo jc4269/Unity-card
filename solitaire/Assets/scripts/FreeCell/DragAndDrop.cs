@@ -16,11 +16,14 @@ public class DragAndDrop : MonoBehaviour {
 
 	public bool draggingMode = false;
 
+	CardStackView cardStackViewOfCardBeingMoved;
+
 	// Use this for initialization
 	void Start () {
 		//mcCamera = maincamera.GetComponent<Camera> ();
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -37,6 +40,8 @@ public class DragAndDrop : MonoBehaviour {
 			//hit = raycastFirstHitWithLayerMask(ray, layerMask);
 			if (Physics.Raycast(ray,out hit,Mathf.Infinity,LayerMask.GetMask("Card"))) {
 				gameobjectToDrag = hit.collider.gameObject;
+				cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModel> ().zoneIn.GetComponent<CardStackView>();
+				Debug.Log ("cardStackViewOfCardBeingMoved="+cardStackViewOfCardBeingMoved);
 				GOCenter = gameobjectToDrag.transform.position;
 				touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				offset = touchPosition - GOCenter;
@@ -57,16 +62,16 @@ public class DragAndDrop : MonoBehaviour {
 		}
 		if (Input.GetMouseButtonUp (0)) {
 			draggingMode = false;
-			if(gameobjectToDrag){
+			if(gameobjectToDrag != null){
 				//hit test to see which column or row its over.
 				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 				//LayerMask layerMask;
 				//layerMask = 1 << LayerMask.NameToLayer ("CardStack"); // only check for collisions with cards
 				//hit = raycastFirstHitWithLayerMask(ray, layerMask);
 				//Debug.Log("CardStackLayerNumber:"+LayerMask.GetMask("CardStack"));
-				if (Physics.Raycast(ray,out hit,Mathf.Infinity,LayerMask.GetMask("CardStack"))) {
-					Debug.Log ("stackname:"+hit.collider.gameObject.name);
-					Debug.Log ("stacktag:"+hit.collider.gameObject.tag);
+				if (Physics.Raycast (ray, out hit, Mathf.Infinity, LayerMask.GetMask ("CardStack"))) {
+					Debug.Log ("stackname:" + hit.collider.gameObject.name);
+					Debug.Log ("stacktag:" + hit.collider.gameObject.tag);
 					GameObject cardStackHit = hit.collider.gameObject;
 					CardStackView cardStackHitCardStackView = cardStackHit.GetComponent<CardStackView> ();
 					CardModel cm = gameobjectToDrag.GetComponent<CardModel> ();
@@ -84,14 +89,13 @@ public class DragAndDrop : MonoBehaviour {
 						//snap back to column
 						cmzoneIn.GetComponent<CardStackView> ().updateCardViewStackFetchedCardsVisually ();
 					}
+				} else {
+					//Debug.Log ("cardStackViewOfCardBeingMoved.size"+ cardStackViewOfCardBeingMoved.getFetchedCardsSize ());
+					cardStackViewOfCardBeingMoved.updateCardViewStackFetchedCardsVisually ();
 				}
 			}
-
-			//TODO: hit test to see which column or row its over.
-			//		if column card is from, just snap it back
-			//		Then pass to function to see if valid placement.
-			//		If valid, add card into column/row
-			//		If false, add back to column card is from.
+			gameobjectToDrag = null;
+			cardStackViewOfCardBeingMoved = null;
 		}
 	}
 		

@@ -17,20 +17,28 @@ public class FreeCellGameController : MonoBehaviour {
 		boardSetup ();
 
 		CardStack tempCS;
+
+		//48 cards dealt over 8 columns
 		for (int i = 0; i < 8; i++) {
 			tempCS = columns [i].GetComponent<CardStack> ();
-			for (int j = 0; j < 2; j++) {
+			for (int j = 0; j < 6; j++) {
 				tempCS.push (deck.pop ());
 			}
 		}
-		tempCS = freeCardRow.GetComponent<CardStack> ();
-		for (int j = 0; j < 2; j++) {
+
+		//remaining 4 go into the first 4 columns, one each.
+		for (int i = 0; i < 4; i++) {
+			tempCS = columns [i].GetComponent<CardStack> ();
 			tempCS.push (deck.pop ());
 		}
-		tempCS = pileStackRow.GetComponent<CardStack> ();
-		for (int j = 0; j < 2; j++) {
-			tempCS.push (deck.pop ());
-		}
+//		tempCS = freeCardRow.GetComponent<CardStack> ();
+//		for (int j = 0; j < 2; j++) {
+//			tempCS.push (deck.pop ());
+//		}
+//		tempCS = pileStackRow.GetComponent<CardStack> ();
+//		for (int j = 0; j < 2; j++) {
+//			tempCS.push (deck.pop ());
+//		}
 
 	}
 

@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/scripts/FreeCell/FreeCellGameController.cs">
     <Files>
-      <File FileName="Assets/scripts/FreeCell/DragAndDrop.cs" Line="78" Column="97" />
-      <File FileName="Assets/scripts/FreeCell/FreeCellGameController.cs" Line="69" Column="32" />
-      <File FileName="Assets/scripts/CardStackView.cs" Line="152" Column="12" />
+      <File FileName="Assets/scripts/FreeCell/DragAndDrop.cs" Line="90" Column="51" />
+      <File FileName="Assets/scripts/FreeCell/FreeCellGameController.cs" Line="27" Column="4" />
+      <File FileName="Assets/scripts/CardStackView.cs" Line="5" Column="38" />
       <File FileName="Assets/scripts/CardStack.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/FreeCell/DebugZone.cs" Line="1" Column="1" />
       <File FileName="Assets/scripts/CardModel.cs" Line="1" Column="1" />

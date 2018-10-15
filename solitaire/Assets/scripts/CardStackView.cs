@@ -6,7 +6,7 @@ using UnityEngine;
 public class CardStackView : MonoBehaviour 
 {
 	CardStack cardStack;
-	Dictionary<int, CardView> fetchedCards;
+	public Dictionary<int, CardView> fetchedCards;
 	int lastCount;
 
 	public Vector3 startPosition;

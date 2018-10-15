@@ -85,6 +85,9 @@ public class DragAndDrop : MonoBehaviour {
 						cardStackHitCardStackView.addCardToFetchedWithIndexAndCard (cm.cardIndex, gameobjectToDrag);
 						cmzoneInCardStackView.updateCardViewStackFetchedCardsVisually ();
 						cardStackHitCardStackView.updateCardViewStackFetchedCardsVisually ();
+
+						//check win condition after every valid action.
+						Debug.Log("win="+freeCellGC.checkWinGame());
 					} else {
 						//snap back to column
 						cmzoneIn.GetComponent<CardStackView> ().updateCardViewStackFetchedCardsVisually ();
@@ -96,6 +99,8 @@ public class DragAndDrop : MonoBehaviour {
 			}
 			gameobjectToDrag = null;
 			cardStackViewOfCardBeingMoved = null;
+
+
 		}
 	}
 		

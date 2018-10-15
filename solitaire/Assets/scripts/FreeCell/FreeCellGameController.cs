@@ -162,4 +162,47 @@ public class FreeCellGameController : MonoBehaviour {
 
 		return false;
 	}
+
+	public bool checkWinGame (){
+		//Check each such that the ranks of each card are are in decending order K to A. (if not then return false)
+		//		This is the complicated check. simple check is for all cards to be in the pile area. but that means alot more time involved for players 
+		//		and I like the way windows freegame does things.
+		// freestack area is fine, they dont need to be counted.
+		// pile stack area is ok because they can only be in sorted order.
+
+		int lastEntryIndex = -1;
+		CardStackView colCardStackView;
+//		int lastEntryIndex = -1;
+//		int entryIndex = -1;
+//		int lastEntryRank = -1;
+//		int lastEntrySuit = -1;
+//		int entryRank = -1;
+//		int entrySuit = -1;
+		foreach (GameObject col in columns) {
+			lastEntryIndex = -1;
+			colCardStackView = col.GetComponent<CardStackView>();
+			//if only 0 or 1 cards in column, it is valid to win game condition so its fine to continue on. 
+			foreach(int entryIndex in colCardStackView.fetchedCards.Keys){
+				
+				if (lastEntryIndex == -1) { //first card in column
+					lastEntryIndex = entryIndex;
+					continue;
+				}
+
+
+//				lastEntryRank = getCardRankFromIndex (lastEntryIndex);
+//				lastEntrySuit = getCardSuitFromIndex(lastEntryIndex);
+//				entryRank = getCardRankFromIndex(entryIndex);
+//				entrySuit = getCardSuitFromIndex(entryIndex);
+
+				if (getCardRankFromIndex(lastEntryIndex) < getCardRankFromIndex(entryIndex)) { // if lastEntry is not higher than current entry, then not a valid win condition so can cancel search.
+					return false;
+				}
+
+
+				lastEntryIndex = entryIndex;
+			}
+		}
+		return true; // after getting through the column checks, if everything is ranked in decending order per column, then its a win.
+	}
 }

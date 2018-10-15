@@ -83,7 +83,7 @@ public class FreeCellGameController : MonoBehaviour {
 	//2 - clubs
 	//3 - spades
 	int getCardSuitFromIndex (int cardIndex){
-		return cardIndex / 4; // due to interger division, decimals will get trunicated resulting in 0-3 as return.
+		return cardIndex / 13; // due to interger division, decimals will get trunicated resulting in 0-3 as return.
 	}
 
 	int getCardRankFromIndex (int cardIndex){
@@ -98,9 +98,9 @@ public class FreeCellGameController : MonoBehaviour {
 		Debug.Log ("zone.tag ="+ zone.tag);
 		//if zone is freecardrow
 		if(zone.tag == "FreeCardRow"){
-			Debug.Log ("dorpped on FreeCardRow");
+			//Debug.Log ("dorpped on FreeCardRow");
 			//if freecardrow stack size < 4, then can add card.
-			Debug.Log("zone.GetComponent<CardStackView> ().getFetchedCardsSize () = "+zone.GetComponent<CardStackView> ().getFetchedCardsSize ());
+			//Debug.Log("zone.GetComponent<CardStackView> ().getFetchedCardsSize () = "+zone.GetComponent<CardStackView> ().getFetchedCardsSize ());
 			if (zone.GetComponent<CardStackView> ().getFetchedCardsSize () < 4) {
 				return true;
 			}
@@ -127,7 +127,10 @@ public class FreeCellGameController : MonoBehaviour {
 		//if zone is column
 		if(zone.tag == "Column"){
 			Debug.Log ("dorpped on Column");
-
+			Debug.Log ("cardSuit="+cardSuit);
+			Debug.Log ("cardRank="+cardRank);
+			Debug.Log ("zoneLastCardSuit="+zoneLastCardSuit);
+			Debug.Log ("zoneLastCardRank="+zoneLastCardRank);
 			// if no cards on column, so add card - > value.
 			if(zoneLastCardIndex == -1){ 
 				return true;

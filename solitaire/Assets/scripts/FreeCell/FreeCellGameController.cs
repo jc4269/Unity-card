@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FreeCellGameController : MonoBehaviour {
 
@@ -10,6 +11,9 @@ public class FreeCellGameController : MonoBehaviour {
 	public GameObject column;
 	public GameObject pileStackRow;
 	public GameObject freeCardRow;
+
+	public Text feedBackText;
+
 	public List<GameObject> columns;
 
 	// Use this for initialization
@@ -288,47 +292,41 @@ public class FreeCellGameController : MonoBehaviour {
 					cardStackHitCardStackView.addCardToFetchedWithIndexAndCard (cm.cardIndex, gcDragged);
 
 					//update cardStack that Card is going into, the hit stack
-					Debug.Log("update card stack for card going into cardStackHit.tag="+cardStackHit.tag);
 					if (cardStackHit.tag == "PileStackRow") {
-						Debug.Log ("card going to -> checkIfValidDrop==true and tag==PileStackRow");
 						updatePileStackView (cardStackHitCardStackView);
 					} else {
-						Debug.Log ("card going to -> checkIfValidDrop==true and tag!=PileStackRow");
 						cardStackHitCardStackView.updateCardViewStackFetchedCardsVisually ();
 					}
 
 					//update cardStack that Card coming from, last zone card was in.
-					Debug.Log("update card stack for card coming out of cmzoneIn.tag="+cmzoneIn.tag);
 					if (cmzoneIn.tag == "PileStackRow") {
-						Debug.Log ("card coming from -> checkIfValidDrop==true and tag==PileStackRow");
 						updatePileStackView (cmzoneInCardStackView);
 					} else {
-						Debug.Log ("card coming from -> checkIfValidDrop==true and tag!=PileStackRow");
 						cmzoneInCardStackView.updateCardViewStackFetchedCardsVisually ();
 					}
 
 
 					//check win condition after every valid action.
-					Debug.Log("win="+checkWinGame());
+
+					bool didWinGame = checkWinGame ();
+					Debug.Log("win="+didWinGame);
+					if (didWinGame) {
+						feedBackText.text = "YOU WON!!!   Play Again?";
+					}
+
 				} else {
 					//snap back to card stack if not valid
-					Debug.Log("snap back to cmzoneIn.tag="+cmzoneIn.tag);
 					if (cmzoneIn.tag == "PileStackRow") {
-						Debug.Log ("snap back -> checkIfValidDrop==false and tag==PileStackRow");
 						updatePileStackView (cmzoneInCardStackView);
 					} else {
-						Debug.Log ("snap back -> checkIfValidDrop==false and tag!=PileStackRow");
 						cmzoneIn.GetComponent<CardStackView> ().updateCardViewStackFetchedCardsVisually ();
 					}
 				}
 			} else {
 				//didn't drop onto stack, so snap back
-				Debug.Log("snap back to for no card stack hit cardStackViewOfCardBeingMoved.gameObject.tag="+cardStackViewOfCardBeingMoved.gameObject.tag);
 				if (cardStackViewOfCardBeingMoved.gameObject.tag == "PileStackRow") {
-					Debug.Log ("raycast not hit stack so snap back -> tag==PileStackRow");
 					updatePileStackView (cardStackViewOfCardBeingMoved);
 				} else {
-					Debug.Log ("raycast not hit stack so snap back -> tag!=PileStackRow");
 					cardStackViewOfCardBeingMoved.updateCardViewStackFetchedCardsVisually ();
 				}
 			}

@@ -134,11 +134,11 @@ public class FreeCellGameController : MonoBehaviour {
 		}
 		//if zone is column
 		if(zone.tag == "Column"){
-			Debug.Log ("dorpped on Column");
-			Debug.Log ("cardSuit="+cardSuit);
-			Debug.Log ("cardRank="+cardRank);
-			Debug.Log ("zoneLastCardSuit="+zoneLastCardSuit);
-			Debug.Log ("zoneLastCardRank="+zoneLastCardRank);
+//			Debug.Log ("dorpped on Column");
+//			Debug.Log ("cardSuit="+cardSuit);
+//			Debug.Log ("cardRank="+cardRank);
+//			Debug.Log ("zoneLastCardSuit="+zoneLastCardSuit);
+//			Debug.Log ("zoneLastCardRank="+zoneLastCardRank);
 			// if no cards on column, so add card - > value.
 			if(zoneLastCardIndex == -1){ 
 				return true;
@@ -156,11 +156,183 @@ public class FreeCellGameController : MonoBehaviour {
 		//if zone is pilestackrow
 		if (zone.tag == "PileStackRow") {
 			Debug.Log ("dorpped on PileStackRow");
+
+			int[] piles = suitPileStackVisibleView (lastZoneCardStackView);
 			//if card is 1 rank higher than card in its suit pile. (no cards means pile needs an ace)
-			return true;
+			// ace case (lowest card): since empty is -1, +1 = 0 therefore ace handled
+			// king case (highest card): since only one deck and only one copy of each card, there shouldn't be anything higher so should be handled.
+			if(piles[cardSuit]+1 == cardRank){
+				return true;
+				//lastZoneCardStackView.addCardToFetchedWithIndexAndCard (cardIndex, c);
+			}
+			//update pile view
+			//updatePileStackView(lastZoneCardStackView);
+			//return true;
 		}
 
 		return false;
+	}
+
+	//custom update function for specific implementation pilestackview (a cardstack/cardstackview object)
+	void updatePileStackView(CardStackView csv){
+		int i = 0;
+		GameObject c = null;
+		SpriteRenderer csr;
+		Vector3 temp;
+		float co;
+		CardStackView pileStackRowCSV;
+		// stores the entries at the top of each suit pile (hearts=0, diamonds=1, clubs=2, spades=3)
+		List<KeyValuePair<int, CardView>> suitPile = new List<KeyValuePair<int, CardView>>();
+		for(int j = 0; j < 4; j++){
+			suitPile.Add(new KeyValuePair<int, CardView>(-1, null));
+		}
+//		suitPile.Add(null);
+//		suitPile.Add(null);
+//		suitPile.Add(null);
+
+		int entryCardIndex;
+		int entryCardSuit;
+		int entryCardRank;
+		int suitPileRank;
+		foreach(KeyValuePair<int, CardView> entry in csv.fetchedCards){
+			c = entry.Value.card;
+			c.GetComponent<BoxCollider> ().enabled = false; // set all cards to disabled, will set top of piles back after
+			entryCardIndex = entry.Key;
+			entryCardSuit = getCardSuitFromIndex(entryCardIndex);
+			entryCardRank = getCardRankFromIndex (entryCardIndex);
+			Debug.Log("value of suitpile[entrycardindex]="+suitPile [entryCardSuit].Key);
+			Debug.Log("entryCardSuit="+entryCardSuit+", entryCardRank="+entryCardRank);
+			if (suitPile [entryCardSuit].Key == -1) { // empty
+				suitPile [entryCardSuit] = entry;
+			} else {
+				suitPileRank = getCardRankFromIndex(suitPile[entryCardSuit].Key);
+				Debug.Log("suitCardRank="+suitPileRank);
+				//if card of same suit is higher than previous recorded, update suitpile column with current card entry.
+				if (suitPileRank < entryCardRank) {
+					suitPile [entryCardSuit] = entry;
+				}
+			}
+
+
+
+
+
+			csr = c.GetComponent<SpriteRenderer> ();
+			//Vector3 temp = c.transform.position;
+			co = 1.1f * entryCardSuit;
+
+			pileStackRowCSV = pileStackRow.GetComponent<CardStackView> ();
+			temp = pileStackRowCSV.startPosition + pileStackRowCSV.offsetPositionWithDirection(co);
+
+			c.transform.position = temp;
+			csr.sortingOrder = entryCardRank;
+
+			i++;
+		}
+
+
+		//set cardstack object collider size to encompass all cards.
+		//TODO:see if this dynamicism is still needed?
+
+		//set pile top cards to enabled.
+		for(int j = 0; j < 4; j++){
+			Debug.Log ("j="+j+", rank="+getCardRankFromIndex(suitPile [j].Key));
+			if (suitPile [j].Key != -1) {
+				suitPile [j].Value.card.GetComponent<BoxCollider> ().enabled = true;
+			}
+		}
+	}
+
+	//return an array of four ints representing the the suit piles with highest rank card on the top of the pile (hearts=0, diamonds=1, clubs=2, spades=3)
+	int[] suitPileStackVisibleView(CardStackView csv){
+		int[] piles = new int[4];
+		for (int i = 0; i < 4; i++) {
+			piles [i] = -1; //-1 means there is nothing in the corresponding suit pile
+		}
+		foreach(KeyValuePair<int, CardView> entry in csv.fetchedCards){
+			int cardIndex = entry.Key;
+			int cardSuit = getCardSuitFromIndex (cardIndex);
+			int cardRank = getCardRankFromIndex (cardIndex);
+			//looking for highest rank card for each suit.
+			if (piles [cardSuit] < cardRank) {
+				piles [cardSuit] = cardRank; 
+			}
+		}
+
+		return piles;
+	}
+
+	public void onMouseUpGameLogic(GameObject gcDragged, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved){
+		if(gcDragged != null){
+			//hit test to see which column or row its over.
+			Ray ray = Camera.main.ScreenPointToRay (mousePosition);
+			RaycastHit hit;
+			//LayerMask layerMask;
+			//layerMask = 1 << LayerMask.NameToLayer ("CardStack"); // only check for collisions with cards
+			//hit = raycastFirstHitWithLayerMask(ray, layerMask);
+			//Debug.Log("CardStackLayerNumber:"+LayerMask.GetMask("CardStack"));
+			if (Physics.Raycast (ray, out hit, Mathf.Infinity, LayerMask.GetMask ("CardStack"))) {
+				//Debug.Log ("stackname:" + hit.collider.gameObject.name);
+				//Debug.Log ("stacktag:" + hit.collider.gameObject.tag);
+				GameObject cardStackHit = hit.collider.gameObject;
+				CardStackView cardStackHitCardStackView = cardStackHit.GetComponent<CardStackView> ();
+				CardModel cm = gcDragged.GetComponent<CardModel> ();
+				//Debug ("card suit="+getCardSuitFromIndex( cm.cardIndex) + ", card rank=" + getCardRankFromIndex( cm.cardIndex));
+				GameObject cmzoneIn = cm.zoneIn;
+				CardStackView cmzoneInCardStackView = cmzoneIn.GetComponent<CardStackView> (); 
+				//Debug.Log("getmouseup.name="+cmzoneIn);
+				//FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
+				if (checkIfValidDrop (cardStackHit, gcDragged)) {
+					cmzoneInCardStackView.removeCardFromFetchedWithIndex (cm.cardIndex);
+					cm.zoneIn = cardStackHit; //updating to cards new zone
+					cardStackHitCardStackView.addCardToFetchedWithIndexAndCard (cm.cardIndex, gcDragged);
+
+					//update cardStack that Card is going into, the hit stack
+					Debug.Log("update card stack for card going into cardStackHit.tag="+cardStackHit.tag);
+					if (cardStackHit.tag == "PileStackRow") {
+						Debug.Log ("card going to -> checkIfValidDrop==true and tag==PileStackRow");
+						updatePileStackView (cardStackHitCardStackView);
+					} else {
+						Debug.Log ("card going to -> checkIfValidDrop==true and tag!=PileStackRow");
+						cardStackHitCardStackView.updateCardViewStackFetchedCardsVisually ();
+					}
+
+					//update cardStack that Card coming from, last zone card was in.
+					Debug.Log("update card stack for card coming out of cmzoneIn.tag="+cmzoneIn.tag);
+					if (cmzoneIn.tag == "PileStackRow") {
+						Debug.Log ("card coming from -> checkIfValidDrop==true and tag==PileStackRow");
+						updatePileStackView (cmzoneInCardStackView);
+					} else {
+						Debug.Log ("card coming from -> checkIfValidDrop==true and tag!=PileStackRow");
+						cmzoneInCardStackView.updateCardViewStackFetchedCardsVisually ();
+					}
+
+
+					//check win condition after every valid action.
+					Debug.Log("win="+checkWinGame());
+				} else {
+					//snap back to card stack if not valid
+					Debug.Log("snap back to cmzoneIn.tag="+cmzoneIn.tag);
+					if (cmzoneIn.tag == "PileStackRow") {
+						Debug.Log ("snap back -> checkIfValidDrop==false and tag==PileStackRow");
+						updatePileStackView (cmzoneInCardStackView);
+					} else {
+						Debug.Log ("snap back -> checkIfValidDrop==false and tag!=PileStackRow");
+						cmzoneIn.GetComponent<CardStackView> ().updateCardViewStackFetchedCardsVisually ();
+					}
+				}
+			} else {
+				//didn't drop onto stack, so snap back
+				Debug.Log("snap back to for no card stack hit cardStackViewOfCardBeingMoved.gameObject.tag="+cardStackViewOfCardBeingMoved.gameObject.tag);
+				if (cardStackViewOfCardBeingMoved.gameObject.tag == "PileStackRow") {
+					Debug.Log ("raycast not hit stack so snap back -> tag==PileStackRow");
+					updatePileStackView (cardStackViewOfCardBeingMoved);
+				} else {
+					Debug.Log ("raycast not hit stack so snap back -> tag!=PileStackRow");
+					cardStackViewOfCardBeingMoved.updateCardViewStackFetchedCardsVisually ();
+				}
+			}
+		}
 	}
 
 	public bool checkWinGame (){

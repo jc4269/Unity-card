@@ -132,7 +132,7 @@ public class CardStackView : MonoBehaviour
 
 	//private helper function since this code is used twice in script.
 	//offsetHorizontal is needed but this function has access and is fine since private.
-	Vector3 offsetPositionWithDirection (float co){
+	public Vector3 offsetPositionWithDirection (float co){
 		Vector3 offset;
 		if (offsetHorizontal) {
 			offset = (new Vector3 (co, 0f, 0f));

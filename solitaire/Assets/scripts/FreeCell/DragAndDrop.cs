@@ -62,44 +62,10 @@ public class DragAndDrop : MonoBehaviour {
 		}
 		if (Input.GetMouseButtonUp (0)) {
 			draggingMode = false;
-			if(gameobjectToDrag != null){
-				//hit test to see which column or row its over.
-				Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-				//LayerMask layerMask;
-				//layerMask = 1 << LayerMask.NameToLayer ("CardStack"); // only check for collisions with cards
-				//hit = raycastFirstHitWithLayerMask(ray, layerMask);
-				//Debug.Log("CardStackLayerNumber:"+LayerMask.GetMask("CardStack"));
-				if (Physics.Raycast (ray, out hit, Mathf.Infinity, LayerMask.GetMask ("CardStack"))) {
-					Debug.Log ("stackname:" + hit.collider.gameObject.name);
-					Debug.Log ("stacktag:" + hit.collider.gameObject.tag);
-					GameObject cardStackHit = hit.collider.gameObject;
-					CardStackView cardStackHitCardStackView = cardStackHit.GetComponent<CardStackView> ();
-					CardModel cm = gameobjectToDrag.GetComponent<CardModel> ();
-					GameObject cmzoneIn = cm.zoneIn;
-					CardStackView cmzoneInCardStackView = cmzoneIn.GetComponent<CardStackView> (); 
-					//Debug.Log("getmouseup.name="+cmzoneIn);
-					FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
-					if (freeCellGC.checkIfValidDrop (cardStackHit, gameobjectToDrag)) {
-						cmzoneInCardStackView.removeCardFromFetchedWithIndex (cm.cardIndex);
-						cm.zoneIn = cardStackHit;
-						cardStackHitCardStackView.addCardToFetchedWithIndexAndCard (cm.cardIndex, gameobjectToDrag);
-						cmzoneInCardStackView.updateCardViewStackFetchedCardsVisually ();
-						cardStackHitCardStackView.updateCardViewStackFetchedCardsVisually ();
-
-						//check win condition after every valid action.
-						Debug.Log("win="+freeCellGC.checkWinGame());
-					} else {
-						//snap back to column
-						cmzoneIn.GetComponent<CardStackView> ().updateCardViewStackFetchedCardsVisually ();
-					}
-				} else {
-					//Debug.Log ("cardStackViewOfCardBeingMoved.size"+ cardStackViewOfCardBeingMoved.getFetchedCardsSize ());
-					cardStackViewOfCardBeingMoved.updateCardViewStackFetchedCardsVisually ();
-				}
-			}
+			FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
+			freeCellGC.onMouseUpGameLogic (gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
 			gameobjectToDrag = null;
 			cardStackViewOfCardBeingMoved = null;
-
 
 		}
 	}

@@ -21,11 +21,14 @@ public class FreeCellGameController : MonoBehaviour {
 		Debug.Log ("Play Again Pressed");
 		//disable play again button
 //		playAgainButton.interactable = false;
-//		//reset hands and deck
-//		player.GetComponent<CardStackView>().clear();
-//		dealer.GetComponent<CardStackView>().clear();
-//		deck.GetComponent<CardStackView>().clear();
-//		deck.CreateDeck ();
+//		//reset board
+		pileStackRow.GetComponent<CardStackView>().clear();
+		freeCardRow.GetComponent<CardStackView>().clear();
+		for (int i = 0; i < 8; i++) {
+			columns [i].GetComponent<CardStackView> ().clear();
+		}
+
+		gameSetup ();
 //		//deck.GetComponent<CardStackView> ().showCards ();
 //		dealersFirstCard = -1;
 //
@@ -43,6 +46,11 @@ public class FreeCellGameController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		boardSetup ();
+		gameSetup ();
+	}
+
+	void gameSetup(){
+		deck.CreateDeck ();
 
 		CardStack tempCS;
 
@@ -59,19 +67,10 @@ public class FreeCellGameController : MonoBehaviour {
 			tempCS = columns [i].GetComponent<CardStack> ();
 			tempCS.push (deck.pop ());
 		}
-//		tempCS = freeCardRow.GetComponent<CardStack> ();
-//		for (int j = 0; j < 2; j++) {
-//			tempCS.push (deck.pop ());
-//		}
-//		tempCS = pileStackRow.GetComponent<CardStack> ();
-//		for (int j = 0; j < 2; j++) {
-//			tempCS.push (deck.pop ());
-//		}
-
 	}
 
 	void boardSetup(){
-		deck.CreateDeck ();
+		
 
 		pileStackRow.transform.position = pileStackRow.GetComponent<CardStackView> ().startPosition;
 		freeCardRow.transform.position = freeCardRow.GetComponent<CardStackView> ().startPosition;

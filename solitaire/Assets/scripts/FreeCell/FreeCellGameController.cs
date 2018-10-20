@@ -12,9 +12,33 @@ public class FreeCellGameController : MonoBehaviour {
 	public GameObject pileStackRow;
 	public GameObject freeCardRow;
 
+	public Button playAgainButton;
 	public Text feedBackText;
 
 	public List<GameObject> columns;
+
+	public void playAgain(){
+		Debug.Log ("Play Again Pressed");
+		//disable play again button
+//		playAgainButton.interactable = false;
+//		//reset hands and deck
+//		player.GetComponent<CardStackView>().clear();
+//		dealer.GetComponent<CardStackView>().clear();
+//		deck.GetComponent<CardStackView>().clear();
+//		deck.CreateDeck ();
+//		//deck.GetComponent<CardStackView> ().showCards ();
+//		dealersFirstCard = -1;
+//
+//		//enable gameplay buttons
+//		hitButton.interactable = true;
+//		standButton.interactable = true;
+//
+//
+//		//reset feedback text
+//		feedBackText.text = "Playing again!";
+//
+//		startGame ();
+	}
 
 	// Use this for initialization
 	void Start () {

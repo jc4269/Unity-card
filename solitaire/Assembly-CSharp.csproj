@@ -64,6 +64,9 @@
      <Compile Include="Assets\scripts\FreeCell\DebugZone.cs" />
      <Compile Include="Assets\scripts\FreeCell\DragAndDrop.cs" />
      <Compile Include="Assets\scripts\FreeCell\FreeCellGameController.cs" />
+     <Compile Include="Assets\scripts\LoadSceneOnClick.cs" />
+     <Compile Include="Assets\scripts\QuitOnClick.cs" />
+     <Compile Include="Assets\scripts\SelectOnInput.cs" />
  <Reference Include="Facebook.Unity.Settings">
  <HintPath>/Users/jaicarlton/Unity-card/solitaire/Library/FacebookSDK/Facebook.Unity.Settings.dll</HintPath>
  </Reference>

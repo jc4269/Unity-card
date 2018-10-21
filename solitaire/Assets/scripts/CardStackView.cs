@@ -153,10 +153,12 @@ public class CardStackView : MonoBehaviour
 		float co;
 		foreach(CardView cv in fetchedCards.Values){
 			c = cv.card;
-			if (isLastCardClickableOnly) {
-				c.GetComponent<BoxCollider> ().enabled = false;
-			} else {
-				c.GetComponent<BoxCollider> ().enabled = true;
+			if (c.GetComponent<BoxCollider>() != null) {
+				if (isLastCardClickableOnly) {
+					c.GetComponent<BoxCollider> ().enabled = false;
+				} else {
+					c.GetComponent<BoxCollider> ().enabled = true;
+				}
 			}
 			csr = c.GetComponent<SpriteRenderer> ();
 			//Vector3 temp = c.transform.position;
@@ -179,7 +181,9 @@ public class CardStackView : MonoBehaviour
 
 		//last object processed now gets box colider enabled. Saves using if statement in loop above for now.
 		if (c) {
-			c.GetComponent<BoxCollider> ().enabled = true;
+			if (c.GetComponent<BoxCollider> () != null) {
+				c.GetComponent<BoxCollider> ().enabled = true;
+			}
 		}
 	}
 

@@ -1,7 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solitaire", "Assembly-CSharp.csproj", "{9B2116AB-F83D-A2EA-FA91-FEA40CE36696}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio for Mac
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "solitaire", "solitaire.csproj", "{D5EEBD5D-5D3D-B8BA-EE3A-FE09F8DAF334}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,15 +9,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9B2116AB-F83D-A2EA-FA91-FEA40CE36696}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B2116AB-F83D-A2EA-FA91-FEA40CE36696}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B2116AB-F83D-A2EA-FA91-FEA40CE36696}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B2116AB-F83D-A2EA-FA91-FEA40CE36696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5EEBD5D-5D3D-B8BA-EE3A-FE09F8DAF334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5EEBD5D-5D3D-B8BA-EE3A-FE09F8DAF334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5EEBD5D-5D3D-B8BA-EE3A-FE09F8DAF334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5EEBD5D-5D3D-B8BA-EE3A-FE09F8DAF334}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Assembly-CSharp.csproj
 	EndGlobalSection
 EndGlobal

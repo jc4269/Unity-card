@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FreeCellGameController : MonoBehaviour {
@@ -17,18 +18,31 @@ public class FreeCellGameController : MonoBehaviour {
 
 	public List<GameObject> columns;
 
+    public void backToMenu(int menuIndex){
+        //clean up memory
+        resetBoard();
+
+        //then load menu
+
+        SceneManager.LoadScene(menuIndex);
+    }
+
+    void resetBoard(){
+        pileStackRow.GetComponent<CardStackView>().clear();
+        freeCardRow.GetComponent<CardStackView>().clear();
+        for (int i = 0; i < 8; i++)
+        {
+            columns[i].GetComponent<CardStackView>().clear();
+        }
+    }
+
 	public void playAgain(){
 		Debug.Log ("Play Again Pressed");
-		//disable play again button
-//		playAgainButton.interactable = false;
-//		//reset board
-		pileStackRow.GetComponent<CardStackView>().clear();
-		freeCardRow.GetComponent<CardStackView>().clear();
-		for (int i = 0; i < 8; i++) {
-			columns [i].GetComponent<CardStackView> ().clear();
-		}
+        //disable play again button
+        //		playAgainButton.interactable = false;	//reset board
+        resetBoard();
 
-		gameSetup ();
+        gameSetup ();
 //		//deck.GetComponent<CardStackView> ().showCards ();
 //		dealersFirstCard = -1;
 //

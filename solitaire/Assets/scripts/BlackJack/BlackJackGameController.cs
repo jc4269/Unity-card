@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BlackJackGameController : MonoBehaviour 
@@ -16,7 +17,7 @@ public class BlackJackGameController : MonoBehaviour
 	public Button playAgainButton;
 
 	public Text feedBackText;
-	/***
+    /***
 	 * Deal 2 cards to each player and dealer.
 	 * 	Dealers cards have first face down and rest face up.
 	 * 	Players cards are all face up.
@@ -25,9 +26,18 @@ public class BlackJackGameController : MonoBehaviour
 	 * 
 	 */
 
-	#region Public methods
+    #region Public methods
 
-	public void hit(){
+    public void backToMenu(int menuIndex)
+    {
+        //clean up memory
+        resetBoard();
+
+        //then load menu
+        SceneManager.LoadScene(menuIndex);
+    }
+
+    public void hit(){
 		player.push(deck.pop());
 		//Debug.Log ("hand value = "+player.handValue ());
 		if (player.handValue () > 21) {
@@ -46,15 +56,14 @@ public class BlackJackGameController : MonoBehaviour
 		StartCoroutine(dealersTurn());
 		//TODO: ends players turn with current hand value and dealer turn to reveal cards and keep hitting till handvalue is 17 or more
 	}
-
+    
 	public void playAgain(){
 		//disable play again button
 		playAgainButton.interactable = false;
-		//reset hands and deck
-		player.GetComponent<CardStackView>().clear();
-		dealer.GetComponent<CardStackView>().clear();
-		deck.GetComponent<CardStackView>().clear();
-		deck.CreateDeck ();
+        //reset hands and deck
+        resetBoard();
+
+        deck.CreateDeck ();
 		//deck.GetComponent<CardStackView> ().showCards ();
 		dealersFirstCard = -1;
 
@@ -70,6 +79,12 @@ public class BlackJackGameController : MonoBehaviour
 	}
 
 	#endregion
+
+    void resetBoard(){
+        player.GetComponent<CardStackView>().clear();
+        dealer.GetComponent<CardStackView>().clear();
+        deck.GetComponent<CardStackView>().clear();
+    }
 
 	#region Unity messages
 

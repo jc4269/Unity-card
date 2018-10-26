@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BlackJackGameController : MonoBehaviour 
 {
 	int dealersFirstCard = -1;
+    int betAmountForCurrentHand;
 
 	public CardStack player;
 	public CardStack dealer;
@@ -17,6 +18,12 @@ public class BlackJackGameController : MonoBehaviour
 	public Button playAgainButton;
 
 	public Text feedBackText;
+    public Text moneyText;
+    public Text betText;
+    public int money;
+    public int betAmount;
+
+
     /***
 	 * Deal 2 cards to each player and dealer.
 	 * 	Dealers cards have first face down and rest face up.
@@ -89,14 +96,25 @@ public class BlackJackGameController : MonoBehaviour
 	#region Unity messages
 
 	void Start(){
-		startGame ();
+        //money will be persistant through games. TODO: Save value between games.
+        money = 500;
+        betAmount = 10;
+
+        updateBetText();
+        updateMoneyText();
+        startGame ();
 	}
 
 	#endregion
 
 	void startGame(){
-		//deal cards to player and dealer
-		for(int i = 0; i<2; i++){
+        //take bet amount
+        betAmountForCurrentHand = betAmount;
+        money -= betAmountForCurrentHand;
+
+        updateMoneyText();
+        //deal cards to player and dealer
+        for (int i = 0; i<2; i++){
 			player.push(deck.pop());
 			HitDealer (); 
 		}
@@ -135,23 +153,45 @@ public class BlackJackGameController : MonoBehaviour
 		Debug.Log ("playerHandValue = "+ playerHandValue + ", dealerHandValue = "+ dealerHandValue);
 		//determine who won and give feedback
 		if (playerHandValue > 21) { //player bust
-			feedBackText.text = loseStr;
-		} 
+            feedBackText.text = loseStr;
+            //lose: money already bet. no need to do anything
+
+        } 
 		else if (dealerHandValue > 21) { //dealer bust
 			feedBackText.text = winStr;
-		}
+            money += 2* betAmountForCurrentHand;
+        }
 		else if (dealerHandValue < playerHandValue) {
 			feedBackText.text = winStr;
-		}
+            money += 2* betAmountForCurrentHand;
+        }
 		else if (dealerHandValue == playerHandValue) {
 			feedBackText.text = drawStr;
-		}
+            money += betAmountForCurrentHand; // draw, get back bet amount. no winnings
+        }
 		else if (dealerHandValue > playerHandValue) {
 			feedBackText.text = loseStr;
-		}
-
-		//end of game, enable play again button
-		playAgainButton.interactable = true;
+            //lose: money already bet. no need to do anything
+        }
+        updateMoneyText();
+        //end of game, enable play again button
+        playAgainButton.interactable = true;
 	}
 
+    public void updateMoneyText(){
+        moneyText.text = "Money: " + money;
+    }
+    public void updateBetText()
+    {
+        betText.text = "Bet: " + betAmount;
+    }
+    public void updateBetAmount(int updateAmount){
+        betAmount += updateAmount;
+        updateBetText();
+    }
+
+    public void resetBetAmount(){
+        betAmount = 0;
+        updateBetText();
+    }
 }

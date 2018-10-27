@@ -16,14 +16,19 @@ public class FreeCellGameController : MonoBehaviour {
 	public Button playAgainButton;
 	public Text feedBackText;
 
-	public List<GameObject> columns;
+    public GameObject rowColBackground;
+    public GameObject pileRowBackground;
+    public GameObject freeCardBackground;
+
+    public List<GameObject> columns;
 
     public void backToMenu(int menuIndex){
         //clean up memory
         resetBoard();
 
-        //then load menu
+        //TODO: do i need to get rid of columns?
 
+        //then load menu
         SceneManager.LoadScene(menuIndex);
     }
 
@@ -59,7 +64,9 @@ public class FreeCellGameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		boardSetup ();
+
+
+        boardSetup ();
 		gameSetup ();
 	}
 
@@ -88,30 +95,42 @@ public class FreeCellGameController : MonoBehaviour {
 
 		pileStackRow.transform.position = pileStackRow.GetComponent<CardStackView> ().startPosition;
 		freeCardRow.transform.position = freeCardRow.GetComponent<CardStackView> ().startPosition;
+        pileRowBackground.transform.position = pileStackRow.GetComponent<CardStackView>().startPosition + new Vector3(2f, 0f, 0f);
+        freeCardBackground.transform.position = freeCardRow.GetComponent<CardStackView>().startPosition + new Vector3(2f, 0f, 0f);
 
-		GameObject c;
+        GameObject c;
+        GameObject rowColBackgroundTemp;
 		BoxCollider bc = column.GetComponent<BoxCollider> ();
 		Vector3 sizeTemp = bc.size;
 		sizeTemp.z = 0.2f;
 		bc.size = sizeTemp;
-		
 
-		CardStackView columnCVS = column.GetComponent<CardStackView> ();
+        Vector3 rowColScale = new Vector3(1, 4, 0);
+
+        CardStackView columnCVS = column.GetComponent<CardStackView> ();
 		Vector3 startPosition = columnCVS.startPosition;
 		column.transform.position = startPosition;
 		columns.Add (column);
-		//Debug.Log ("startPosition="+startPosition);
-		Vector3 temp;
+
+        rowColBackgroundTemp = (GameObject)Instantiate(rowColBackground);
+        rowColBackgroundTemp.transform.localScale = rowColScale;
+        Vector3 backgroundOffset = new Vector3(0f, -2f, 0f);
+        rowColBackgroundTemp.transform.position = startPosition + backgroundOffset;
+        //Debug.Log ("startPosition="+startPosition);
+        Vector3 temp;
 		float columnOffset = 1.0f;
 		float cs;
 		for(int i = 0; i < 7; i++){
 			c = (GameObject)Instantiate (column);
-			cs = columnOffset * (i+1);
+            rowColBackgroundTemp = (GameObject)Instantiate(rowColBackground);
+            rowColBackgroundTemp.transform.localScale = rowColScale;
+            cs = columnOffset * (i+1);
 			temp = startPosition + (new Vector3 (cs, 0f, 0f));
 			c.transform.position = temp;
-			//bc = c.GetComponent<BoxCollider> ();
-			//Debug.Log ("sizez="+bc.size.z);
-			CardStackView csv = c.GetComponent<CardStackView> ();
+            rowColBackgroundTemp.transform.position = temp + backgroundOffset;
+            //bc = c.GetComponent<BoxCollider> ();
+            //Debug.Log ("sizez="+bc.size.z);
+            CardStackView csv = c.GetComponent<CardStackView> ();
 			csv.cardOffset = -0.3f;
 			csv.cardPrefab = card;
 			csv.faceUp = true;
@@ -412,4 +431,5 @@ public class FreeCellGameController : MonoBehaviour {
 		}
 		return true; // after getting through the column checks, if everything is ranked in decending order per column, then its a win.
 	}
+
 }

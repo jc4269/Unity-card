@@ -244,7 +244,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 132499515}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.5200005, z: 0}
+  m_LocalPosition: {x: 0, y: 2.75, z: 0}
   m_LocalScale: {x: 0.025, y: 0.025, z: 0.025}
   m_Children: []
   m_Father: {fileID: 381217552}
@@ -252,7 +252,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 2.52}
+  m_AnchoredPosition: {x: 0, y: 2.75}
   m_SizeDelta: {x: 210.961, y: 28.564}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &132499517
@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -964,6 +964,11 @@ Prefab:
       propertyPath: reverseLayerOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
+        type: 2}
+      propertyPath: isLastCardClickableOnly
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
   m_IsPrefabParent: 0
@@ -1077,7 +1082,7 @@ MonoBehaviour:
   cardPrefab: {fileID: 1946358085}
   faceUp: 1
   reverseLayerOrder: 0
-  isLastCardClickableOnly: 1
+  isLastCardClickableOnly: 0
 --- !u!114 &1137715559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1608,6 +1613,10 @@ Prefab:
     - target: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4242631854498214, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}

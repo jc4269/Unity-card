@@ -146,15 +146,20 @@ public class FreeCellGameController : MonoBehaviour {
 		
 	}
 
+    public void printCardSuitRankFromIndex(int cardIndex){
+
+        Debug.Log("Card Index="+cardIndex+", Card Suit="+ getCardSuitFromIndex(cardIndex) +", Card Rank="+getCardRankFromIndex(cardIndex));
+
+    }
 	//0 - hearts
 	//1 - diamonds
 	//2 - clubs
 	//3 - spades
-	int getCardSuitFromIndex (int cardIndex){
+	public int getCardSuitFromIndex (int cardIndex){
 		return cardIndex / 13; // due to interger division, decimals will get trunicated resulting in 0-3 as return.
 	}
 
-	int getCardRankFromIndex (int cardIndex){
+	public int getCardRankFromIndex (int cardIndex){
 		return cardIndex % 13;
 
 	}

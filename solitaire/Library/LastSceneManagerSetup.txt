@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/mainmenu.unity
+- path: Assets/scenes/FreeCell.unity
   isLoaded: 1
   isActive: 1

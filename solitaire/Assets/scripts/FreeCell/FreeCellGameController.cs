@@ -21,6 +21,7 @@ public class FreeCellGameController : MonoBehaviour {
     public GameObject freeCardBackground;
 
     public List<GameObject> columns;
+    public List<GameObject> cardsToMoveAsColumn;
 
     public void backToMenu(int menuIndex){
         //clean up memory
@@ -327,8 +328,9 @@ public class FreeCellGameController : MonoBehaviour {
 		return piles;
 	}
 
-	public void onMouseUpGameLogic(GameObject gcDragged, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved){
-		if(gcDragged != null){
+	public void onMouseUpGameLogic(List<GameObject> gcDraggedList, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved){
+		if(gcDraggedList.Count > 0){
+            GameObject selectedCardDragged = gcDraggedList[0]; // first card in list is the base card of column being dragged.
 			//hit test to see which column or row its over.
 			Ray ray = Camera.main.ScreenPointToRay (mousePosition);
 			RaycastHit hit;
@@ -341,17 +343,21 @@ public class FreeCellGameController : MonoBehaviour {
 				//Debug.Log ("stacktag:" + hit.collider.gameObject.tag);
 				GameObject cardStackHit = hit.collider.gameObject;
 				CardStackView cardStackHitCardStackView = cardStackHit.GetComponent<CardStackView> ();
-				CardModel cm = gcDragged.GetComponent<CardModel> ();
+				CardModel cm = selectedCardDragged.GetComponent<CardModel> ();
 				//Debug ("card suit="+getCardSuitFromIndex( cm.cardIndex) + ", card rank=" + getCardRankFromIndex( cm.cardIndex));
 				GameObject cmzoneIn = cm.zoneIn;
 				CardStackView cmzoneInCardStackView = cmzoneIn.GetComponent<CardStackView> (); 
 				//Debug.Log("getmouseup.name="+cmzoneIn);
 				//FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
-				if (checkIfValidDrop (cardStackHit, gcDragged)) {
-					cmzoneInCardStackView.removeCardFromFetchedWithIndex (cm.cardIndex);
-					cm.zoneIn = cardStackHit; //updating to cards new zone
-					cardStackHitCardStackView.addCardToFetchedWithIndexAndCard (cm.cardIndex, gcDragged);
-
+				if (checkIfValidDrop (cardStackHit, selectedCardDragged)) {
+                    //valid so update all cards in column being dragged.
+                    for (int i = 0; i < gcDraggedList.Count; i++)
+                    {
+                        cm = gcDraggedList[i].GetComponent<CardModel>();
+                        cmzoneInCardStackView.removeCardFromFetchedWithIndex(cm.cardIndex);
+                        cm.zoneIn = cardStackHit; //updating to cards new zone
+                        cardStackHitCardStackView.addCardToFetchedWithIndexAndCard(cm.cardIndex, gcDraggedList[i]);
+                    }
 					//update cardStack that Card is going into, the hit stack
 					if (cardStackHit.tag == "PileStackRow") {
 						updatePileStackView (cardStackHitCardStackView);
@@ -490,7 +496,7 @@ public class FreeCellGameController : MonoBehaviour {
         return count;
     }
 
-    public bool onMouseDownisValidObject(GameObject gcClicked, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved)
+    public List<GameObject> onMouseDownObjectsToMove(GameObject gcClicked, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved)
     {
         //check if column
         if (cardStackViewOfCardBeingMoved.tag == "Column")
@@ -502,7 +508,10 @@ public class FreeCellGameController : MonoBehaviour {
                 Debug.Log("card till end is valid");
                 if(isEnoughFreeSpacesToMoveCardColumn(gcClicked)){
                     Debug.Log("ENOUGH FREE SPACE");
-                }else{
+                    //all good, create a list of cards to move in a column.
+                    cardsToMoveAsColumn = getCardsFromSelectedToEndOfColumn(gcClicked);
+                }
+                else{
                     Debug.Log("NOT ENOUGH FREE SPACE");
                 }
             }
@@ -511,7 +520,35 @@ public class FreeCellGameController : MonoBehaviour {
                 Debug.Log("NOT card till end is valid");
             }
         }
-        return true;
+        return cardsToMoveAsColumn;
+    }
+
+    private List<GameObject> getCardsFromSelectedToEndOfColumn(GameObject c){
+        CardStackView csvOfColumnCardIsIn = c.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
+        //go through fetched list to find where selected card is then do check from there
+        bool foundSelectedCard = false;
+        int selectedCardIndex = c.GetComponent<CardModel>().cardIndex;
+        List<GameObject> temp = new List<GameObject>();
+        foreach (KeyValuePair<int, CardView> entry in csvOfColumnCardIsIn.fetchedCards)
+        {
+            //find selected card
+            if (!foundSelectedCard)
+            {
+                if (entry.Key == selectedCardIndex)
+                {
+                    foundSelectedCard = true;
+                    temp.Add(entry.Value.card);
+                }
+            }
+            else
+            { // start checking for valid column to move all card down from selected card
+                temp.Add(entry.Value.card);
+            }
+
+
+        }
+
+        return temp;
     }
 
 	public bool checkWinGame (){

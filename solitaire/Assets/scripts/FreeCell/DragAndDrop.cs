@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour {
 	public GameObject gameobjectToDrag;
+    public List<GameObject> gameObjectsToDrag;
 	//public GameObject maincamera;
 	//Camera mcCamera;
 	public Vector3 GOCenter;
@@ -44,7 +45,8 @@ public class DragAndDrop : MonoBehaviour {
                 FreeCellGameController freeCellGC = GetComponent<FreeCellGameController>();
 
                 cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
-                if(freeCellGC.onMouseDownisValidObject(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved)){
+                gameObjectsToDrag = freeCellGC.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
+                if (gameObjectsToDrag.Count > 0){
                     Debug.Log("cardStackViewOfCardBeingMoved=" + cardStackViewOfCardBeingMoved);
                     //Debug.Log("printout of column");
                     //foreach (KeyValuePair<int, CardView> entry in cardStackViewOfCardBeingMoved.fetchedCards){
@@ -61,8 +63,12 @@ public class DragAndDrop : MonoBehaviour {
                     //FCGC.printCardSuitRankFromIndex(cardIndex);
                     //Debug.Log("sortingOrder = " + myRenderer.sortingOrder);
                     draggingMode = true;
-                    SpriteRenderer sr = gameobjectToDrag.GetComponent<SpriteRenderer>();
-                    sr.sortingOrder = 100;
+                    gameobjectToDrag = gameObjectsToDrag[0];
+                    for (int i = 0; i < gameObjectsToDrag.Count; i++)
+                    {
+                        SpriteRenderer sr = gameObjectsToDrag[i].GetComponent<SpriteRenderer>();
+                        sr.sortingOrder = 100 + i;
+                    }
                 }
                
             }
@@ -94,18 +100,24 @@ public class DragAndDrop : MonoBehaviour {
 		}
 		if (Input.GetMouseButton (0)) {
 			if (draggingMode) {
+
 				touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 				newGOCenter = touchPosition - offset;
-				gameobjectToDrag.transform.position = new Vector3 (newGOCenter.x, newGOCenter.y, GOCenter.z);
+				
+                for (int i = 0; i < gameObjectsToDrag.Count; i++)
+                {
+                    gameObjectsToDrag[i].transform.position = new Vector3(newGOCenter.x, newGOCenter.y - 0.3f*i, GOCenter.z);
+                }
 
-			}
+            }
 		}
 		if (Input.GetMouseButtonUp (0)) {
 			draggingMode = false;
 			FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
-			freeCellGC.onMouseUpGameLogic (gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
+            freeCellGC.onMouseUpGameLogic (gameObjectsToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
 			gameobjectToDrag = null;
 			cardStackViewOfCardBeingMoved = null;
+            gameObjectsToDrag.Clear();
 
 		}
 	}

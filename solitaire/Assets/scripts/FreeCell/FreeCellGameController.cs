@@ -394,6 +394,64 @@ public class FreeCellGameController : MonoBehaviour {
 		}
 	}
 
+    //check if card to pile end is valid to move as a column (descending rank and alternating card colour)
+    public bool isCardToColumnEndInValidOrder(GameObject card){
+        CardStackView csvOfColumnCardIsIn = card.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
+        //go through fetched list to find where selected card is then do check from there
+        bool foundSelectedCard = false;
+        int previousCardIndex = -1;
+        foreach (KeyValuePair<int, CardView> entry in csvOfColumnCardIsIn.fetchedCards){
+            //find selected card
+            if(!foundSelectedCard){
+                if(entry.Key == card.GetComponent<CardModel>().cardIndex){
+                    foundSelectedCard = true;
+                }
+            }
+            else{ // start checking for valid column to move all card down from selected card
+                if(!isCardValidToBeOnTopOfAnotherCardInColumn(previousCardIndex, entry.Key)){
+                    return false;
+                }
+            }
+            previousCardIndex = entry.Key;
+
+        }
+        return true;
+    }
+
+    //assumes there is a previous card to check. still need to check if previous card is there.
+    bool isCardValidToBeOnTopOfAnotherCardInColumn(int previousCardIndex, int currentCardIndex){
+        //if current card rank is one less than previous card and suit of current card is opposite colour to previous card,
+        int currentCardRank = getCardRankFromIndex(currentCardIndex);
+        int currentCardSuit = getCardSuitFromIndex(currentCardIndex);
+        int previousCardRank = getCardRankFromIndex(previousCardIndex);
+        int previousCardSuit = getCardSuitFromIndex(previousCardIndex);
+
+        if (currentCardSuit < 2 && previousCardSuit >= 2 || currentCardSuit >= 2 && previousCardSuit < 2)
+        { //make sure suit is different colour
+            if (currentCardRank == previousCardRank - 1)
+            { // card needs to be one less than zone card
+              //then valid, add card to column.
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool onMouseDownisValidObject(GameObject gcClicked, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved){
+        //check if column
+        if (cardStackViewOfCardBeingMoved.tag == "Column"){
+            Debug.Log("is a column");
+            //check if card to pile end is valid (descending rank and alternating card colour)
+            if(isCardToColumnEndInValidOrder(gcClicked))
+            {
+                Debug.Log("card till end is valid");
+            }
+            else{
+                Debug.Log("NOT card till end is valid");
+            }
+        }
+        return true;
+    }
 	public bool checkWinGame (){
 		//Check each such that the ranks of each card are are in decending order K to A. (if not then return false)
 		//		This is the complicated check. simple check is for all cards to be in the pile area. but that means alot more time involved for players 

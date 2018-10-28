@@ -395,15 +395,16 @@ public class FreeCellGameController : MonoBehaviour {
 	}
 
     //check if card to pile end is valid to move as a column (descending rank and alternating card colour)
-    public bool isCardToColumnEndInValidOrder(GameObject card){
-        CardStackView csvOfColumnCardIsIn = card.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
+    public bool isCardToColumnEndInValidOrder(GameObject c){
+        CardStackView csvOfColumnCardIsIn = c.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
         //go through fetched list to find where selected card is then do check from there
         bool foundSelectedCard = false;
         int previousCardIndex = -1;
+        int selectedCardIndex = c.GetComponent<CardModel>().cardIndex;
         foreach (KeyValuePair<int, CardView> entry in csvOfColumnCardIsIn.fetchedCards){
             //find selected card
             if(!foundSelectedCard){
-                if(entry.Key == card.GetComponent<CardModel>().cardIndex){
+                if(entry.Key == selectedCardIndex){
                     foundSelectedCard = true;
                 }
             }
@@ -437,21 +438,82 @@ public class FreeCellGameController : MonoBehaviour {
         return false;
     }
 
-    public bool onMouseDownisValidObject(GameObject gcClicked, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved){
+    bool isEnoughFreeSpacesToMoveCardColumn(GameObject c){
+        CardStackView csvOfColumnCardIsIn = c.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
+        //go through fetched list to find where selected card is then do check from there
+        bool foundSelectedCard = false;
+        int previousCardIndex = -1;
+        int selectedCardIndex = c.GetComponent<CardModel>().cardIndex;
+        int cardColumnSize = 0;
+        foreach (KeyValuePair<int, CardView> entry in csvOfColumnCardIsIn.fetchedCards)
+        {
+            //find selected card
+            if (!foundSelectedCard)
+            {
+                if (entry.Key == selectedCardIndex)
+                {
+                    foundSelectedCard = true;
+                    cardColumnSize++;
+                }
+            }
+            else
+            { // start checking for valid column to move all card down from selected card
+                cardColumnSize++;
+            }
+            previousCardIndex = entry.Key;
+
+        }
+        int numberOfFreeSpaces = 4- freeCardRow.GetComponent<CardStackView>().getFetchedCardsSize();
+        int numberOfColumnsEmpty = getNumberOfColumnsEmpty();
+        Debug.Log("is enough free space: cardColumnSize ="+ cardColumnSize + ", numberOfFreeSpaces="+ numberOfFreeSpaces+ ", numberOfColumnsEmpty="+ numberOfColumnsEmpty);
+        float largestColumnSizeMovable = (1 + numberOfFreeSpaces) * (Mathf.Pow(2, numberOfColumnsEmpty));
+        Debug.Log("largestColumnSizeMovable="+ largestColumnSizeMovable);
+        if (cardColumnSize <= (1+numberOfFreeSpaces)*(Mathf.Pow(2,numberOfColumnsEmpty))){
+            return true;
+        }
+
+        return false;
+    }
+
+    private int getNumberOfColumnsEmpty(){
+        GameObject col;
+        CardStackView colCSV;
+        int count = 0;
+        for (int i = 0; i < 8; i++){
+            col = columns[i];
+            colCSV = col.GetComponent<CardStackView>();
+            //Debug.Log("i="+i+ ", colCSV.getFetchedCardsSize()=" + colCSV.getFetchedCardsSize());
+            if(colCSV.getFetchedCardsSize() <= 0){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public bool onMouseDownisValidObject(GameObject gcClicked, Vector3 mousePosition, CardStackView cardStackViewOfCardBeingMoved)
+    {
         //check if column
-        if (cardStackViewOfCardBeingMoved.tag == "Column"){
+        if (cardStackViewOfCardBeingMoved.tag == "Column")
+        {
             Debug.Log("is a column");
             //check if card to pile end is valid (descending rank and alternating card colour)
-            if(isCardToColumnEndInValidOrder(gcClicked))
+            if (isCardToColumnEndInValidOrder(gcClicked))
             {
                 Debug.Log("card till end is valid");
+                if(isEnoughFreeSpacesToMoveCardColumn(gcClicked)){
+                    Debug.Log("ENOUGH FREE SPACE");
+                }else{
+                    Debug.Log("NOT ENOUGH FREE SPACE");
+                }
             }
-            else{
+            else
+            {
                 Debug.Log("NOT card till end is valid");
             }
         }
         return true;
     }
+
 	public bool checkWinGame (){
 		//Check each such that the ranks of each card are are in decending order K to A. (if not then return false)
 		//		This is the complicated check. simple check is for all cards to be in the pile area. but that means alot more time involved for players 

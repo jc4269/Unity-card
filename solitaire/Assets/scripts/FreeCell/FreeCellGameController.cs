@@ -205,9 +205,16 @@ public class FreeCellGameController : MonoBehaviour {
 //			Debug.Log ("cardRank="+cardRank);
 //			Debug.Log ("zoneLastCardSuit="+zoneLastCardSuit);
 //			Debug.Log ("zoneLastCardRank="+zoneLastCardRank);
+
+
 			// if no cards on column, so add card - > value.
-			if(zoneLastCardIndex == -1){ 
-				return true;
+			if(zoneLastCardIndex == -1){
+                //now need to check if the cards being moved is still valid to the empty column (e.g. enough spaces since empty column being dropped into can't count for free space)
+                if(!isEnoughFreeSpacesToMoveCardColumn(c, true)){
+                    return false;
+                }
+
+                return true;
 			}
 			//if card rank is one less than zone last card and suit of card is opposite colour to zone last card,
 			if (cardSuit < 2 && zoneLastCardSuit >= 2 || cardSuit >= 2 && zoneLastCardSuit < 2) { //make sure suit is different colour
@@ -343,7 +350,9 @@ public class FreeCellGameController : MonoBehaviour {
 				//Debug.Log ("stacktag:" + hit.collider.gameObject.tag);
 				GameObject cardStackHit = hit.collider.gameObject;
 				CardStackView cardStackHitCardStackView = cardStackHit.GetComponent<CardStackView> ();
-				CardModel cm = selectedCardDragged.GetComponent<CardModel> ();
+
+
+                CardModel cm = selectedCardDragged.GetComponent<CardModel> ();
 				//Debug ("card suit="+getCardSuitFromIndex( cm.cardIndex) + ", card rank=" + getCardRankFromIndex( cm.cardIndex));
 				GameObject cmzoneIn = cm.zoneIn;
 				CardStackView cmzoneInCardStackView = cmzoneIn.GetComponent<CardStackView> (); 
@@ -444,7 +453,8 @@ public class FreeCellGameController : MonoBehaviour {
         return false;
     }
 
-    bool isEnoughFreeSpacesToMoveCardColumn(GameObject c){
+
+    bool isEnoughFreeSpacesToMoveCardColumn(GameObject c, bool isBeingMovedToEmptyColumn = false){
         CardStackView csvOfColumnCardIsIn = c.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
         //go through fetched list to find where selected card is then do check from there
         bool foundSelectedCard = false;
@@ -471,6 +481,10 @@ public class FreeCellGameController : MonoBehaviour {
         }
         int numberOfFreeSpaces = 4- freeCardRow.GetComponent<CardStackView>().getFetchedCardsSize();
         int numberOfColumnsEmpty = getNumberOfColumnsEmpty();
+        //if being moved to empty column, can't use it in free space calucationg so reduce number of columns by 1 if greater than 0. 
+        if(isBeingMovedToEmptyColumn){
+            if (numberOfColumnsEmpty > 0) numberOfColumnsEmpty--;
+        }
         Debug.Log("is enough free space: cardColumnSize ="+ cardColumnSize + ", numberOfFreeSpaces="+ numberOfFreeSpaces+ ", numberOfColumnsEmpty="+ numberOfColumnsEmpty);
         float largestColumnSizeMovable = (1 + numberOfFreeSpaces) * (Mathf.Pow(2, numberOfColumnsEmpty));
         Debug.Log("largestColumnSizeMovable="+ largestColumnSizeMovable);

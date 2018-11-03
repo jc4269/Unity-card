@@ -43,7 +43,7 @@ public class FreeCellGameController : MonoBehaviour {
     }
 
 	public void playAgain(){
-		Debug.Log ("Play Again Pressed");
+		//Debug.Log ("Play Again Pressed");
         //disable play again button
         //		playAgainButton.interactable = false;	//reset board
         resetBoard();
@@ -168,8 +168,8 @@ public class FreeCellGameController : MonoBehaviour {
 	//zone is the column or row where card was dropped on.
 	//c is card that was dropped.
 	public bool checkIfValidDrop (GameObject zone, GameObject c){
-		Debug.Log ("checkIfValidDrop in");
-		Debug.Log ("zone.tag ="+ zone.tag);
+		//Debug.Log ("checkIfValidDrop in");
+		//Debug.Log ("zone.tag ="+ zone.tag);
 		//if zone is freecardrow
 		if(zone.tag == "FreeCardRow"){
 			//Debug.Log ("dorpped on FreeCardRow");
@@ -228,7 +228,7 @@ public class FreeCellGameController : MonoBehaviour {
 
 		//if zone is pilestackrow
 		if (zone.tag == "PileStackRow") {
-			Debug.Log ("dorpped on PileStackRow");
+			//Debug.Log ("dorpped on PileStackRow");
 
 			int[] piles = suitPileStackVisibleView (lastZoneCardStackView);
 			//if card is 1 rank higher than card in its suit pile. (no cards means pile needs an ace)
@@ -485,9 +485,9 @@ public class FreeCellGameController : MonoBehaviour {
         if(isBeingMovedToEmptyColumn){
             if (numberOfColumnsEmpty > 0) numberOfColumnsEmpty--;
         }
-        Debug.Log("is enough free space: cardColumnSize ="+ cardColumnSize + ", numberOfFreeSpaces="+ numberOfFreeSpaces+ ", numberOfColumnsEmpty="+ numberOfColumnsEmpty);
+        //Debug.Log("is enough free space: cardColumnSize ="+ cardColumnSize + ", numberOfFreeSpaces="+ numberOfFreeSpaces+ ", numberOfColumnsEmpty="+ numberOfColumnsEmpty);
         float largestColumnSizeMovable = (1 + numberOfFreeSpaces) * (Mathf.Pow(2, numberOfColumnsEmpty));
-        Debug.Log("largestColumnSizeMovable="+ largestColumnSizeMovable);
+        //Debug.Log("largestColumnSizeMovable="+ largestColumnSizeMovable);
         if (cardColumnSize <= (1+numberOfFreeSpaces)*(Mathf.Pow(2,numberOfColumnsEmpty))){
             return true;
         }
@@ -515,23 +515,23 @@ public class FreeCellGameController : MonoBehaviour {
         //check if column
         if (cardStackViewOfCardBeingMoved.tag == "Column")
         {
-            Debug.Log("is a column");
+            //Debug.Log("is a column");
             //check if card to pile end is valid (descending rank and alternating card colour)
             if (isCardToColumnEndInValidOrder(gcClicked))
             {
-                Debug.Log("card till end is valid");
+               //Debug.Log("card till end is valid");
                 if(isEnoughFreeSpacesToMoveCardColumn(gcClicked)){
-                    Debug.Log("ENOUGH FREE SPACE");
+                    //Debug.Log("ENOUGH FREE SPACE");
                     //all good, create a list of cards to move in a column.
                     cardsToMoveAsColumn = getCardsFromSelectedToEndOfColumn(gcClicked);
                 }
                 else{
-                    Debug.Log("NOT ENOUGH FREE SPACE");
+                    //Debug.Log("NOT ENOUGH FREE SPACE");
                 }
             }
             else
             {
-                Debug.Log("NOT card till end is valid");
+                //Debug.Log("NOT card till end is valid");
             }
             return cardsToMoveAsColumn;
         }

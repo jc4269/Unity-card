@@ -43,7 +43,7 @@ public class DragAndDrop : MonoBehaviour {
             {
                 gameobjectToDrag = hit.collider.gameObject;
                 FreeCellGameController freeCellGC = GetComponent<FreeCellGameController>();
-
+                //Debug.Log("Card clicked");
                 cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
                 gameObjectsToDrag = freeCellGC.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
                 if (gameObjectsToDrag.Count > 0){
@@ -73,29 +73,6 @@ public class DragAndDrop : MonoBehaviour {
                
             }
 
-            //hit = raycastFirstHitWithLayerMask(ray, layerMask);
-   //         if (Physics.Raycast(ray,out hit,Mathf.Infinity,LayerMask.GetMask("Card"))) {
-			//	gameobjectToDrag = hit.collider.gameObject;
-			//	cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModel> ().zoneIn.GetComponent<CardStackView>();
-			//	Debug.Log ("cardStackViewOfCardBeingMoved="+cardStackViewOfCardBeingMoved);
-   //             //Debug.Log("printout of column");
-   //             //foreach (KeyValuePair<int, CardView> entry in cardStackViewOfCardBeingMoved.fetchedCards){
-   //             //    FCGC.printCardSuitRankFromIndex(entry.Key);
-   //             //    SpriteRenderer myr = entry.Value.card.GetComponent<SpriteRenderer>();
-   //             //    Debug.Log("sortingOrder = " + myr.sortingOrder);
-   //             //}
-			//	GOCenter = gameobjectToDrag.transform.position;
-			//	touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			//	offset = touchPosition - GOCenter;
-   //             //int cardIndex = gameobjectToDrag.GetComponent<CardModel>().cardIndex;
-   //             //SpriteRenderer myRenderer = hit.transform.GetComponent<SpriteRenderer>();
-   //             //Debug.Log("CardSingleGrab");
-   //             //FCGC.printCardSuitRankFromIndex(cardIndex);
-   //             //Debug.Log("sortingOrder = " + myRenderer.sortingOrder);
-   //             draggingMode = true;
-			//	SpriteRenderer sr = gameobjectToDrag.GetComponent<SpriteRenderer> ();
-			//	sr.sortingOrder = 100;
-			//}
 
 		}
 		if (Input.GetMouseButton (0)) {
@@ -152,6 +129,7 @@ public class DragAndDrop : MonoBehaviour {
                 SpriteRenderer myRenderer = hits[i].transform.GetComponent<SpriteRenderer>();
                 if (myRenderer == null)
                 {
+                    //Debug.Log("no renderer");
                     break; // if transform has no SpriteRenderer, we leave it out
                 }
 

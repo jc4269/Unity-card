@@ -519,8 +519,12 @@ public class FreeCellGameController : MonoBehaviour {
             {
                 Debug.Log("NOT card till end is valid");
             }
+            return cardsToMoveAsColumn;
         }
-        return cardsToMoveAsColumn;
+        List<GameObject> t = new List<GameObject>();
+        //if not column then its a signle card so short here is to just return gameobjectToDrag for now. can be refactored later.
+        t.Add(gcClicked);
+        return t;
     }
 
     private List<GameObject> getCardsFromSelectedToEndOfColumn(GameObject c){

@@ -140,8 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13113c3c8f1c4cfaa576c89b29e8dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  card: {fileID: 1946358085}
+  Card: {fileID: 1946358085}
   deck: {fileID: 1413907495}
+  Deck: {fileID: 1413907494}
   column: {fileID: 1137715557}
   pileStackRow: {fileID: 1467531174}
   freeCardRow: {fileID: 983388869}
@@ -182,6 +183,8 @@ MonoBehaviour:
   touchPosition: {x: 0, y: 0, z: 0}
   offset: {x: 0, y: 0, z: 0}
   draggingMode: 0
+  cardSelectedColor: {r: 0.50735295, g: 0.50735295, b: 0.50735295, a: 1}
+  cardUnselectedColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &44191205
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,6 +830,8 @@ GameObject:
   - component: {fileID: 983388871}
   - component: {fileID: 983388870}
   - component: {fileID: 983388873}
+  - component: {fileID: 983388875}
+  - component: {fileID: 983388874}
   m_Layer: 8
   m_Name: FreeCardRow
   m_TagString: FreeCardRow
@@ -889,6 +894,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 1, z: 1}
   m_Center: {x: 2, y: 0, z: 0}
+--- !u!114 &983388874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 983388869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPosition: {x: -4.5, y: 2, z: 0}
+  Offset: 1
+  OffsetHorizontal: 1
+  ReverseLayerOrder: 0
+  IsLastCardClickableOnly: 0
+  IsAllCardsFaceUp: 1
+  IsLastCardOnlyFaceUp: 0
+--- !u!114 &983388875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 983388869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12b49a149be1472bb8d94d7d826f068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards: []
 --- !u!1001 &999792068
 Prefab:
   m_ObjectHideFlags: 0
@@ -985,6 +1020,8 @@ GameObject:
   - component: {fileID: 1030466293}
   - component: {fileID: 1030466292}
   - component: {fileID: 1030466295}
+  - component: {fileID: 1030466297}
+  - component: {fileID: 1030466296}
   m_Layer: 0
   m_Name: Row
   m_TagString: Row
@@ -1047,6 +1084,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1030466296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1030466291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPosition: {x: 0, y: 0, z: 0}
+  Offset: 0
+  OffsetHorizontal: 1
+  ReverseLayerOrder: 0
+  IsLastCardClickableOnly: 0
+  IsAllCardsFaceUp: 0
+  IsLastCardOnlyFaceUp: 1
+--- !u!114 &1030466297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1030466291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12b49a149be1472bb8d94d7d826f068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards: []
 --- !u!1 &1137715557
 GameObject:
   m_ObjectHideFlags: 0
@@ -1059,6 +1126,8 @@ GameObject:
   - component: {fileID: 1137715559}
   - component: {fileID: 1137715558}
   - component: {fileID: 1137715561}
+  - component: {fileID: 1137715563}
+  - component: {fileID: 1137715562}
   m_Layer: 8
   m_Name: Column
   m_TagString: Column
@@ -1124,6 +1193,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 4, z: 1}
   m_Center: {x: 0, y: -2, z: 0}
+--- !u!114 &1137715562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137715557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPosition: {x: -4, y: 0, z: 0}
+  Offset: -0.3
+  OffsetHorizontal: 0
+  ReverseLayerOrder: 0
+  IsLastCardClickableOnly: 0
+  IsAllCardsFaceUp: 1
+  IsLastCardOnlyFaceUp: 0
+--- !u!114 &1137715563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1137715557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12b49a149be1472bb8d94d7d826f068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards: []
 --- !u!1 &1197841114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1402,6 +1501,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1413907496}
   - component: {fileID: 1413907495}
+  - component: {fileID: 1413907498}
+  - component: {fileID: 1413907497}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -1434,6 +1535,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1413907497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1413907494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPosition: {x: 0, y: 0, z: 0}
+  Offset: 0.02
+  OffsetHorizontal: 1
+  ReverseLayerOrder: 1
+  IsLastCardClickableOnly: 1
+  IsAllCardsFaceUp: 0
+  IsLastCardOnlyFaceUp: 0
+--- !u!114 &1413907498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1413907494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12b49a149be1472bb8d94d7d826f068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards: []
 --- !u!1 &1467531174
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,6 +1576,8 @@ GameObject:
   - component: {fileID: 1467531176}
   - component: {fileID: 1467531175}
   - component: {fileID: 1467531178}
+  - component: {fileID: 1467531180}
+  - component: {fileID: 1467531179}
   m_Layer: 8
   m_Name: PileStackRow
   m_TagString: PileStackRow
@@ -1507,6 +1640,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 1, z: 1}
   m_Center: {x: 2, y: 0, z: 0}
+--- !u!114 &1467531179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1467531174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartPosition: {x: -0.5, y: 2, z: 0}
+  Offset: 1
+  OffsetHorizontal: 1
+  ReverseLayerOrder: 0
+  IsLastCardClickableOnly: 0
+  IsAllCardsFaceUp: 1
+  IsLastCardOnlyFaceUp: 0
+--- !u!114 &1467531180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1467531174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12b49a149be1472bb8d94d7d826f068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards: []
 --- !u!1 &1507512647
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,6 +1783,21 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 212426691905787988, guid: 57fbcd8ac2463421e929375ed130796a,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212426691905787988, guid: 57fbcd8ac2463421e929375ed130796a,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212426691905787988, guid: 57fbcd8ac2463421e929375ed130796a,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 57fbcd8ac2463421e929375ed130796a, type: 2}
   m_IsPrefabParent: 0
@@ -1628,6 +1806,84 @@ GameObject:
   m_PrefabParentObject: {fileID: 1921274008784242, guid: 57fbcd8ac2463421e929375ed130796a,
     type: 2}
   m_PrefabInternal: {fileID: 1946358084}
+--- !u!114 &1946358086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1946358085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a92c0a0c1504db3a6427ab398b3e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  faces:
+  - {fileID: 21300000, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300002, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300004, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300006, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300008, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300010, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300012, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300014, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300016, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300018, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300020, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300022, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300024, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300026, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300028, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300030, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300032, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300034, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300036, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300038, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300040, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300042, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300044, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300046, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300048, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300050, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300052, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300054, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300056, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300058, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300060, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300062, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300064, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300066, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300068, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300070, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300072, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300074, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300076, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300078, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300080, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300082, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300084, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300086, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300088, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300090, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300092, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300094, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300096, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300098, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300100, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  - {fileID: 21300102, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+  cardBack: {fileID: 21300112, guid: 668680d91e6ad4f3398236eb6145c0c2, type: 3}
+--- !u!114 &1946358087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1946358085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f04cf6c958f441b594b121425da74fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Index: 0
+  faceUp: 0
 --- !u!65 &1946358090
 BoxCollider:
   m_ObjectHideFlags: 0

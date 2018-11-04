@@ -25,7 +25,7 @@ public class DragAndDrop : MonoBehaviour {
     public Color cardSelectedColor = new Color(125/255.0f,125 / 255.0f, 125 / 255.0f, 1/1.0f);
     public Color cardUnselectedColor = new Color(255 / 255.0f, 255 / 255.0f, 255 / 255.0f, 1 / 1.0f);
 
-    CardStackView cardStackViewOfCardBeingMoved;
+    CardStackViewNew cardStackViewOfCardBeingMoved;
 
 	// Use this for initialization
 	void Start () {
@@ -54,8 +54,8 @@ public class DragAndDrop : MonoBehaviour {
                     gameobjectToDrag = hit.collider.gameObject;
                     FreeCellGameController freeCellGC = GetComponent<FreeCellGameController>();
                     //Debug.Log("Card clicked");
-                    cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
-                    gameObjectsToDrag = freeCellGC.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
+                    cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModelNew>().StackIn.GetComponent<CardStackViewNew>();
+                    gameObjectsToDrag = freeCellGC.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved, gameObjectsToDrag.Count);
                     if (gameObjectsToDrag.Count > 0){
                         //Debug.Log("cardStackViewOfCardBeingMoved=" + cardStackViewOfCardBeingMoved);
                         //Debug.Log("printout of column");
@@ -174,7 +174,7 @@ public class DragAndDrop : MonoBehaviour {
                 draggingModeStarted = false;
                 cardSelectedByClick = false;
                 FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
-                freeCellGC.onMouseUpGameLogic (gameObjectsToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
+                freeCellGC.onMouseUpGameLogic (gameObjectsToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved, gameObjectsToDrag.Count);
                 changeCardsSpriteColour(gameObjectsToDrag, cardUnselectedColor);
 
                 //clear variables
@@ -268,42 +268,6 @@ public class DragAndDrop : MonoBehaviour {
         rch = default(RaycastHit);
         return false; // means nothing output/hit, so dont use out variable.
     }
-    // The function for dealing with multiple objects being overlapped and only returning the highest sorting order as hit.
-    // TODO: if using, dont use 2D?
-    //public bool Raycast2DWithOrder (out RaycastHit2D rch, Vector2 origin, Vector2 direction, float distance = Mathf.Infinity, int layerMask = Physics2D.DefaultRaycastLayers) {
-    //	RaycastHit2D[] hits = Physics2D.RaycastAll (origin, direction, distance, layerMask);
-
-    //	if (hits.Length > 0) { //Only function if we actually hit something
-    //		int closestItem = 0; //Set our top hit to a default of the first index in our "hits" array, in case there are no others
-    //		int lowestLayerID = int.MaxValue;
-    //		int highestSortingOrder = int.MaxValue;
-
-    //		for (int i = 1; i < hits.Length; i++) { //Loop for every extra item the raycast hit
-    //			SpriteRenderer myRenderer = hits [i].transform.GetComponent<SpriteRenderer> ();
-    //			if (myRenderer == null) {
-    //				break; // if transform has no SpriteRenderer, we leave it out
-    //			}
-
-    //			int currentLayerID = myRenderer.sortingLayerID; //Store SortingLayerID of the current item in the array being accessed
-
-    //			if (currentLayerID < lowestLayerID) { //If the SortingLayerID of the current array item is lower than the previous lowest
-    //				lowestLayerID = currentLayerID; //Set the "Previous Value" to the current one since it's lower, as it will become the "Previous Lowest" on the next loop
-    //				closestItem = i; //Set our topHit with the Array Index value of the current closest Array item, since it currently has the highest/closest SortingLayerID
-    //				highestSortingOrder = myRenderer.sortingOrder; //Store SortingOrder value of the current closest object, for comparison next loop if we end up going to the "else if"
-    //			} else if (currentLayerID == lowestLayerID) {
-    //				if (myRenderer.sortingOrder > highestSortingOrder) { //If SortingLayerID are the same, then we need to compare SortingOrder. If the SortingOrder is lower than the one stored in the previous loop, then update values
-    //					closestItem = i;
-    //					highestSortingOrder = myRenderer.sortingOrder;
-    //				}
-    //			}
-    //		}
-
-    //		rch =  hits [closestItem];
-    //        return true;
-    //	}
-    //    rch = default(RaycastHit2D);
-    //    return false;
-    //}
 
     private void changeCardsSpriteColour(List<GameObject> gameObjectList, Color changeToColor){
         for (int i = 0; i < gameObjectList.Count; i++)

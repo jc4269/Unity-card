@@ -108,9 +108,9 @@ public class CardStack : MonoBehaviour
 
 	}
 
-	public void reset(){
-		cards.Clear ();
-	}
+    public void reset(){
+        cards.Clear();
+    }
 
 	// Use this for initialization
 	void Awake () {

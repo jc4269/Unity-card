@@ -63,7 +63,7 @@ public class CardStackViewNew : MonoBehaviour
                 spriteRenderer.sortingOrder = i; //left to right put down first to last.
             }
             i++;
-
+            cardViewNew.UpdateSprite();
             //if(IsAllCardsFaceUp){
             //    cardViewNew.toggleFace(IsAllCardsFaceUp);
             //}

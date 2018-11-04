@@ -27,8 +27,11 @@ public class CardStackNew : MonoBehaviour
 
     public void Reset()
     {
+        foreach (GameObject c in Cards){
+            Destroy(c);
+        }
         Cards.Clear();
-        //TODO: go through all cards and destory them.
+
     }
 
     void Awake()

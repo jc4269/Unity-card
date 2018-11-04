@@ -9,10 +9,10 @@ public class BlackJackGameController : MonoBehaviour
 	int dealersFirstCard = -1;
     int betAmountForCurrentHand;
 
-	public CardStack player;
-	public CardStack dealer;
-	public CardStack deck;
-
+	public GameObject Player;
+	public GameObject Dealer;
+    public GameObject Deck;
+    public GameObject Card;
 	public Button hitButton;
 	public Button standButton;
 	public Button playAgainButton;
@@ -45,10 +45,11 @@ public class BlackJackGameController : MonoBehaviour
     }
 
     public void hit(){
-		player.push(deck.pop());
-		//Debug.Log ("hand value = "+player.handValue ());
-		if (player.handValue () > 21) {
-			//TODO: player bust
+        HitPlayer();
+        //Debug.Log ("hand value = "+player.handValue ());
+        updateStacks();
+
+        if (HandValue(Player.GetComponent<CardStackNew>()) > 21) {
 			hitButton.interactable = false;
 			standButton.interactable = false;
 			StartCoroutine(dealersTurn());
@@ -61,7 +62,6 @@ public class BlackJackGameController : MonoBehaviour
 		standButton.interactable = false;
 		//start dealers turn
 		StartCoroutine(dealersTurn());
-		//TODO: ends players turn with current hand value and dealer turn to reveal cards and keep hitting till handvalue is 17 or more
 	}
     
 	public void playAgain(){
@@ -70,7 +70,7 @@ public class BlackJackGameController : MonoBehaviour
         //reset hands and deck
         resetBoard();
 
-        deck.CreateDeck ();
+        CreateDeck (Deck);
 		//deck.GetComponent<CardStackView> ().showCards ();
 		dealersFirstCard = -1;
 
@@ -88,14 +88,21 @@ public class BlackJackGameController : MonoBehaviour
 	#endregion
 
     void resetBoard(){
-        player.GetComponent<CardStackView>().clear();
-        dealer.GetComponent<CardStackView>().clear();
-        deck.GetComponent<CardStackView>().clear();
+        Player.GetComponent<CardStackNew>().Reset();
+        Dealer.GetComponent<CardStackNew>().Reset();
+        Deck.GetComponent<CardStackNew>().Reset();
     }
 
-	#region Unity messages
+    void updateStacks()
+    {
+        Player.GetComponent<CardStackViewNew>().UpdateStackView();
+        Dealer.GetComponent<CardStackViewNew>().UpdateStackView();
+        Deck.GetComponent<CardStackViewNew>().UpdateStackView();
+    }
 
-	void Start(){
+    #region Unity messages
+
+    void Start(){
         //money will be persistant through games. TODO: Save value between games.
         money = 500;
         betAmount = 10;
@@ -105,41 +112,93 @@ public class BlackJackGameController : MonoBehaviour
         startGame ();
 	}
 
-	#endregion
+    #endregion
 
-	void startGame(){
+    void CreateDeck(GameObject deckStack)
+    {
+        GameObject card = null;
+        CardStackNew cardStackNew = deckStack.GetComponent<CardStackNew>();
+        //add unshuffled cards to list (deck)
+        for (int i = 0; i < 52; i++)
+        {
+            //clone card
+            card = (GameObject)Instantiate(Card);
+
+            //init card
+            card.GetComponent<CardModelNew>().Index = i;
+            card.GetComponent<CardViewNew>().toggleFace(false);
+
+            //add card
+            cardStackNew.Push(card);
+            //Debug.Log (i);
+        }
+
+
+        //shuffle cards
+        int n = cardStackNew.Cards.Count;        //number of cards in deck
+                                                 //Debug.Log("n="+n);
+        int k;                      // random value
+        GameObject temp;                   // holds int for swapping
+        while (n > 1)
+        {
+            n--;
+            k = Random.Range(0, n + 1);
+            temp = cardStackNew.Cards[k];
+            cardStackNew.Cards[k] = cardStackNew.Cards[n];
+            cardStackNew.Cards[n] = temp;
+        }
+
+
+    }
+
+    void startGame(){
         //take bet amount
         betAmountForCurrentHand = betAmount;
         money -= betAmountForCurrentHand;
 
         updateMoneyText();
+
+        CreateDeck(Deck);
+
         //deal cards to player and dealer
         for (int i = 0; i<2; i++){
-			player.push(deck.pop());
-			HitDealer (); 
+            HitPlayer();
+            HitDealer (); 
 		}
-	}
+        updateStacks();
 
+    }
+    void HitPlayer(){
+        GameObject card = Deck.GetComponent<CardStackNew>().Pop();
+        card.GetComponent<CardViewNew>().toggleFace(true);
+        Player.GetComponent<CardStackNew>().Push(card);
+    }
 	void HitDealer (){
-		int card = deck.pop ();
-		dealer.push(card);
+        GameObject card = Deck.GetComponent<CardStackNew>().Pop();
 
-		if (dealersFirstCard < 0)
-			dealersFirstCard = card;
-		
-		if (dealer.cardsCount () >= 2) {
-			CardStackView view = dealer.GetComponent<CardStackView> ();
-			view.Toggle (card, true);
+        Dealer.GetComponent<CardStackNew>().Push(Deck.GetComponent<CardStackNew>().Pop());
+
+        if (dealersFirstCard < 0)
+        {
+            dealersFirstCard = card.GetComponent<CardModelNew>().Index;
+            Dealer.GetComponent<CardStackNew>().Cards[0].GetComponent<CardViewNew>().toggleFace(false);
+        }
+        int dealersHandSize = Dealer.GetComponent<CardStackNew>().Cards.Count;
+        if (dealersHandSize >= 2) {
+            Dealer.GetComponent<CardStackNew>().Cards[dealersHandSize-1].GetComponent<CardViewNew>().toggleFace(true);
 		}
-	}
+
+        updateStacks();
+    }
 
 	IEnumerator dealersTurn(){
 		Debug.Log ("dealers turn");
-		CardStackView view = dealer.GetComponent<CardStackView> ();
-		view.Toggle (dealersFirstCard, true);
-		view.showCards ();
-		yield return new WaitForSeconds (1f);
-		while (dealer.handValue () < 17) {
+        CardStackViewNew dealerCardStackViewNew = Dealer.GetComponent<CardStackViewNew>();
+        CardStackNew dealerCardStackNew = Dealer.GetComponent<CardStackNew>();
+        dealerCardStackNew.Cards[0].GetComponent<CardViewNew>().toggleFace(true);//flipp first card over
+        //view.showCards ();
+        yield return new WaitForSeconds (1f);
+		while (HandValue(dealerCardStackNew) < 17) {
 			HitDealer ();
 			yield return new WaitForSeconds (1f);
 		}
@@ -147,8 +206,8 @@ public class BlackJackGameController : MonoBehaviour
 		string winStr = "You win! Play again?";
 		string loseStr = "You lost. Play again?";
 		string drawStr = "Draw. Play again?";
-		int playerHandValue = player.handValue ();
-		int dealerHandValue = dealer.handValue ();
+        int playerHandValue = HandValue (Player.GetComponent<CardStackNew>());
+		int dealerHandValue = HandValue (dealerCardStackNew);
 
 		Debug.Log ("playerHandValue = "+ playerHandValue + ", dealerHandValue = "+ dealerHandValue);
 		//determine who won and give feedback
@@ -193,5 +252,51 @@ public class BlackJackGameController : MonoBehaviour
     public void resetBetAmount(){
         betAmount = 0;
         updateBetText();
+    }
+
+
+
+    //calculate hand value
+    public int HandValue(CardStackNew cardStackNew)
+    {
+        int total = 0;
+        int cardRank;
+        int cardIndex;
+        int aces = 0; // count the number of aces in hand, used later to do 1 or 11 logic
+        foreach (GameObject card in cardStackNew.Cards)
+        {
+            cardIndex = card.GetComponent<CardModelNew>().Index;
+            cardRank = cardIndex % 13;
+            //Debug.Log ("Cardrank="+cardRank);
+            if (cardRank >= 10 && cardRank <= 12)
+            { // J, Q, K
+                cardRank = 10; // J,Q,K worth 10 points
+
+            }
+            else if (cardRank == 0)
+            { // ace
+                aces++;
+                continue; // dont want to add cardrank to total.
+            }
+            else
+            { // pip value 2-10
+                cardRank += 1; // needs one added to get correct value.
+            }
+
+            total += cardRank; // add hand value up.
+        }
+
+        for (int i = 0; i < aces; i++)
+        {
+            if (total + 11 <= 21)
+            {
+                total += 11;
+            }
+            else
+            {
+                total += 1;
+            }
+        }
+        return total;
     }
 }

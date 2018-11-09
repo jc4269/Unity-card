@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class FreeCellGameController : MonoBehaviour {
+public class FreeCellGameController : MonoBehaviour, IGameController {
 
 	public GameObject Card;
 	public CardStack deck;

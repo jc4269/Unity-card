@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DragAndDrop : MonoBehaviour {
+    public GameObject GameControllerObject; // this script will have access to common functions for game controller component. must set.
+
+    private IGameController GameControllerComponent;
+
 	public GameObject gameobjectToDrag;
     public List<GameObject> gameObjectsToDrag;
 	//public GameObject maincamera;
 	//Camera mcCamera;
+    
 	public Vector3 GOCenter;
 	public Vector3 touchPosition;
 	public Vector3 offset;
@@ -29,8 +34,10 @@ public class DragAndDrop : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        GameControllerComponent = GameControllerObject.GetComponent<IGameController>();
+
         //mcCamera = maincamera.GetComponent<Camera> ();
-	}
+    }
 
 
 	// Update is called once per frame
@@ -52,10 +59,10 @@ public class DragAndDrop : MonoBehaviour {
                 {
                     //Debug.Log("at least 1 object");
                     gameobjectToDrag = hit.collider.gameObject;
-                    FreeCellGameController freeCellGC = GetComponent<FreeCellGameController>();
+                    //FreeCellGameController freeCellGC = GetComponent<FreeCellGameController>();
                     //Debug.Log("Card clicked");
                     cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModelNew>().StackIn.GetComponent<CardStackViewNew>();
-                    gameObjectsToDrag = freeCellGC.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved, gameObjectsToDrag.Count);
+                    gameObjectsToDrag = GameControllerComponent.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved, gameObjectsToDrag.Count);
                     if (gameObjectsToDrag.Count > 0){
                         //Debug.Log("cardStackViewOfCardBeingMoved=" + cardStackViewOfCardBeingMoved);
                         //Debug.Log("printout of column");
@@ -173,8 +180,8 @@ public class DragAndDrop : MonoBehaviour {
                 draggingMode = false;
                 draggingModeStarted = false;
                 cardSelectedByClick = false;
-                FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
-                freeCellGC.onMouseUpGameLogic (gameObjectsToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved, gameObjectsToDrag.Count);
+                //FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
+                GameControllerComponent.onMouseUpGameLogic (gameObjectsToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved, gameObjectsToDrag.Count);
                 changeCardsSpriteColour(gameObjectsToDrag, cardUnselectedColor);
 
                 //clear variables

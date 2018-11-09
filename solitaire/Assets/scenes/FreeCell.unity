@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25d2a0b045984165a91164e1d811265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  GameControllerObject: {fileID: 13832694}
   gameobjectToDrag: {fileID: 0}
   gameObjectsToDrag: []
   GOCenter: {x: 0, y: 0, z: 0}
@@ -458,7 +459,7 @@ RectTransform:
   m_GameObject: {fileID: 381217548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.009259259, y: 0.009259259, z: 0.009259259}
+  m_LocalScale: {x: 0.0060515874, y: 0.0060515874, z: 0.0060515874}
   m_Children:
   - {fileID: 132499516}
   - {fileID: 1412467303}

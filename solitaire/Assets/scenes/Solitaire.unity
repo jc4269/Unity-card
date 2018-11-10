@@ -276,114 +276,78 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.39, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &123266117
+--- !u!1 &99606562
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1223964212663546, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-    type: 2}
-  m_PrefabInternal: {fileID: 638687691}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 123266123}
-  - component: {fileID: 123266122}
-  - component: {fileID: 123266121}
-  - component: {fileID: 123266120}
-  - component: {fileID: 123266119}
-  - component: {fileID: 123266118}
-  m_Layer: 8
+  - component: {fileID: 99606566}
+  - component: {fileID: 99606565}
+  - component: {fileID: 99606564}
+  - component: {fileID: 99606563}
+  m_Layer: 0
   m_Name: Column
-  m_TagString: Column
+  m_TagString: Row
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &123266118
+--- !u!114 &99606563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 123266117}
+  m_GameObject: {fileID: 99606562}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPosition: {x: -4, y: 0, z: 0}
+  StartPosition: {x: -3.5, y: 1, z: 0}
   Offset: -0.3
   OffsetHorizontal: 0
   ReverseLayerOrder: 0
   IsLastCardClickableOnly: 0
-  IsAllCardsFaceUp: 1
-  IsLastCardOnlyFaceUp: 0
---- !u!114 &123266119
+  IsAllCardsFaceUp: 0
+  IsLastCardOnlyFaceUp: 1
+--- !u!114 &99606564
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 123266117}
+  m_GameObject: {fileID: 99606562}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d12b49a149be1472bb8d94d7d826f068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Cards: []
---- !u!65 &123266120
+--- !u!65 &99606565
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 123266117}
+  m_GameObject: {fileID: 99606562}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 4, z: 1}
   m_Center: {x: 0, y: -2, z: 0}
---- !u!114 &123266121
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-    type: 2}
-  m_PrefabInternal: {fileID: 638687691}
-  m_GameObject: {fileID: 123266117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {x: -4, y: 0, z: 0}
-  cardOffset: -0.3
-  offsetHorizontal: 0
-  cardPrefab: {fileID: 18587787}
-  faceUp: 1
-  reverseLayerOrder: 0
-  isLastCardClickableOnly: 0
---- !u!114 &123266122
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 114723533552425544, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-    type: 2}
-  m_PrefabInternal: {fileID: 638687691}
-  m_GameObject: {fileID: 123266117}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465a92c895cd94020949e55b38d72c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameDeck: 0
---- !u!4 &123266123
+--- !u!4 &99606566
 Transform:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-    type: 2}
-  m_PrefabInternal: {fileID: 638687691}
-  m_GameObject: {fileID: 123266117}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 99606562}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24932766, y: 0.04790114, z: -0.0077860253}
+  m_LocalPosition: {x: -11.24, y: 0.04790114, z: -0.0077860253}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &137964364
 GameObject:
@@ -393,8 +357,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 137964370}
-  - component: {fileID: 137964369}
-  - component: {fileID: 137964368}
   - component: {fileID: 137964367}
   - component: {fileID: 137964366}
   - component: {fileID: 137964365}
@@ -447,36 +409,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &137964368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 137964364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {x: 0, y: 0, z: 0}
-  cardOffset: 0
-  offsetHorizontal: 1
-  cardPrefab: {fileID: 18587787}
-  faceUp: 0
-  reverseLayerOrder: 0
-  isLastCardClickableOnly: 1
---- !u!114 &137964369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 137964364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465a92c895cd94020949e55b38d72c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameDeck: 0
 --- !u!4 &137964370
 Transform:
   m_ObjectHideFlags: 0
@@ -488,7 +420,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &303390799
 GameObject:
@@ -498,13 +430,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 303390805}
-  - component: {fileID: 303390804}
-  - component: {fileID: 303390803}
   - component: {fileID: 303390802}
   - component: {fileID: 303390801}
   - component: {fileID: 303390800}
   m_Layer: 8
-  m_Name: FreeCardRow
+  m_Name: DrawnPileColumn
   m_TagString: FreeCardRow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -521,9 +451,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPosition: {x: -4.5, y: 2, z: 0}
-  Offset: 1
-  OffsetHorizontal: 1
+  StartPosition: {x: -5, y: 0, z: 0}
+  Offset: 0.5
+  OffsetHorizontal: 0
   ReverseLayerOrder: 0
   IsLastCardClickableOnly: 0
   IsAllCardsFaceUp: 1
@@ -552,36 +482,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 1, z: 1}
   m_Center: {x: 2, y: 0, z: 0}
---- !u!114 &303390803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 303390799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {x: -4.5, y: 2, z: 0}
-  cardOffset: 1
-  offsetHorizontal: 1
-  cardPrefab: {fileID: 18587787}
-  faceUp: 1
-  reverseLayerOrder: 0
-  isLastCardClickableOnly: 0
---- !u!114 &303390804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 303390799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465a92c895cd94020949e55b38d72c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameDeck: 0
 --- !u!4 &303390805
 Transform:
   m_ObjectHideFlags: 0
@@ -669,91 +569,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 547531595}
---- !u!1001 &638687691
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0.24932766
-      objectReference: {fileID: 0}
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.04790114
-      objectReference: {fileID: 0}
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -0.0077860253
-      objectReference: {fileID: 0}
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4429398338355826, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-        type: 2}
-      propertyPath: cardPrefab
-      value: 
-      objectReference: {fileID: 18587787}
-    - target: {fileID: 1223964212663546, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_TagString
-      value: Column
-      objectReference: {fileID: 0}
-    - target: {fileID: 1223964212663546, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-        type: 2}
-      propertyPath: faceUp
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-        type: 2}
-      propertyPath: offsetHorizontal
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-        type: 2}
-      propertyPath: startPosition.x
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-        type: 2}
-      propertyPath: cardOffset
-      value: -0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-        type: 2}
-      propertyPath: reverseLayerOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114675583645127200, guid: fdcfe1a5ec9464ce7a81e36a1f467690,
-        type: 2}
-      propertyPath: isLastCardClickableOnly
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: fdcfe1a5ec9464ce7a81e36a1f467690, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &749004890
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,8 +639,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 952711827}
-  - component: {fileID: 952711826}
-  - component: {fileID: 952711825}
   - component: {fileID: 952711824}
   - component: {fileID: 952711823}
   - component: {fileID: 952711822}
@@ -847,9 +660,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPosition: {x: -0.5, y: 2, z: 0}
-  Offset: 1
-  OffsetHorizontal: 1
+  StartPosition: {x: 4, y: 2, z: 0}
+  Offset: 2
+  OffsetHorizontal: 0
   ReverseLayerOrder: 0
   IsLastCardClickableOnly: 0
   IsAllCardsFaceUp: 1
@@ -876,38 +689,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 4, y: 1, z: 1}
-  m_Center: {x: 2, y: 0, z: 0}
---- !u!114 &952711825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 952711821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a39cddbbba0944469dd8a4942d330b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPosition: {x: -0.5, y: 2, z: 0}
-  cardOffset: 1
-  offsetHorizontal: 1
-  cardPrefab: {fileID: 18587787}
-  faceUp: 1
-  reverseLayerOrder: 0
-  isLastCardClickableOnly: 0
---- !u!114 &952711826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 952711821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465a92c895cd94020949e55b38d72c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameDeck: 0
+  m_Size: {x: 1, y: 8, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &952711827
 Transform:
   m_ObjectHideFlags: 0
@@ -959,7 +742,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1120604094
 GameObject:
@@ -1018,7 +801,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1182457002}
         m_MethodName: playAgain
         m_Mode: 1
         m_Arguments:
@@ -1184,6 +967,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a0ad359f7184380b4a122869386548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Card: {fileID: 18587787}
+  Deck: {fileID: 1327151856}
+  Column: {fileID: 99606562}
+  PileStackRow: {fileID: 952711821}
+  DrawnPileColumn: {fileID: 303390799}
+  playAgainButton: {fileID: 0}
+  feedBackText: {fileID: 0}
+  RowColBackground: {fileID: 1162896755}
+  PileRowBackground: {fileID: 1519520868}
+  DrawnPileBackground: {fileID: 1894189372}
+  columns: []
+  cardsToMoveAsColumn: []
 --- !u!114 &1182457003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1225,7 +1020,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1327151860}
-  - component: {fileID: 1327151857}
   - component: {fileID: 1327151859}
   - component: {fileID: 1327151858}
   m_Layer: 0
@@ -1235,18 +1029,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1327151857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1327151856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465a92c895cd94020949e55b38d72c09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGameDeck: 0
 --- !u!114 &1327151858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,8 +1040,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676db11b1c0634c1e83ad5e0e25429d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartPosition: {x: 0, y: 0, z: 0}
-  Offset: 0.02
+  StartPosition: {x: -5, y: 2, z: 0}
+  Offset: 0.01
   OffsetHorizontal: 1
   ReverseLayerOrder: 1
   IsLastCardClickableOnly: 1
@@ -1288,7 +1070,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1339378125
 GameObject:
@@ -1437,8 +1219,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1519520868}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 2, z: 0}
-  m_LocalScale: {x: 4, y: 1, z: 1}
+  m_LocalPosition: {x: 4, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 8, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 12
@@ -1593,7 +1375,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1182457002}
         m_MethodName: backToMenu
         m_Mode: 3
         m_Arguments:
@@ -1745,7 +1527,7 @@ GameObject:
   - component: {fileID: 1894189374}
   - component: {fileID: 1894189373}
   m_Layer: 0
-  m_Name: FreeCardBackground
+  m_Name: DrawnPileBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1802,8 +1584,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1894189372}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 2, z: 0}
-  m_LocalScale: {x: 4, y: 1, z: 1}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
@@ -1875,9 +1657,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Play again
-
-'
+  m_Text: Play again
 --- !u!222 &2005277794
 CanvasRenderer:
   m_ObjectHideFlags: 0

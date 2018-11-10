@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/blackjack.unity
+- path: Assets/scenes/Solitaire.unity
   isLoaded: 1
   isActive: 1

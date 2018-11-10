@@ -247,6 +247,9 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
                         //cm.zoneIn = cardStackHit; //updating to cards new zone
                         cardStackHitCardStack.Push(gcDraggedList[i]);
                     }
+
+                    CheckAndFlipLastCardOfColumnCardStack(cardStackInCardStackNew);
+
                     //update cardStack that Card is going into, the hit stack
                     if (cardStackHit.tag == "PileStackRow")
                     {
@@ -275,6 +278,8 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
                         cardStackInCardStackViewNew.UpdateStackView();
                     }
 
+ 
+                    
 
                     //check win condition after every valid action.
 
@@ -785,6 +790,15 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
             {
                 Debug.Log("j=" + j + " is empty.");
             }
+        }
+    }
+
+    //if column card was moved check if last card is face down, and if so flip it face up.
+    void CheckAndFlipLastCardOfColumnCardStack(CardStackNew cardStackInCardStackNew)
+    {
+        if (cardStackInCardStackNew.Cards.Count > 0 && cardStackInCardStackNew.Cards[cardStackInCardStackNew.Cards.Count - 1].GetComponent<CardModelNew>().faceUp == false)
+        {
+            cardStackInCardStackNew.Cards[cardStackInCardStackNew.Cards.Count - 1].GetComponent<CardViewNew>().toggleFace(true);
         }
     }
 }

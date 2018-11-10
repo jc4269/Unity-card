@@ -9,6 +9,8 @@ TagManager:
   - PileStackRow
   - Row
   - Card
+  - Deck
+  - DrawnPileColumn
   layers:
   - Default
   - TransparentFX

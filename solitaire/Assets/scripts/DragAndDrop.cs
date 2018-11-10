@@ -53,81 +53,37 @@ public class DragAndDrop : MonoBehaviour {
                 //Debug.Log("cardNotSelected");
                 //nothing selected, get card
                 onMouseDownMousePos = Input.mousePosition;
-                cardSelectedByClick = false;
+                //cardSelectedByClick = false;
                 Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
                 if (RaycastWithOrder(out hit, ray, Mathf.Infinity, LayerMask.GetMask("Card")))
                 {
                     //Debug.Log("at least 1 object");
                     gameobjectToDrag = hit.collider.gameObject;
-                    //FreeCellGameController freeCellGC = GetComponent<FreeCellGameController>();
                     //Debug.Log("Card clicked");
                     cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModelNew>().StackIn.GetComponent<CardStackViewNew>();
+                    //Debug.Log("onmouseDown gameObjectsToDrag.Count=" + gameObjectsToDrag.Count);
                     gameObjectsToDrag = GameControllerComponent.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved, gameObjectsToDrag.Count);
+                    //Debug.Log("onmouseDown gameObjectsToDrag.Count=" + gameObjectsToDrag.Count);
+
                     if (gameObjectsToDrag.Count > 0){
-                        //Debug.Log("cardStackViewOfCardBeingMoved=" + cardStackViewOfCardBeingMoved);
-                        //Debug.Log("printout of column");
-                        //foreach (KeyValuePair<int, CardView> entry in cardStackViewOfCardBeingMoved.fetchedCards){
-                        //    FCGC.printCardSuitRankFromIndex(entry.Key);
-                        //    SpriteRenderer myr = entry.Value.card.GetComponent<SpriteRenderer>();
-                        //    Debug.Log("sortingOrder = " + myr.sortingOrder);
-                        //}
                         GOCenter = gameobjectToDrag.transform.position;
                         touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                         offset = touchPosition - GOCenter;
-                        //int cardIndex = gameobjectToDrag.GetComponent<CardModel>().cardIndex;
-                        //SpriteRenderer myRenderer = hit.transform.GetComponent<SpriteRenderer>();
-                        //Debug.Log("CardSingleGrab");
-                        //FCGC.printCardSuitRankFromIndex(cardIndex);
-                        //Debug.Log("sortingOrder = " + myRenderer.sortingOrder);
+                    }else{
+                        //clear
+                        //draggingMode = false;
+                        //draggingModeStarted = false;
+                        //cardSelectedByClick = false;
+                        ////FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
 
+                        ////clear variables
+                        //gameobjectToDrag = null;
+                        //cardStackViewOfCardBeingMoved = null;
+                        //gameObjectsToDrag.Clear();
                     }
 
                 }
             }
-            //Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-            ////Debug.Log ("Input.mousePosition="+Input.mousePosition);
-            ////RaycastHit[] rch = Physics.RaycastAll (ray);
-            ////Debug.Log("Length="+rch.Length);
-            ////LayerMask layerMask;
-            ////layerMask = 1 << LayerMask.NameToLayer ("Card"); // only check for collisions with cards
-            ////layerMask = ~(1 << LayerMask.NameToLayer ("layerX")); // ignore collisions with layerX
-            ////layerMask = ~(1 << LayerMask.NameToLayer ("layerX") | 1 << LayerMask.NameToLayer ("layerY")); // ignore both layerX and layerY
-            ////RaycastHit hitTest;
-
-            //if (RaycastWithOrder(out hit, ray, Mathf.Infinity, LayerMask.GetMask("Card")))
-            //{
-            //    gameobjectToDrag = hit.collider.gameObject;
-            //    FreeCellGameController freeCellGC = GetComponent<FreeCellGameController>();
-            //    //Debug.Log("Card clicked");
-            //    cardStackViewOfCardBeingMoved = gameobjectToDrag.GetComponent<CardModel>().zoneIn.GetComponent<CardStackView>();
-            //    gameObjectsToDrag = freeCellGC.onMouseDownObjectsToMove(gameobjectToDrag, Input.mousePosition, cardStackViewOfCardBeingMoved);
-            //    if (gameObjectsToDrag.Count > 0){
-            //        Debug.Log("cardStackViewOfCardBeingMoved=" + cardStackViewOfCardBeingMoved);
-            //        //Debug.Log("printout of column");
-            //        //foreach (KeyValuePair<int, CardView> entry in cardStackViewOfCardBeingMoved.fetchedCards){
-            //        //    FCGC.printCardSuitRankFromIndex(entry.Key);
-            //        //    SpriteRenderer myr = entry.Value.card.GetComponent<SpriteRenderer>();
-            //        //    Debug.Log("sortingOrder = " + myr.sortingOrder);
-            //        //}
-            //        GOCenter = gameobjectToDrag.transform.position;
-            //        touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //        offset = touchPosition - GOCenter;
-            //        //int cardIndex = gameobjectToDrag.GetComponent<CardModel>().cardIndex;
-            //        //SpriteRenderer myRenderer = hit.transform.GetComponent<SpriteRenderer>();
-            //        //Debug.Log("CardSingleGrab");
-            //        //FCGC.printCardSuitRankFromIndex(cardIndex);
-            //        //Debug.Log("sortingOrder = " + myRenderer.sortingOrder);
-            //        draggingMode = true;
-            //        gameobjectToDrag = gameObjectsToDrag[0];
-            //        for (int i = 0; i < gameObjectsToDrag.Count; i++)
-            //        {
-            //            SpriteRenderer sr = gameObjectsToDrag[i].GetComponent<SpriteRenderer>();
-            //            sr.sortingOrder = 100 + i;
-            //        }
-            //    }
-
-            //}
-
 
         }
 		if (Input.GetMouseButton (0)) {
@@ -159,17 +115,7 @@ public class DragAndDrop : MonoBehaviour {
                     gameObjectsToDrag[i].transform.position = new Vector3(newGOCenter.x, newGOCenter.y - 0.3f*i, GOCenter.z);
                 }
             }
-            //if (draggingMode) {
 
-            //touchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            //newGOCenter = touchPosition - offset;
-
-            //    for (int i = 0; i < gameObjectsToDrag.Count; i++)
-            //    {
-            //        gameObjectsToDrag[i].transform.position = new Vector3(newGOCenter.x, newGOCenter.y - 0.3f*i, GOCenter.z);
-            //    }
-
-            //}
         }
 		if (Input.GetMouseButtonUp (0)) {
             currentMousePos = Input.mousePosition;
@@ -190,6 +136,7 @@ public class DragAndDrop : MonoBehaviour {
                 gameObjectsToDrag.Clear();
 
             }
+            //Debug.Log("gameObjectsToDrag.Count="+ gameObjectsToDrag.Count);
             if (!draggingMode && !cardSelectedByClick && gameObjectsToDrag.Count > 0) // nothing confirmed selected or dragged and also something to potentially select
             {
                 //Debug.Log("not dragging not selected and at least one object clicked");

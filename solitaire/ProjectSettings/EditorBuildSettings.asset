@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/scenes/Solitaire.unity
     guid: 85a1d4f9e6cc94d6d9827df3d212e951
+  - enabled: 1
+    path: Assets/scenes/Spider Solitaire.unity
+    guid: ef39e174f401640e08c8b7debf251e27

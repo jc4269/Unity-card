@@ -16,9 +16,9 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
     public Button playAgainButton;
     public Text feedBackText;
-    public Text CardDrawnText;
-    public Button CardDrawnAmountButton;
-    public Button ResetDeckButton;
+    //public Text CardDrawnText;
+    //public Button CardDrawnAmountButton;
+    //public Button ResetDeckButton;
 
     public GameObject RowColBackground;
     public GameObject PileRowBackground;
@@ -28,30 +28,30 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     public List<GameObject> cardsToMoveAsColumn;
     private int CardDrawAmount = 1;
 // --- Button Functions
-    public void ResetDeck(){
-        //take all cards from DrawnPileColumn and put them in deck in the same order.
-        Debug.Log("clicked RESET DECK");
-        //int n = DrawnPileColumn.GetComponent<CardStackNew>().Cards.Count;
-        //for (int i = 0; i < n; i++) {
-        //    GameObject card = DrawnPileColumn.GetComponent<CardStackNew>().Pop();
-        //    card.GetComponent<CardViewNew>().toggleFace(false);
-        //    Deck.GetComponent<CardStackNew>().Push(card);
-        //}
-        Deck.GetComponent<CardStackViewNew>().UpdateStackView();
-        //DrawnPileColumUpdateView();
-        ResetDeckButton.interactable = false;
+    //public void ResetDeck(){
+    //    //take all cards from DrawnPileColumn and put them in deck in the same order.
+    //    Debug.Log("clicked RESET DECK");
+    //    //int n = DrawnPileColumn.GetComponent<CardStackNew>().Cards.Count;
+    //    //for (int i = 0; i < n; i++) {
+    //    //    GameObject card = DrawnPileColumn.GetComponent<CardStackNew>().Pop();
+    //    //    card.GetComponent<CardViewNew>().toggleFace(false);
+    //    //    Deck.GetComponent<CardStackNew>().Push(card);
+    //    //}
+    //    Deck.GetComponent<CardStackViewNew>().UpdateStackView();
+    //    //DrawnPileColumUpdateView();
+    //    ResetDeckButton.interactable = false;
 
-    }
+    //}
 
-    public void CardDrawnAmountChanger(){
-        if (CardDrawAmount == 1){
-            CardDrawAmount = 3;
-        }
-        else{
-            CardDrawAmount = 1;
-        }
-        CardDrawnText.text = "Cards Drawn: " + CardDrawAmount;
-    }
+    //public void CardDrawnAmountChanger(){
+    //    if (CardDrawAmount == 1){
+    //        CardDrawAmount = 3;
+    //    }
+    //    else{
+    //        CardDrawAmount = 1;
+    //    }
+    //    CardDrawnText.text = "Cards Drawn: " + CardDrawAmount;
+    //}
 
     public void backToMenu(int menuIndex)
     {
@@ -66,6 +66,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
     public void playAgain()
     {
+        //Debug.Log("play again");
         resetBoard();
         gameSetup();
     }
@@ -85,7 +86,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
     void gameSetup(){
 
-        CreateDeck(Deck);
+        CreateTwoDecks(Deck);
         for (int i = 0; i < Deck.GetComponent<CardStackNew>().Cards.Count; i++)
         {
             Deck.GetComponent<CardStackNew>().Cards[i].GetComponent<CardViewNew>().toggleFace(false);
@@ -93,21 +94,35 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
             CardStackNew cardStackNew;
         CardStackViewNew cardStackViewNew;
-        //deal cards to each column in this format: 1,2,3,4,5,6,7.
         GameObject card = null;
-        for (int i = 0; i < 7; i++)
+        //5 cards for each column
+        for (int i = 0; i < 8; i++)
         {
             cardStackNew = columns[i].GetComponent<CardStackNew>();
-            for (int j = 0; j < i + 1; j++) // use column index as a quick way to give the correct cards out to each column
+            for (int j = 0; j < 5; j++) // use column index as a quick way to give the correct cards out to each column
             {
                 card = Deck.GetComponent<CardStackNew>().Pop();
                 card.GetComponent<CardViewNew>().toggleFace(false);
                 cardStackNew.Push(card);
             }
+        }
+        //first 4 columns get 1 extra card each.
+        for (int i = 0; i < 4; i++)
+        {
+            cardStackNew = columns[i].GetComponent<CardStackNew>();
+            card = Deck.GetComponent<CardStackNew>().Pop();
+            card.GetComponent<CardViewNew>().toggleFace(false);
+            cardStackNew.Push(card);
+        }
+
+        //set all last cards in column to face up and update the column view
+        for (int i = 0; i < 8; i++)
+        {
+            cardStackNew = columns[i].GetComponent<CardStackNew>();
+            card = cardStackNew.Cards[cardStackNew.Cards.Count-1];
             //last card needs to be visable
             card.GetComponent<CardViewNew>().toggleFace(true);
             cardStackViewNew = columns[i].GetComponent<CardStackViewNew>();
-            //cardStackViewNew.Toggle(cardStackNew.Cards.Count - 1, true);
 
             //update view
             cardStackViewNew.UpdateStackView();
@@ -147,7 +162,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         Vector3 temp;
         float columnOffset = 1.0f;
         float cs;
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 7; i++)
         {
             c = (GameObject)Instantiate(Column);
             rowColBackgroundTemp = (GameObject)Instantiate(RowColBackground);
@@ -350,8 +365,8 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     //}
     // Use this for initialization
     void Start () {
-        ResetDeckButton.interactable = false;
-        CardDrawnText.text = "Cards Drawn: " + CardDrawAmount;
+        //ResetDeckButton.interactable = false;
+        //CardDrawnText.text = "Cards Drawn: " + CardDrawAmount;
         boardSetup();
         gameSetup();
     }
@@ -361,12 +376,8 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 		
 	}
 
-
-    void CreateDeck(GameObject deckStack)
-    {
+    void CreateDeckWithDeckID(CardStackNew cardStackNew, int deckID){
         GameObject card = null;
-        CardStackNew cardStackNew = deckStack.GetComponent<CardStackNew>();
-        //add unshuffled cards to list (deck)
         for (int i = 0; i < 52; i++)
         {
             //clone card
@@ -374,13 +385,36 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
             //init card
             card.GetComponent<CardModelNew>().Index = i;
+            card.GetComponent<CardModelNew>().DeckID = deckID;
             card.GetComponent<CardViewNew>().toggleFace(true);
 
             //add card
             cardStackNew.Push(card);
             //Debug.Log (i);
         }
+    }
 
+    void CreateTwoDecks(GameObject deckStack)
+    {
+        //GameObject card = null;
+        CardStackNew cardStackNew = deckStack.GetComponent<CardStackNew>();
+        //add unshuffled cards to list (deck)
+        //for (int i = 0; i < 52; i++)
+        //{
+        //    //clone card
+        //    card = (GameObject)Instantiate(Card);
+
+        //    //init card
+        //    card.GetComponent<CardModelNew>().Index = i;
+        //    card.GetComponent<CardModelNew>().DeckID = 1;
+        //    card.GetComponent<CardViewNew>().toggleFace(true);
+
+        //    //add card
+        //    cardStackNew.Push(card);
+        //    //Debug.Log (i);
+        //}
+        CreateDeckWithDeckID(cardStackNew, 1);
+        CreateDeckWithDeckID(cardStackNew, 2);
 
         //shuffle cards
         int n = cardStackNew.Cards.Count;        //number of cards in deck

@@ -8,7 +8,7 @@ public class CardModelNew : MonoBehaviour
     //stackIn: belongs to card stack
     public GameObject StackIn { get; set; }
     public bool faceUp = false;
-
+    public int DeckID = -1;
 
 
 }

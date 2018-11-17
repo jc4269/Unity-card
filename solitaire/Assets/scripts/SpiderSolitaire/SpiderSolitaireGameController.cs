@@ -181,7 +181,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                 Debug.Log("card is face down, not valid");
                 return tempList; //should be empty;
             }
-            //Debug.Log("is a column");
+            Debug.Log("cardindex="+getCardRankFromIndex(gcClicked.GetComponent<CardModelNew>().Index));
 
 
             //check if card to pile end is valid (descending rank and alternating card colour)
@@ -391,7 +391,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
         for (int i = 0; i < cardStackNew.Cards.Count/10; i++){
             //put 10 cards in same spot 
-            Debug.Log("offset=" + offset);
+            // Debug.Log("offset=" + offset);
             for (int j = 0; j < 10; j++){
                 card = cardStackNew.Cards[i*10+j];
 
@@ -613,7 +613,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
             if (zoneLastCardIndex == -1)
             {
                 Debug.Log("is empty");
-
+                return true;
             }
 
             if(isCardValidToBeOnTopOfAnotherCardInColumn(zoneLastCardIndex, cardIndex)){

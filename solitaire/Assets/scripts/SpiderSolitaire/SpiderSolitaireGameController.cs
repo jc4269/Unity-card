@@ -249,11 +249,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                     //update cardStack that Card is going into, the hit stack
                     if (cardStackHit.tag == "PileStackRow")
                     {
-                        updatePileStackView(cardStackHit);
-                    }
-                    else if (cardStackHit.tag == "DrawnPileColumn")
-                    {
-                        //DrawnPileColumUpdateView();
+                        updatePileStackView();
                     }
                     else
                     {
@@ -263,20 +259,17 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                     //update cardStack that Card coming from, last zone card was in.
                     if (cardStackIn.tag == "PileStackRow")
                     {
-                        updatePileStackView(cardStackIn);
+                        updatePileStackView();
                     }
-                    else if (cardStackIn.tag == "DrawnPileColumn")
-                    {
-                        //DrawnPileColumUpdateView();
-                    }
+
                     else
                     {
                         cardStackInCardStackViewNew.UpdateStackView();
                     }
 
- 
-                    
 
+
+                    KingToAceCheckAndMove();
                     //check win condition after every valid action.
 
                     bool didWinGame = checkWinGame();
@@ -292,11 +285,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                     //snap back to card stack if not valid
                     if (cardStackIn.tag == "PileStackRow")
                     {
-                        updatePileStackView(cardStackIn);
-                    }
-                    else if (cardStackIn.tag == "DrawnPileColumn")
-                    {
-                        //DrawnPileColumUpdateView();
+                        updatePileStackView();
                     }
                     else
                     {
@@ -309,11 +298,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                 //didn't drop onto stack, so snap back
                 if (cardStackViewOfCardBeingMoved.gameObject.tag == "PileStackRow")
                 {
-                    updatePileStackView(cardStackViewOfCardBeingMoved.gameObject);
-                }
-                else if (cardStackViewOfCardBeingMoved.gameObject.tag == "DrawnPileColumn")
-                {
-                    //DrawnPileColumUpdateView();
+                    updatePileStackView();
                 }
                 else
                 {
@@ -374,21 +359,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     {
         //GameObject card = null;
         CardStackNew cardStackNew = deckStack.GetComponent<CardStackNew>();
-        //add unshuffled cards to list (deck)
-        //for (int i = 0; i < 52; i++)
-        //{
-        //    //clone card
-        //    card = (GameObject)Instantiate(Card);
 
-        //    //init card
-        //    card.GetComponent<CardModelNew>().Index = i;
-        //    card.GetComponent<CardModelNew>().DeckID = 1;
-        //    card.GetComponent<CardViewNew>().toggleFace(true);
-
-        //    //add card
-        //    cardStackNew.Push(card);
-        //    //Debug.Log (i);
-        //}
         CreateDeckWithDeckID(cardStackNew, 1);
         CreateDeckWithDeckID(cardStackNew, 2);
 
@@ -436,10 +407,12 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                 }
             }
             //increment to next pile of 10 cards 
-            offset += 1.0f;
+            offset -= 1.5f;
         }
 
     }
+
+
 
     void UpdateCardWithOffset(GameObject card, CardStackNew cardStackNew, CardStackViewNew cardStackViewNew, float offset, int index){
         CardViewNew cardViewNew;
@@ -694,90 +667,117 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         return piles;
     }
 
+    void KingToAceCheckAndMove(){
+        for (int i = 0; i < columns.Count; i++){
+            if(hasColumnKingToAce(columns[i])){
+                moveKingToAceInColumnToPileStack(columns[i]);
+                //update views
+                columns[i].GetComponent<CardStackViewNew>().UpdateStackView();
+                updatePileStackView();
+            }
+
+        }
+    }
+
+    //since nothing can go ontop of ace, king to ace since will always be the last in column, so go from top till 13 cards taken
+    private void moveKingToAceInColumnToPileStack(GameObject column)
+    {
+        CardStackNew columnCardStackNew = column.GetComponent<CardStackNew>();
+        CardStackNew pileStackCardStackNew = PileStackRow.GetComponent<CardStackNew>();
+        GameObject card = null;
+        for (int i = 0; i < 13; i++){
+            pileStackCardStackNew.Push(columnCardStackNew.Pop());
+        }
+    }
+
+    //in therory, first first KingToAce sequence and returns true if it does.
+    //in practice can't have king on ace so first full sequence found will only be one per column
+    private bool hasColumnKingToAce(GameObject column)
+    {
+        CardStackNew cardStackNew = column.GetComponent<CardStackNew>();
+        GameObject card = null;
+        GameObject lastCard = null;
+        int sequenceCount = 0;
+
+        for (int i = 0; i < cardStackNew.Cards.Count; i++)
+        {
+
+
+            //column needs at least 13 cards left to start checking for sequence
+            if (cardStackNew.Cards.Count - (i + 1) - 13 < 0)
+            {
+                break;
+            }
+            //if card not face up, then can't start checking.
+            if (!card.GetComponent<CardModelNew>().faceUp){
+                continue;
+            }
+
+
+            card = cardStackNew.Cards[i];
+
+            //so if sequence started by being greater than one, check for next valid card in sequence, i.e same suit, rank -1
+            if (sequenceCount > 1)
+            {
+                sequenceCount++;
+                if (!isCardValidToBeOnTopOfAnotherCardInColumnToMoveAsColumn(lastCard.GetComponent<CardModelNew>().Index, card.GetComponent<CardModelNew>().Index))
+                {
+                    sequenceCount = 0;
+
+                }
+                
+            }
+            if(sequenceCount == 13){
+                return true;
+            }
+            //if card == king
+            if (getCardRankFromIndex(card.GetComponent<CardModelNew>().Index) == 12) // king
+            {
+                sequenceCount = 1;
+            }
+
+        }
+
+
+        return false;
+    }
+
+
 
     //custom update function for specific implementation pilestackview (a cardstack/cardstackview object)
-    void updatePileStackView(GameObject pileStack)
+    void updatePileStackView()
     {
-        int i = 0;
-        //GameObject card = null;
-        SpriteRenderer spriteRenderer;
-        Vector3 temp;
-        float co;
-        CardStackNew pileStackCardStackNew = PileStackRow.GetComponent<CardStackNew>();
-        CardStackViewNew pileStackCardStackViewNew = PileStackRow.GetComponent<CardStackViewNew>();
-        // stores the entries at the top of each suit pile (hearts=0, diamonds=1, clubs=2, spades=3)
-        //List<KeyValuePair<int, CardView>> suitPile = new List<KeyValuePair<int, CardView>>();
-        List<GameObject> suitPiles = new List<GameObject>();
-        for (int j = 0; j < 4; j++)
-        {
-            suitPiles.Add(null);
-        }
-        //        suitPile.Add(null);
-        //        suitPile.Add(null);
-        //        suitPile.Add(null);
+        //the way cards are added to pile stack is only when have a full sequeunce and its in order. so just display columns of 13 cards with top card only visible.
 
-        int cardIndex;
-        int cardSuit;
-        int cardRank;
-        int suitPileRank;
-        foreach (GameObject card in pileStackCardStackNew.Cards)
-        {
+        GameObject card = null;
 
-            card.GetComponent<BoxCollider>().enabled = false; // set all cards to disabled, will set top of piles back after
-            cardIndex = card.GetComponent<CardModelNew>().Index;
-            cardSuit = getCardSuitFromIndex(cardIndex);
-            cardRank = getCardRankFromIndex(cardIndex);
-            //Debug.Log("value of suitpile[cardindex]="+suitPiles [cardindex]);
-            //Debug.Log("entryCardSuit="+cardSuit+", entryCardRank="+cardRank);
-            if (suitPiles[cardSuit] == null)
-            { // empty
-                suitPiles[cardSuit] = card;
-            }
-            else
+        CardStackNew cardStackNew = PileStackRow.GetComponent<CardStackNew>();
+        CardStackViewNew cardStackViewNew = PileStackRow.GetComponent<CardStackViewNew>();
+
+        float offset = 0.0f;
+        int index;
+        for (int i = 0; i < cardStackNew.Cards.Count / 8; i++)
+        {
+            //put 10 cards in same spot 
+            Debug.Log("offset=" + offset);
+            for (int j = 0; j < 13; j++)
             {
-                suitPileRank = getCardRankFromIndex(suitPiles[cardSuit].GetComponent<CardModelNew>().Index);
-                //Debug.Log("suitCardRank="+suitPileRank);
-                //if card of same suit is higher than previous recorded, update suitpile column with current card entry.
-                if (suitPileRank < cardRank)
+                index = i * 8 + j;
+                card = cardStackNew.Cards[index];
+
+                UpdateCardWithOffset(card, cardStackNew, cardStackViewNew, offset, index);
+            }
+
+            //set interactive last, most top one.
+            if (card)
+            {
+                if (card.GetComponent<BoxCollider>() != null)
                 {
-                    suitPiles[cardSuit] = card;
+                    card.GetComponent<BoxCollider>().enabled = false;
                 }
             }
-
-
-
-
-
-            spriteRenderer = card.GetComponent<SpriteRenderer>();
-            //Vector3 temp = c.transform.position;
-            co = -1.6f * cardSuit;
-
-
-            temp = pileStackCardStackViewNew.StartPosition + pileStackCardStackViewNew.OffsetPositionWithDirection(co);
-
-            card.transform.position = temp;
-            spriteRenderer.sortingOrder = cardRank;
-
-            i++;
-        }
-
-
-        //set cardstack object collider size to encompass all cards.
-        //TODO:see if this dynamicism is still needed?
-
-        //set pile top cards to enabled.
-        for (int j = 0; j < 4; j++)
-        {
-
-            if (suitPiles[j] != null)
-            {
-                Debug.Log("j=" + j + ", rank=" + getCardRankFromIndex(suitPiles[j].GetComponent<CardModelNew>().Index));
-                suitPiles[j].GetComponent<BoxCollider>().enabled = true;
-            }
-            else
-            {
-                Debug.Log("j=" + j + " is empty.");
-            }
+            //increment to next pile of 13 cards 
+            offset += 1.0f;
         }
     }
 
@@ -800,7 +800,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                 return true;
             }
         }
-        
+        return false;
 
     }
 

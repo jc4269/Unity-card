@@ -535,7 +535,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
             }
             else
             { // start checking for valid column to move all card down from selected card
-                if (!isCardValidToBeOnTopOfAnotherCardInColumn(previousCardIndex, c.GetComponent<CardModelNew>().Index))
+                if (!isCardValidToBeOnTopOfAnotherCardInColumnToMoveAsColumn(previousCardIndex, c.GetComponent<CardModelNew>().Index))
                 {
                     return false;
                 }
@@ -546,17 +546,31 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         return true;
     }
 
-    //assumes there is a previous card to check. still need to check if previous card is there.
+
     bool isCardValidToBeOnTopOfAnotherCardInColumn(int previousCardIndex, int currentCardIndex)
+    {
+        //if current card rank is one less than previous card and suit of current card is opposite colour to previous card,
+        int currentCardRank = getCardRankFromIndex(currentCardIndex);
+        //int currentCardSuit = getCardSuitFromIndex(currentCardIndex);
+        int previousCardRank = getCardRankFromIndex(previousCardIndex);
+        //int previousCardSuit = getCardSuitFromIndex(previousCardIndex);
+        if (currentCardRank == previousCardRank - 1)
+        { // card needs to be one less than zone card
+          //then valid, add card to column.
+            return true;
+        }
+        return false;
+    }
+
+    bool isCardValidToBeOnTopOfAnotherCardInColumnToMoveAsColumn(int previousCardIndex, int currentCardIndex)
     {
         //if current card rank is one less than previous card and suit of current card is opposite colour to previous card,
         int currentCardRank = getCardRankFromIndex(currentCardIndex);
         int currentCardSuit = getCardSuitFromIndex(currentCardIndex);
         int previousCardRank = getCardRankFromIndex(previousCardIndex);
         int previousCardSuit = getCardSuitFromIndex(previousCardIndex);
-
-        if (currentCardSuit < 2 && previousCardSuit >= 2 || currentCardSuit >= 2 && previousCardSuit < 2)
-        { //make sure suit is different colour
+        if (currentCardSuit == previousCardSuit)
+        {
             if (currentCardRank == previousCardRank - 1)
             { // card needs to be one less than zone card
               //then valid, add card to column.
@@ -622,24 +636,15 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
             //            Debug.Log ("zoneLastCardRank="+zoneLastCardRank);
 
 
-            // if no cards on column, so add card - > value.
+            // if no cards on column, allow any card
             if (zoneLastCardIndex == -1)
             {
                 Debug.Log("is empty");
-                // TODO: allow only kings to go into empty zones.
-                if (cardRank == 12) // king
-                { 
-                    return true;
-                }
+
             }
-            //if card rank is one less than zone last card and suit of card is opposite colour to zone last card,
-            if (cardSuit < 2 && zoneLastCardSuit >= 2 || cardSuit >= 2 && zoneLastCardSuit < 2)
-            { //make sure suit is different colour
-                if (cardRank == zoneLastCardRank - 1)
-                { // card needs to be one less than zone card
-                    //then valid, add card to column.
-                    return true;
-                }
+
+            if(isCardValidToBeOnTopOfAnotherCardInColumn(zoneLastCardIndex, cardIndex)){
+                return true;
             }
 
         }

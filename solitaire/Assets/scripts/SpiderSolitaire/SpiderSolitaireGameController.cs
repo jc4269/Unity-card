@@ -28,30 +28,6 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     public List<GameObject> cardsToMoveAsColumn;
     private int CardDrawAmount = 1;
 // --- Button Functions
-    //public void ResetDeck(){
-    //    //take all cards from DrawnPileColumn and put them in deck in the same order.
-    //    Debug.Log("clicked RESET DECK");
-    //    //int n = DrawnPileColumn.GetComponent<CardStackNew>().Cards.Count;
-    //    //for (int i = 0; i < n; i++) {
-    //    //    GameObject card = DrawnPileColumn.GetComponent<CardStackNew>().Pop();
-    //    //    card.GetComponent<CardViewNew>().toggleFace(false);
-    //    //    Deck.GetComponent<CardStackNew>().Push(card);
-    //    //}
-    //    Deck.GetComponent<CardStackViewNew>().UpdateStackView();
-    //    //DrawnPileColumUpdateView();
-    //    ResetDeckButton.interactable = false;
-
-    //}
-
-    //public void CardDrawnAmountChanger(){
-    //    if (CardDrawAmount == 1){
-    //        CardDrawAmount = 3;
-    //    }
-    //    else{
-    //        CardDrawAmount = 1;
-    //    }
-    //    CardDrawnText.text = "Cards Drawn: " + CardDrawAmount;
-    //}
 
     public void backToMenu(int menuIndex)
     {
@@ -87,16 +63,17 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     void gameSetup(){
 
         CreateTwoDecks(Deck);
+        //deck cards are face down
         for (int i = 0; i < Deck.GetComponent<CardStackNew>().Cards.Count; i++)
         {
             Deck.GetComponent<CardStackNew>().Cards[i].GetComponent<CardViewNew>().toggleFace(false);
         }
 
-            CardStackNew cardStackNew;
+        CardStackNew cardStackNew;
         CardStackViewNew cardStackViewNew;
         GameObject card = null;
         //5 cards for each column
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i <columns.Count; i++)
         {
             cardStackNew = columns[i].GetComponent<CardStackNew>();
             for (int j = 0; j < 5; j++) // use column index as a quick way to give the correct cards out to each column
@@ -116,7 +93,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         }
 
         //set all last cards in column to face up and update the column view
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < columns.Count; i++)
         {
             cardStackNew = columns[i].GetComponent<CardStackNew>();
             card = cardStackNew.Cards[cardStackNew.Cards.Count-1];
@@ -130,7 +107,8 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
         //remaining cards stay in the deck
         //move remaining cards in deck into position
-        Deck.GetComponent<CardStackViewNew>().UpdateStackView();
+        //Deck.GetComponent<CardStackViewNew>().UpdateStackView();
+        DeckUpdateView();
     }
 
     void boardSetup(){
@@ -162,7 +140,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         Vector3 temp;
         float columnOffset = 1.0f;
         float cs;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 9; i++)
         {
             c = (GameObject)Instantiate(Column);
             rowColBackgroundTemp = (GameObject)Instantiate(RowColBackground);
@@ -190,9 +168,11 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         {
             Debug.Log("clicked card in deck.");
             //draw cards from deck (up to card drawn amount option) to drawnpilerow
-            //DrawCardsFromDeckToDrawnPile();
+            DrawCardsFromDeckToColumns();
+
             Debug.Log("templist.count="+tempList.Count);
             return tempList; // empty, dont do anything.
+
         }
         if (cardStackViewOfCardBeingMoved.tag == "Column")
         {
@@ -344,25 +324,21 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     }
 // --- END Drag and Drop functions
 
-    //void DrawCardsFromDeckToDrawnPile(){
-    //    for (int i = 0; i < CardDrawAmount; i++){
-    //        if (Deck.GetComponent<CardStackNew>().Cards.Count > 0)
-    //        {
-    //            GameObject card = Deck.GetComponent<CardStackNew>().Pop();
-    //            card.GetComponent<CardViewNew>().toggleFace(true);
-    //            DrawnPileColumn.GetComponent<CardStackNew>().Push(card);
-    //        }
-    //        else { // deck is empty no need to continue
+    void DrawCardsFromDeckToColumns(){
+        CardStackNew cardStackNew;
+        CardStackViewNew cardStackViewNew;
+        for (int i = 0; i < columns.Count; i++){
+            cardStackNew = columns[i].GetComponent<CardStackNew>();
+            GameObject card = Deck.GetComponent<CardStackNew>().Pop();
+            card.GetComponent<CardViewNew>().toggleFace(true);
+            cardStackNew.GetComponent<CardStackNew>().Push(card);
+            cardStackViewNew = columns[i].GetComponent<CardStackViewNew>();
+            cardStackViewNew.UpdateStackView();
 
-    //            break;
-    //        }
-    //    }
-    //    if(Deck.GetComponent<CardStackNew>().Cards.Count == 0){
-    //        ResetDeckButton.interactable = true;
-    //    }
-    //    Deck.GetComponent<CardStackViewNew>().UpdateStackView();
-    //    DrawnPileColumUpdateView();
-    //}
+        }
+        //Deck.GetComponent<CardStackViewNew>().UpdateStackView();
+        DeckUpdateView();
+    }
     // Use this for initialization
     void Start () {
         //ResetDeckButton.interactable = false;
@@ -433,65 +409,37 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
     }
 
-    //void DrawnPileColumUpdateView(){
-    //    //the last 3 cards get offset, the rest are in a pile behind the first card.
-    //    //or if just 1 card drawn, stack cards.
-    //    if (CardDrawAmount == 1)
-    //    {
-    //        //Debug.Log("CardDrawnAmount == 1");
-    //        DrawnPileColumn.GetComponent<CardStackViewNew>().Offset = 0;
-    //        DrawnPileColumn.GetComponent<CardStackViewNew>().UpdateStackView();
-    //    }
-    //    else{ //3 cards drawn
-    //        //custom, put all but the last 2 cards at start position then start using offset for the last 2 cards.
+    //for spider solitaire, will show the deck with in piles of 8 cards.
+    void DeckUpdateView(){
+        GameObject card = null;
 
-    //        GameObject lastCard = null;
-    //        GameObject card;
+        CardStackNew cardStackNew = Deck.GetComponent<CardStackNew>();
+        CardStackViewNew cardStackViewNew = Deck.GetComponent<CardStackViewNew>();
+        Debug.Log("DeckUpdateView cardStackNew.Cards.Count=" + cardStackNew.Cards.Count);
+        float offset = 0.0f;
 
-    //        CardStackNew cardStackNew = DrawnPileColumn.GetComponent<CardStackNew>();
-    //        CardStackViewNew cardStackViewNew = DrawnPileColumn.GetComponent<CardStackViewNew>();
-    //        for (int i = 0; i < cardStackNew.Cards.Count - 2; i++)
-    //        {
-    //            card = cardStackNew.Cards[i];
-    //            UpdateCardWithOffset(card, cardStackNew, cardStackViewNew, 0, i);
+        for (int i = 0; i < cardStackNew.Cards.Count/10; i++){
+            //put 10 cards in same spot 
+            Debug.Log("offset=" + offset);
+            for (int j = 0; j < 10; j++){
+                card = cardStackNew.Cards[i*10+j];
 
-    //            //lastCard = card;
-    //        }
+                UpdateCardWithOffset(card, cardStackNew, cardStackViewNew, offset, i*10+j);
+            }
 
-    //        //now apply offsets to last 2 cards, if 
-    //        int start = -1;
-    //        if (cardStackNew.Cards.Count >= 2)
-    //        {
-    //            start = cardStackNew.Cards.Count - 2;
-    //        }
-    //        if(cardStackNew.Cards.Count == 1){
-    //            start = 0;
-    //        }
-    //        if (start >= 0)
-    //        {
-    //            float offset = 0.0f;
-    //            for (int i = start; i < cardStackNew.Cards.Count; i++)
-    //            {
-    //                card = cardStackNew.Cards[i];
-    //                offset += -0.5f;
-    //                UpdateCardWithOffset(card, cardStackNew, cardStackViewNew, offset, i);
+            //set interactive last, most top one.
+            if (card)
+            {
+                if (card.GetComponent<BoxCollider>() != null)
+                {
+                    card.GetComponent<BoxCollider>().enabled = true;
+                }
+            }
+            //increment to next pile of 10 cards 
+            offset += 1.0f;
+        }
 
-    //                lastCard = card;
-    //            }
-    //        }
-    //        //set cardstack collider size to encompass all cards.
-    //        //TODO:see if this dynamicism is still needed?
-
-    //        //last object processed now gets box colider enabled. Saves using if statement in loop above for now.
-    //        if (lastCard)
-    //        {
-    //            if (lastCard.GetComponent<BoxCollider>() != null)
-    //            {
-    //                lastCard.GetComponent<BoxCollider>().enabled = true;
-    //            }
-    //        }
-    //    }
-    //}
+    }
 
     void UpdateCardWithOffset(GameObject card, CardStackNew cardStackNew, CardStackViewNew cardStackViewNew, float offset, int index){
         CardViewNew cardViewNew;

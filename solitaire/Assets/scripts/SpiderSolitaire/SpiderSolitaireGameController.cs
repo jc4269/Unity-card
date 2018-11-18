@@ -316,6 +316,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
             cardStackNew = columns[i].GetComponent<CardStackNew>();
             GameObject card = Deck.GetComponent<CardStackNew>().Pop();
             card.GetComponent<CardViewNew>().toggleFace(true);
+            card.GetComponent<BoxCollider>().enabled = true;
             cardStackNew.GetComponent<CardStackNew>().Push(card);
             cardStackViewNew = columns[i].GetComponent<CardStackViewNew>();
             cardStackViewNew.UpdateStackView();
@@ -459,6 +460,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         //go through fetched list to find where selected card is then do check from there
         bool foundSelectedCard = false;
         int selectedCardIndex = card.GetComponent<CardModelNew>().Index;
+        int selectedCardDeckID = card.GetComponent<CardModelNew>().DeckID;
         List<GameObject> temp = new List<GameObject>();
 
         foreach (GameObject c in columnCardStackInCardStackNew.Cards)
@@ -467,7 +469,7 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
             //find selected card
             if (!foundSelectedCard)
             {
-                if (c.GetComponent<CardModelNew>().Index == selectedCardIndex)
+                if (c.GetComponent<CardModelNew>().Index == selectedCardIndex && c.GetComponent<CardModelNew>().DeckID == selectedCardDeckID)
                 {
                     foundSelectedCard = true;
                     temp.Add(c);
@@ -495,14 +497,19 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         bool foundSelectedCard = false;
         int previousCardIndex = -1;
         int selectedCardIndex = card.GetComponent<CardModelNew>().Index;
+        int selectedCardDeckID = card.GetComponent<CardModelNew>().DeckID;
         foreach (GameObject c in columnCardStackInCardStackNew.Cards)
         {
 
             //find selected card
             if (!foundSelectedCard)
-            {
-                if (c.GetComponent<CardModelNew>().Index == selectedCardIndex)
+            {   
+
+                if (c.GetComponent<CardModelNew>().Index == selectedCardIndex && c.GetComponent<CardModelNew>().DeckID == selectedCardDeckID)
                 {
+                    Debug.Log("c.GetComponent<CardModelNew>().Index="+c.GetComponent<CardModelNew>().Index + ", selectedCardIndex=" + selectedCardIndex);
+                    Debug.Log("c.GetComponent<CardModelNew>().DeckID=" + c.GetComponent<CardModelNew>().DeckID + ", selectedCardDeckID=" + selectedCardDeckID);
+
                     foundSelectedCard = true;
                 }
             }

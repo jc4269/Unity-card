@@ -312,7 +312,7 @@ MonoBehaviour:
   ReverseLayerOrder: 0
   IsLastCardClickableOnly: 0
   IsAllCardsFaceUp: 0
-  IsLastCardOnlyFaceUp: 1
+  IsLastCardOnlyFaceUp: 0
 --- !u!114 &99606564
 MonoBehaviour:
   m_ObjectHideFlags: 0

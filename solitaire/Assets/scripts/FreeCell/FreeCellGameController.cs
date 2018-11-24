@@ -76,7 +76,9 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
 
     // Use this for initialization
     void Start () {
-
+        //testing
+        GetComponent<CommandManager>().ExecuteCommand(new CommandMoveCards());
+        //end testing
 
         boardSetup ();
         gameSetup ();

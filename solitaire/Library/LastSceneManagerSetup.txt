@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/scenes/Solitaire.unity
+- path: Assets/scenes/Spider Solitaire.unity
   isLoaded: 1
   isActive: 1

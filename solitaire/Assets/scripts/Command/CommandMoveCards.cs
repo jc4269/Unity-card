@@ -42,22 +42,22 @@ public class CommandMoveCards : ICommand
         //CardStackNew cardStackHitCardStackNew = ToCardStack.GetComponent<CardStackNew>();
         //cardStackInCardStackNew.Cards.Remove(card);
         //cardStackHitCardStackNew.Push(card);
-        Debug.Log("Inside Swap");
-        Debug.Log("FromCardStack.GetComponent<CardStackNew>().Cards.Count=" + FromCardStack.GetComponent<CardStackNew>().Cards.Count);
-        Debug.Log("ToCardStack.GetComponent<CardStackNew>().Cards.Count=" + ToCardStack.GetComponent<CardStackNew>().Cards.Count);
+        //Debug.Log("Inside Swap");
+        //Debug.Log("FromCardStack.GetComponent<CardStackNew>().Cards.Count=" + FromCardStack.GetComponent<CardStackNew>().Cards.Count);
+        //Debug.Log("ToCardStack.GetComponent<CardStackNew>().Cards.Count=" + ToCardStack.GetComponent<CardStackNew>().Cards.Count);
         fromCardStack.GetComponent<CardStackNew>().Cards.Remove(card);
         toCardStack.GetComponent<CardStackNew>().Push(card);
-        Debug.Log("FromCardStack.GetComponent<CardStackNew>().Cards.Count=" + FromCardStack.GetComponent<CardStackNew>().Cards.Count);
-        Debug.Log("ToCardStack.GetComponent<CardStackNew>().Cards.Count=" + ToCardStack.GetComponent<CardStackNew>().Cards.Count);
+        //Debug.Log("FromCardStack.GetComponent<CardStackNew>().Cards.Count=" + FromCardStack.GetComponent<CardStackNew>().Cards.Count);
+        //Debug.Log("ToCardStack.GetComponent<CardStackNew>().Cards.Count=" + ToCardStack.GetComponent<CardStackNew>().Cards.Count);
     }
 
     public void Undo()
     {
         //take cards from the toCardStack (new owner) and put them into fromCardStack (old owner) in same order.
         Debug.Log("Undoing CommandMoveCards action");
-        Debug.Log("CardsToMove.Count="+ CardsToMove.Count);
-        Debug.Log("ToCardStack.tag="+ ToCardStack.tag);
-        Debug.Log("FromCardStack.tag=" + FromCardStack.tag);
+        //Debug.Log("CardsToMove.Count="+ CardsToMove.Count);
+        //Debug.Log("ToCardStack.tag="+ ToCardStack.tag);
+        //Debug.Log("FromCardStack.tag=" + FromCardStack.tag);
         for (int i = 0; i < CardsToMove.Count; i++)
         {
             SwapCard(CardsToMove[i], ToCardStack, FromCardStack);

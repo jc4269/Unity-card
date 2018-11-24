@@ -27,6 +27,20 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
     public List<GameObject> cardsToMoveAsColumn;
     private int CardDrawAmount = 1;
 // --- Button Functions
+    public void Undo()
+    {
+        GetComponent<CommandManager>().UndoCommand();
+        //then update views
+        //update view after putting cards in.
+        for (int i = 0; i < 7; i++)
+        {
+            columns[i].GetComponent<CardStackViewNew>().UpdateStackView();
+        }
+        Deck.GetComponent<CardStackViewNew>().UpdateStackView();
+        DrawnPileColumUpdateView();
+        updatePileStackView(PileStackRow);
+    }
+
     public void ResetDeck(){
         //take all cards from DrawnPileColumn and put them in deck in the same order.
         Debug.Log("clicked RESET DECK");
@@ -238,17 +252,22 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
                 if (checkIfValidDrop(cardStackHit, selectedCardDragged, sizeOfColumnBeingMoved))
                 {
                     Debug.Log("Valid Drop and gcdraggedlist.count=" + gcDraggedList.Count);
+                    //valid so update all cards in column being dragged using command action.
+                    //setup command action
+                    SolitaireCommandMoveCards solitaireCommandMoveCards = new SolitaireCommandMoveCards(gcDraggedList, cardStackIn, cardStackHit);
+                    //execute
+                    GetComponent<CommandManager>().ExecuteCommand(solitaireCommandMoveCards);
                     //valid so update all cards in column being dragged.
-                    for (int i = 0; i < gcDraggedList.Count; i++)
-                    {
-                        cardModelNew = gcDraggedList[i].GetComponent<CardModelNew>();
-                        //cardStackInCardStackViewNew.removeCardFromFetchedWithIndex(cm.cardIndex);
-                        cardStackInCardStackNew.Cards.Remove(gcDraggedList[i]);
-                        //cm.zoneIn = cardStackHit; //updating to cards new zone
-                        cardStackHitCardStack.Push(gcDraggedList[i]);
-                    }
+                    //for (int i = 0; i < gcDraggedList.Count; i++)
+                    //{
+                    //    cardModelNew = gcDraggedList[i].GetComponent<CardModelNew>();
+                    //    //cardStackInCardStackViewNew.removeCardFromFetchedWithIndex(cm.cardIndex);
+                    //    cardStackInCardStackNew.Cards.Remove(gcDraggedList[i]);
+                    //    //cm.zoneIn = cardStackHit; //updating to cards new zone
+                    //    cardStackHitCardStack.Push(gcDraggedList[i]);
+                    //}
 
-                    CheckAndFlipLastCardOfColumnCardStack(cardStackInCardStackNew);
+                    //CheckAndFlipLastCardOfColumnCardStack(cardStackInCardStackNew);
 
                     //update cardStack that Card is going into, the hit stack
                     if (cardStackHit.tag == "PileStackRow")
@@ -329,18 +348,10 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
 // --- END Drag and Drop functions
 
     void DrawCardsFromDeckToDrawnPile(){
-        for (int i = 0; i < CardDrawAmount; i++){
-            if (Deck.GetComponent<CardStackNew>().Cards.Count > 0)
-            {
-                GameObject card = Deck.GetComponent<CardStackNew>().Pop();
-                card.GetComponent<CardViewNew>().toggleFace(true);
-                DrawnPileColumn.GetComponent<CardStackNew>().Push(card);
-            }
-            else { // deck is empty no need to continue
-
-                break;
-            }
-        }
+        //setup command action
+        CommandDrawCards commandDrawCards = new CommandDrawCards(CardDrawAmount, Deck, DrawnPileColumn);
+        //execute
+        GetComponent<CommandManager>().ExecuteCommand(commandDrawCards);
         if(Deck.GetComponent<CardStackNew>().Cards.Count == 0){
             ResetDeckButton.interactable = true;
         }
@@ -783,18 +794,18 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
 
             if (suitPiles[j] != null)
             {
-                Debug.Log("j=" + j + ", rank=" + getCardRankFromIndex(suitPiles[j].GetComponent<CardModelNew>().Index));
+                //Debug.Log("j=" + j + ", rank=" + getCardRankFromIndex(suitPiles[j].GetComponent<CardModelNew>().Index));
                 suitPiles[j].GetComponent<BoxCollider>().enabled = true;
             }
             else
             {
-                Debug.Log("j=" + j + " is empty.");
+                //Debug.Log("j=" + j + " is empty.");
             }
         }
     }
 
     //if column card was moved check if last card is face down, and if so flip it face up.
-    void CheckAndFlipLastCardOfColumnCardStack(CardStackNew cardStackInCardStackNew)
+    public void CheckAndFlipLastCardOfColumnCardStack(CardStackNew cardStackInCardStackNew)
     {
         if (cardStackInCardStackNew.Cards.Count > 0 && cardStackInCardStackNew.Cards[cardStackInCardStackNew.Cards.Count - 1].GetComponent<CardModelNew>().faceUp == false)
         {

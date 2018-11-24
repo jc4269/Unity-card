@@ -474,12 +474,12 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
                 //FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
                 if (checkIfValidDrop (cardStackHit, selectedCardDragged, sizeOfColumnBeingMoved)) {
                     Debug.Log("Valid Drop and gcdraggedlist.count="+ gcDraggedList.Count);
-
+                    //valid so update all cards in column being dragged using command action.
                     //setup command action
                     CommandMoveCards commandMoveCards = new CommandMoveCards(gcDraggedList, cardStackIn, cardStackHit);
                     //
                     GetComponent<CommandManager>().ExecuteCommand(commandMoveCards);
-                    //valid so update all cards in column being dragged using command action.
+
                     //for (int i = 0; i < gcDraggedList.Count; i++)
                     //{
                     //    cardModelNew = gcDraggedList[i].GetComponent<CardModelNew>();

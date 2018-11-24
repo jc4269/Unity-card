@@ -24,6 +24,18 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
     public List<GameObject> columns;
     public List<GameObject> cardsToMoveAsColumn;
 
+    public void Undo(){
+        GetComponent<CommandManager>().UndoCommand();
+        //then update views
+        //update view after putting cards in.
+        for (int i = 0; i < 8; i++)
+        {
+            columns[i].GetComponent<CardStackViewNew>().UpdateStackView();
+        }
+        freeCardRow.GetComponent<CardStackViewNew>().UpdateStackView();
+        updatePileStackView(pileStackRow);
+    }
+
     public void backToMenu(int menuIndex){
         //clean up memory
         resetBoard();
@@ -76,9 +88,6 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
 
     // Use this for initialization
     void Start () {
-        //testing
-        GetComponent<CommandManager>().ExecuteCommand(new CommandMoveCards());
-        //end testing
 
         boardSetup ();
         gameSetup ();
@@ -166,7 +175,7 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
         }
 
         //update view after putting cards in.
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 8; i++)
         {
             cardStackViewNew = columns[i].GetComponent<CardStackViewNew>();
             cardStackViewNew.UpdateStackView();
@@ -465,15 +474,20 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
                 //FreeCellGameController freeCellGC = GetComponent<FreeCellGameController> ();
                 if (checkIfValidDrop (cardStackHit, selectedCardDragged, sizeOfColumnBeingMoved)) {
                     Debug.Log("Valid Drop and gcdraggedlist.count="+ gcDraggedList.Count);
-                    //valid so update all cards in column being dragged.
-                    for (int i = 0; i < gcDraggedList.Count; i++)
-                    {
-                        cardModelNew = gcDraggedList[i].GetComponent<CardModelNew>();
-                        //cardStackInCardStackViewNew.removeCardFromFetchedWithIndex(cm.cardIndex);
-                        cardStackInCardStackNew.Cards.Remove(gcDraggedList[i]);
-                        //cm.zoneIn = cardStackHit; //updating to cards new zone
-                        cardStackHitCardStack.Push(gcDraggedList[i]);
-                    }
+
+                    //setup command action
+                    CommandMoveCards commandMoveCards = new CommandMoveCards(gcDraggedList, cardStackIn, cardStackHit);
+                    //
+                    GetComponent<CommandManager>().ExecuteCommand(commandMoveCards);
+                    //valid so update all cards in column being dragged using command action.
+                    //for (int i = 0; i < gcDraggedList.Count; i++)
+                    //{
+                    //    cardModelNew = gcDraggedList[i].GetComponent<CardModelNew>();
+                    //    //cardStackInCardStackViewNew.removeCardFromFetchedWithIndex(cm.cardIndex);
+                    //    cardStackInCardStackNew.Cards.Remove(gcDraggedList[i]);
+                    //    //cm.zoneIn = cardStackHit; //updating to cards new zone
+                    //    cardStackHitCardStack.Push(gcDraggedList[i]);
+                    //}
                     //update cardStack that Card is going into, the hit stack
                     if (cardStackHit.tag == "PileStackRow") {
                         updatePileStackView (cardStackHit);

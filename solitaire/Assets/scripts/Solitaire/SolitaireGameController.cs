@@ -74,6 +74,8 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
         //TODO: do i need to get rid of columns?
         //reset undo manager
         GetComponent<CommandManager>().Clear();
+        //garbage clean up
+        System.GC.Collect();
         //then load menu
         SceneManager.LoadScene(menuIndex);
     }
@@ -83,6 +85,8 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
         resetBoard();
         //reset undo manager
         GetComponent<CommandManager>().Clear();
+        //garbage clean up
+        System.GC.Collect();
         gameSetup();
     }
 

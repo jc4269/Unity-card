@@ -44,6 +44,8 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
 
         //reset undo manager
         GetComponent<CommandManager>().Clear();
+        //garbage clean up
+        System.GC.Collect();
         //then load menu
         SceneManager.LoadScene(menuIndex);
     }
@@ -71,6 +73,8 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
         resetBoard();
         //reset undo manager
         GetComponent<CommandManager>().Clear();
+        //garbage clean up
+        System.GC.Collect();
         gameSetup ();
     }
 

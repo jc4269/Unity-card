@@ -51,6 +51,9 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         //reset undo manager
         GetComponent<CommandManager>().Clear();
 
+        //garbage clean up
+        System.GC.Collect();
+
         //then load menu
         SceneManager.LoadScene(menuIndex);
     }
@@ -61,7 +64,8 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
         resetBoard();
         //reset undo manager
         GetComponent<CommandManager>().Clear();
-
+        //garbage clean up
+        System.GC.Collect();
         gameSetup();
     }
 

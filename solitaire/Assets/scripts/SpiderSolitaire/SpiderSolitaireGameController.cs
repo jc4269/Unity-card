@@ -48,6 +48,9 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 
         //TODO: do i need to get rid of columns?
 
+        //reset undo manager
+        GetComponent<CommandManager>().Clear();
+
         //then load menu
         SceneManager.LoadScene(menuIndex);
     }
@@ -56,6 +59,9 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     {
         //Debug.Log("play again");
         resetBoard();
+        //reset undo manager
+        GetComponent<CommandManager>().Clear();
+
         gameSetup();
     }
 

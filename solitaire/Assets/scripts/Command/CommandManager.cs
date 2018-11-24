@@ -22,4 +22,8 @@ public class CommandManager : MonoBehaviour{
         }
         //Debug.Log("ExecuteCommand after undo commands.count=" + commands.Count);
     }
+
+    public void Clear(){
+        commands.Clear();
+    }
 }

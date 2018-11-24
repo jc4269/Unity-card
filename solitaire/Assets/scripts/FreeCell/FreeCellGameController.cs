@@ -42,6 +42,8 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
 
         //TODO: do i need to get rid of columns?
 
+        //reset undo manager
+        GetComponent<CommandManager>().Clear();
         //then load menu
         SceneManager.LoadScene(menuIndex);
     }
@@ -66,24 +68,10 @@ public class FreeCellGameController : MonoBehaviour, IGameController {
     }
 
     public void playAgain(){
-        //Debug.Log ("Play Again Pressed");
-        //disable play again button
-        //        playAgainButton.interactable = false;    //reset board
         resetBoard();
-
+        //reset undo manager
+        GetComponent<CommandManager>().Clear();
         gameSetup ();
-//        //deck.GetComponent<CardStackView> ().showCards ();
-//        dealersFirstCard = -1;
-//
-//        //enable gameplay buttons
-//        hitButton.interactable = true;
-//        standButton.interactable = true;
-//
-//
-//        //reset feedback text
-//        feedBackText.text = "Playing again!";
-//
-//        startGame ();
     }
 
     // Use this for initialization

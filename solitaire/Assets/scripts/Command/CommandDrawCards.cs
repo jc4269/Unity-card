@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//action: moves card(s) from one stack to another.
+//action: draw cards from a deck to a stack face up. 
 public class CommandDrawCards : ICommand
 {
     int CardsToDraw;

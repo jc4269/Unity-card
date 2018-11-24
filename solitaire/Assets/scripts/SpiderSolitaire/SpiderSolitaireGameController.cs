@@ -28,6 +28,18 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
     public List<GameObject> cardsToMoveAsColumn;
     private int CardDrawAmount = 1;
 // --- Button Functions
+    public void Undo()
+    {
+        GetComponent<CommandManager>().UndoCommand();
+        //then update views
+        //update view after putting cards in.
+        for (int i = 0; i < columns.Count; i++)
+        {
+            columns[i].GetComponent<CardStackViewNew>().UpdateStackView();
+        }
+        DeckUpdateView();
+        updatePileStackView();
+    }
 
     public void backToMenu(int menuIndex)
     {
@@ -234,17 +246,22 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
                 if (checkIfValidDrop(cardStackHit, selectedCardDragged, sizeOfColumnBeingMoved))
                 {
                     Debug.Log("Valid Drop and gcdraggedlist.count=" + gcDraggedList.Count);
+                    //valid so update all cards in column being dragged using command action.
+                    //setup command action
+                    CommandMoveCardsAndFlipCard commandMoveCardsAndFlipCard = new CommandMoveCardsAndFlipCard(gcDraggedList, cardStackIn, cardStackHit);
+                    //execute
+                    GetComponent<CommandManager>().ExecuteCommand(commandMoveCardsAndFlipCard);
                     //valid so update all cards in column being dragged.
-                    for (int i = 0; i < gcDraggedList.Count; i++)
-                    {
-                        cardModelNew = gcDraggedList[i].GetComponent<CardModelNew>();
-                        //cardStackInCardStackViewNew.removeCardFromFetchedWithIndex(cm.cardIndex);
-                        cardStackInCardStackNew.Cards.Remove(gcDraggedList[i]);
-                        //cm.zoneIn = cardStackHit; //updating to cards new zone
-                        cardStackHitCardStack.Push(gcDraggedList[i]);
-                    }
+                    //for (int i = 0; i < gcDraggedList.Count; i++)
+                    //{
+                    //    cardModelNew = gcDraggedList[i].GetComponent<CardModelNew>();
+                    //    //cardStackInCardStackViewNew.removeCardFromFetchedWithIndex(cm.cardIndex);
+                    //    cardStackInCardStackNew.Cards.Remove(gcDraggedList[i]);
+                    //    //cm.zoneIn = cardStackHit; //updating to cards new zone
+                    //    cardStackHitCardStack.Push(gcDraggedList[i]);
+                    //}
 
-                    CheckAndFlipLastCardOfColumnCardStack(cardStackInCardStackNew);
+                    //CheckAndFlipLastCardOfColumnCardStack(cardStackInCardStackNew);
 
                     //update cardStack that Card is going into, the hit stack
                     if (cardStackHit.tag == "PileStackRow")
@@ -310,17 +327,25 @@ public class SpiderSolitaireGameController : MonoBehaviour, IGameController {
 // --- END Drag and Drop functions
 
     void DrawCardsFromDeckToColumns(){
-        CardStackNew cardStackNew;
-        CardStackViewNew cardStackViewNew;
-        for (int i = 0; i < columns.Count; i++){
-            cardStackNew = columns[i].GetComponent<CardStackNew>();
-            GameObject card = Deck.GetComponent<CardStackNew>().Pop();
-            card.GetComponent<CardViewNew>().toggleFace(true);
-            card.GetComponent<BoxCollider>().enabled = true;
-            cardStackNew.GetComponent<CardStackNew>().Push(card);
-            cardStackViewNew = columns[i].GetComponent<CardStackViewNew>();
-            cardStackViewNew.UpdateStackView();
+        //setup command action
+        CommandDrawOneCardToXStacks commandDrawOneCardToXStacks = new CommandDrawOneCardToXStacks(Deck, columns);
+        //execute
+        GetComponent<CommandManager>().ExecuteCommand(commandDrawOneCardToXStacks);
+        //CardStackNew cardStackNew;
+        //CardStackViewNew cardStackViewNew;
+        //for (int i = 0; i < columns.Count; i++){
+        //    cardStackNew = columns[i].GetComponent<CardStackNew>();
+        //    GameObject card = Deck.GetComponent<CardStackNew>().Pop();
+        //    card.GetComponent<CardViewNew>().toggleFace(true);
+        //    card.GetComponent<BoxCollider>().enabled = true;
+        //    cardStackNew.GetComponent<CardStackNew>().Push(card);
+        //    cardStackViewNew = columns[i].GetComponent<CardStackViewNew>();
+        //    cardStackViewNew.UpdateStackView();
 
+        //}
+        for (int i = 0; i < columns.Count; i++)
+        {
+            columns[i].GetComponent<CardStackViewNew>().UpdateStackView();
         }
         //Deck.GetComponent<CardStackViewNew>().UpdateStackView();
         DeckUpdateView();

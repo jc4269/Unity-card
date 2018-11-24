@@ -254,9 +254,9 @@ public class SolitaireGameController : MonoBehaviour, IGameController {
                     Debug.Log("Valid Drop and gcdraggedlist.count=" + gcDraggedList.Count);
                     //valid so update all cards in column being dragged using command action.
                     //setup command action
-                    SolitaireCommandMoveCards solitaireCommandMoveCards = new SolitaireCommandMoveCards(gcDraggedList, cardStackIn, cardStackHit);
+                    CommandMoveCardsAndFlipCard commandMoveCardsAndFlipCard = new CommandMoveCardsAndFlipCard(gcDraggedList, cardStackIn, cardStackHit);
                     //execute
-                    GetComponent<CommandManager>().ExecuteCommand(solitaireCommandMoveCards);
+                    GetComponent<CommandManager>().ExecuteCommand(commandMoveCardsAndFlipCard);
                     //valid so update all cards in column being dragged.
                     //for (int i = 0; i < gcDraggedList.Count; i++)
                     //{
